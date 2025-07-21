@@ -35,7 +35,7 @@ backup:
 	./scripts/backup --action setup --namespace=seafile --pvc=data-seafile-mariadb-0
 	./scripts/backup --action setup --namespace=seafile --pvc=seafile-data
 	./scripts/backup --action setup --namespace=joplin --pvc=data-joplin-postgresql-0
-	./scripts/backup --action setup --namespace=paperless --pvc=data-joplin-postgresql-0
+	./scripts/backup --action setup --namespace=paperless --pvc=paperless-data
 
 restore:
 	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget-data
@@ -45,7 +45,7 @@ restore:
 	./scripts/backup --action restore --namespace=seafile --pvc=data-seafile-mariadb-0
 	./scripts/backup --action restore --namespace=seafile --pvc=seafile-data
 	./scripts/backup --action restore --namespace=joplin --pvc=data-joplin-postgresql-0
-	./scripts/backup --action restore --namespace=paperless --pvc=data-joplin-postgresql-0
+	./scripts/backup --action restore --namespace=paperless --pvc=paperless-data
 
 test:
 	make -C test
