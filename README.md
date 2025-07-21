@@ -16,6 +16,9 @@ It can be used as a highly customizable framework to build your own homelab.
 > For more information, please see the [r/homelab introduction](https://www.reddit.com/r/homelab/wiki/introduction) and the
 > [Home Operations Discord community](https://discord.gg/home-operations) (formerly known as [k8s-at-home](https://k8s-at-home.com)).
 
+If you encounter an issue, please create [a bug report](https://github.com/khuedoan/homelab/issues/new?template=bug_report.md)
+(avoid asking for support about issues specific to this project in other communication channels).
+
 ## Overview
 
 Project status: **ALPHA**
@@ -273,7 +276,7 @@ References:
 - [Diátaxis technical documentation framework](https://diataxis.fr)
 - [Official Terratest examples](https://github.com/gruntwork-io/terratest/tree/master/test)
 - [Self-host an automated Jellyfin media streaming stack](https://zerodya.net/self-host-jellyfin-media-streaming-stack)
-- [App Template Helm chart by bjw-s](https://bjw-s.github.io/helm-charts/docs/app-template)
+- [App Template Helm chart by bjw-s](https://bjw-s-labs.github.io/helm-charts/docs/app-template)
 - [Various application configurations in onedr0p/home-ops](https://github.com/onedr0p/home-ops)
 
 Here is a list of the contributors who have helped to improve this project.
@@ -294,6 +297,8 @@ Big shout-out to them!
 - ![](https://github.com/raedkit.png?size=24) [@raedkit](https://github.com/raedkit)
 - ![](https://github.com/ClashTheBunny.png?size=24) [@ClashTheBunny](https://github.com/ClashTheBunny)
 - ![](https://github.com/retX0.png?size=24) [@retX0](https://github.com/retX0)
+- ![](https://github.com/zalsader.png?size=24) [@zalsader](https://github.com/zalsader)
+- ![](https://github.com/serpro69.png?size=24) [@serpro69](https://github.com/serpro69)
 
 If you feel you're missing from this list, please feel free to add yourself in a PR.
 
