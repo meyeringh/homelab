@@ -210,18 +210,6 @@ def setup_kanidm_oauth_app(name: str, redirect_uri: str) -> None:
 
 def main() -> None:
     with Console().status("Completing the remaining sorcery"):
-        gitea_access_tokens = [
-            {
-                'name': 'renovate',
-                'scopes': [
-                    "write:repository",
-                    "read:user",
-                    "write:issue",
-                    "read:organization",
-                    "read:misc"
-                ]
-            }
-        ]
 
         kanidm_groups = [
             # TODO better group management
@@ -231,9 +219,6 @@ def main() -> None:
         kanidm_oauth_apps = [
             {'name': 'dex', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('dex', 'dex').spec.rules[0].host}/callback"},
         ]
-
-        for token in gitea_access_tokens:
-            setup_gitea_access_token(token['name'], token['scopes'])
 
         setup_gitea_auth_with_dex()
 
