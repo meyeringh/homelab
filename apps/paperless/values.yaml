@@ -55,13 +55,3 @@ app-template:
               subPath: data
             - path: /usr/src/paperless/media
               subPath: media
-    drive:
-      enabled: true
-      type: persistentVolumeClaim
-      existingClaim: my-files-pvc
-      size: 10Gi
-      accessMode: ReadWriteOnce
-      advancedMounts:
-        main:
-          main:
-            - path: /my-files
