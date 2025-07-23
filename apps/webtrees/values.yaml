@@ -30,7 +30,7 @@ app-template:
                   key: adminPassword
             WT_ADMINMAIL: admin@localhost
             PRETTY_URLS: "TRUE"
-            BASE_URL: family.meyeringh.org
+            BASE_URL: "https://family.meyeringh.org"
             DISABLE_SSL: "TRUE"
             PORT: 80
 
