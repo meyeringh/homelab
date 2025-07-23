@@ -33,7 +33,7 @@ app-template:
   service:
     main:
       ports:
-        https:
+        http:
           port: 443
           protocol: HTTPS
   ingress:
@@ -51,7 +51,7 @@ app-template:
               pathType: Prefix
               service:
                 name: main
-                port: https
+                port: http
       tls:
         - hosts:
             - *host
