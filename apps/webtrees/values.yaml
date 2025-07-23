@@ -29,15 +29,17 @@ app-template:
                   name: webtrees
                   key: adminPassword
             WT_ADMINMAIL: admin@localhost
-            PRETTY_URLS: true
+            PRETTY_URLS: "TRUE"
             BASE_URL: family.meyeringh.org
+            DISABLE_SSL: "TRUE"
+            PORT: 80
 
   service:
     main:
       ports:
         http:
-          port: 443
-          protocol: HTTPS
+          port: 80
+          protocol: HTTP
   ingress:
     main:
       enabled: true
