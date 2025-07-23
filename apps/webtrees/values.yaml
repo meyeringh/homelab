@@ -14,8 +14,6 @@ app-template:
             repository: dtjs48jkt/webtrees
             tag: 2.2.1
           env:
-            PORT: 80
-            DISABLE_SSL: TRUE
             DB_HOST: webtrees-mariadb
             DB_USER: root
             DB_PASSWORD:
@@ -35,9 +33,9 @@ app-template:
   service:
     main:
       ports:
-        http:
-          port: 80
-          protocol: HTTP
+        https:
+          port: 443
+          protocol: HTTPS
   ingress:
     main:
       enabled: true
@@ -53,7 +51,7 @@ app-template:
               pathType: Prefix
               service:
                 name: main
-                port: http
+                port: https
       tls:
         - hosts:
             - *host
