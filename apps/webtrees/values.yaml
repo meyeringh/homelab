@@ -1,0 +1,80 @@
+app-template:
+  controllers:
+    main:
+      containers:
+        main:
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          image:
+            repository: dtjs48jkt/webtrees
+            tag: 2.2.1
+          env:
+            PORT: 80
+            DISABLE_SSL: TRUE
+            DB_HOST: webtrees-mariadb
+            DB_USER: webtrees
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: webtrees-db
+                  key: mariadb-password
+            DB_NAME: webtrees
+            WT_ADMIN: admin
+            WT_ADMINPW:
+              valueFrom:
+                secretKeyRef:
+                  name: webtrees
+                  key: adminPassword
+            WT_ADMINMAIL: admin@localhost
+
+  service:
+    main:
+      ports:
+        http:
+          port: 80
+          protocol: HTTP
+  ingress:
+    main:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+      hosts:
+        - host: &host family.meyeringh.org
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: main
+                port: http
+      tls:
+        - hosts:
+            - *host
+          secretName: webtrees-tls-certificate
+  persistence:
+    data:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      retain: true
+      advancedMounts:
+        main:
+          main:
+            - path: /data
+              subPath: data
+mariadb:
+  auth:
+    existingSecret: webtrees-db
+  primary:
+    persistence:
+      enabled: true
+      accessModes:
+        - ReadWriteOnce
+      size: 5Gi
