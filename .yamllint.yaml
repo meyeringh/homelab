@@ -1,6 +1,5 @@
 ignore: |
   templates/
-  mkdocs.yml
 
 extends: default
 
