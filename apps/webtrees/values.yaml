@@ -29,6 +29,8 @@ app-template:
                   name: webtrees
                   key: adminPassword
             WT_ADMINMAIL: admin@localhost
+            PRETTY_URLS: true
+            BASE_URL: family.meyeringh.org
 
   service:
     main:
