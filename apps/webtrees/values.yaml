@@ -17,12 +17,12 @@ app-template:
             PORT: 80
             DISABLE_SSL: TRUE
             DB_HOST: webtrees-mariadb
-            DB_USER: webtrees
+            DB_USER: root
             DB_PASSWORD:
               valueFrom:
                 secretKeyRef:
                   name: webtrees-db
-                  key: mariadb-password
+                  key: mariadb-root-password
             DB_NAME: webtrees
             WT_ADMIN: admin
             WT_ADMINPW:
