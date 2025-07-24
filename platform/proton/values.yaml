@@ -21,9 +21,9 @@ app-template:
     main:
       type: ClusterIP
       ports:
-        smtp:
+        http:
           port: 1025
-          protocol: TCP
+          protocol: HTTP
   persistence:
     state:
       enabled: true
