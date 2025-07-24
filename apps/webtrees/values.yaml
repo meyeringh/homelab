@@ -6,7 +6,9 @@ app-template:
           fsGroup: 1001
       initContainers:
         trust-proton-ca:
-          image: debian:bookworm-slim
+          image:
+            repository: debian
+            tag: bookworm-slim
           command:
             - sh
             - -c
