@@ -13,6 +13,8 @@ app-template:
           image:
             repository: dtjs48jkt/webtrees
             tag: 2.2.1
+          securityContext:
+            fsGroup: 1001
           env:
             DB_HOST: webtrees-mariadb
             DB_USER: root
