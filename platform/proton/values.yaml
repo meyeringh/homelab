@@ -1,0 +1,37 @@
+app-template:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            repository: shenxn/protonmail-bridge
+            tag: 3.19.0-1
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          volumeMounts:
+            - name: state
+              mountPath: /root
+              subPath: proton-state
+  service:
+    main:
+      type: ClusterIP
+      ports:
+        smtp:
+          port: 1025
+          protocol: TCP
+  persistence:
+    state:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      retain: true
+      advancedMounts:
+        main:
+          main:
+            - path: /root
+              subPath: proton-state
