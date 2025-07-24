@@ -4,18 +4,6 @@ app-template:
       pod:
         securityContext:
           fsGroup: 1001
-      initContainers:
-        trust-proton-ca:
-          image:
-            repository: debian
-            tag: bookworm-slim
-          command:
-            - sh
-            - -c
-            - |
-              apt update && apt install -y openssl original-awk ca-certificates \
-              && openssl s_client -connect proton.proton.svc.cluster.local:1025 -starttls smtp -showcerts </dev/null | awk '/BEGIN CERT/,/END CERT/' > /usr/local/share/ca-certificates/proton.crt \
-              && update-ca-certificates
       containers:
         main:
           probes:
@@ -85,19 +73,6 @@ app-template:
           main:
             - path: /var/www/html/data/
               subPath: data
-    ca-store:
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 50Mi
-      retain: false
-      advancedMounts:
-        main:
-          main:
-            - path: /usr/local/share/ca-certificates
-              subPath: ca-store
-          trust-proton-ca:
-            - path: /usr/local/share/ca-certificates
-              subPath: ca-store
 mariadb:
   auth:
     existingSecret: webtrees-db
