@@ -4,6 +4,19 @@ app-template:
       pod:
         securityContext:
           fsGroup: 1001
+      initContainers:
+        trust-proton-ca:
+          image: debian:bookworm-slim
+          command:
+            - sh
+            - -c
+            - |
+              apt update && apt install -y openssl original-awk ca-certificates \
+              && openssl s_client -connect proton.proton.svc.cluster.local:1025 -starttls smtp -showcerts </dev/null | awk '/BEGIN CERT/,/END CERT/' > /usr/local/share/ca-certificates/proton.crt \
+              && update-ca-certificates
+          volumeMounts:
+            - name: ca-store
+              mountPath: /usr/local/share/ca-certificates
       containers:
         main:
           probes:
@@ -36,7 +49,12 @@ app-template:
             BASE_URL: "https://family.meyeringh.org"
             DISABLE_SSL: "TRUE"
             PORT: 80
-
+          volumeMounts:
+            - name: ca-store
+              mountPath: /usr/local/share/ca-certificates
+  volumes:
+    - name: ca-store
+      emptyDir: {}
   service:
     main:
       ports:
