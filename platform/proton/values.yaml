@@ -24,6 +24,7 @@ app-template:
         http:
           port: 1025
           protocol: HTTP
+          targetPort: 25
   persistence:
     state:
       enabled: true
