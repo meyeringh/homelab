@@ -85,6 +85,14 @@ app-template:
           main:
             - path: /var/www/html/data/
               subPath: data
+    ca-store:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 50Mi
+      retain: false
+      advancedMounts:
+        main:
+          main:
             - path: /usr/local/share/ca-certificates
               subPath: ca-store
           trust-proton-ca:
