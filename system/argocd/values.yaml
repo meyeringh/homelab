@@ -73,3 +73,21 @@ argocd-apps:
                 # TODO this may be refactored in the future for finer granularity
                 # See also https://volsync.readthedocs.io/en/stable/usage/permissionmodel.html
                 volsync.backube/privileged-movers: "true"
+          ignoreDifferences:
+          # This is needed to prevent ArgoCD from constantly trying to update the empty labels due to a bug (diff between null labels and empty labels)
+          - group: rbac.authorization.k8s.io
+            kind: Role
+            jsonPointers:
+            - /metadata/labels
+          - group: rbac.authorization.k8s.io
+            kind: RoleBinding
+            jsonPointers:
+            - /metadata/labels
+          - group: rbac.authorization.k8s.io
+            kind: ClusterRole
+            jsonPointers:
+            - /metadata/labels
+          - group: rbac.authorization.k8s.io
+            kind: ClusterRoleBinding
+            jsonPointers:
+            - /metadata/labels
