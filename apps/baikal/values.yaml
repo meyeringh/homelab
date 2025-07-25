@@ -39,5 +39,7 @@ app-template:
       advancedMounts:
         baikal:
           app:
-            - path: /var/www/baikal
+            - path: /var/www/baikal/Specific
               subPath: data
+            - path: /var/www/baikal/config
+              subPath: config
