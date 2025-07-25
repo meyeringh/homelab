@@ -1,9 +1,9 @@
 app-template:
   controllers:
-    main:
+    kanidm:
       type: statefulset
       containers:
-        main:
+        app:
           image:
             repository: docker.io/kanidm/server
             tag: 1.3.3
@@ -28,16 +28,15 @@ app-template:
           domain = "auth.meyeringh.org"
           origin = "https://auth.meyeringh.org"
   service:
-    main:
+    app:
+      controller: kanidm
       ports:
         http:
-          enabled: false
+          port: 80
         https:
           port: 443
-          protocol: HTTPS
         ldap:
           port: 636
-          protocol: TCP
   ingress:
     main:
       enabled: true
@@ -51,8 +50,8 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
-                port: https
+                identifier: app
+                port: 443
       tls:
         - hosts:
             - *host
@@ -61,7 +60,7 @@ app-template:
     config:
       enabled: true
       type: configMap
-      name: kanidm-config
+      identifier: config
       globalMounts:
         - path: /data/server.toml
           subPath: server.toml
