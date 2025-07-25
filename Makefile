@@ -37,8 +37,8 @@ backup:
 	./scripts/backup --action setup --namespace=joplin --pvc=data-joplin-postgresql-0
 	./scripts/backup --action setup --namespace=paperless --pvc=paperless-data
 	./scripts/backup --action setup --namespace=webtrees --pvc=data-webtrees-mariadb-0
-	./scripts/backup --action setup --namespace=webtrees --pvc=webtrees-data
-	./scripts/backup --action setup --namespace=proton --pvc=proton-state
+	./scripts/backup --action setup --namespace=webtrees --pvc=webtrees
+	./scripts/backup --action setup --namespace=proton --pvc=proton
 
 restore:
 	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget-data
@@ -50,8 +50,8 @@ restore:
 	./scripts/backup --action restore --namespace=joplin --pvc=data-joplin-postgresql-0
 	./scripts/backup --action restore --namespace=paperless --pvc=paperless-data
 	./scripts/backup --action restore --namespace=webtrees --pvc=data-webtrees-mariadb-0
-	./scripts/backup --action restore --namespace=webtrees --pvc=webtrees-data
-	./scripts/backup --action restore --namespace=proton --pvc=proton-state
+	./scripts/backup --action restore --namespace=webtrees --pvc=webtrees
+	./scripts/backup --action restore --namespace=proton --pvc=proton
 
 test:
 	make -C test
