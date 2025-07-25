@@ -1,8 +1,8 @@
 app-template:
   controllers:
-    main:
+    proton:
       containers:
-        main:
+        app:
           image:
             repository: shenxn/protonmail-bridge
             tag: 3.19.0-1
@@ -18,11 +18,11 @@ app-template:
               mountPath: /root
               subPath: proton-state
   service:
-    main:
+    app:
+      controller: proton
       ports:
         http:
           port: 1025
-          protocol: HTTP
           targetPort: 25
   ingress:
     main:
@@ -36,8 +36,8 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
-                port: http
+                identifier: app
+                port: 1025
       tls:
         - secretName: mail-tls-certificate
           hosts:
@@ -49,7 +49,7 @@ app-template:
       size: 1Gi
       retain: true
       advancedMounts:
-        main:
-          main:
+        proton:
+          app:
             - path: /root
               subPath: proton-state

@@ -1,11 +1,11 @@
 app-template:
   controllers:
-    main:
+    webtrees:
       pod:
         securityContext:
           fsGroup: 1001
       containers:
-        main:
+        app:
           probes:
             liveness:
               enabled: false
@@ -37,11 +37,11 @@ app-template:
             DISABLE_SSL: "TRUE"
             PORT: 80
   service:
-    main:
+    app:
+      controller: webtrees
       ports:
         http:
           port: 80
-          protocol: HTTP
   ingress:
     main:
       enabled: true
@@ -56,8 +56,8 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
-                port: http
+                identifier: app
+                port: 80
       tls:
         - hosts:
             - *host
@@ -69,8 +69,8 @@ app-template:
       size: 5Gi
       retain: true
       advancedMounts:
-        main:
-          main:
+        webtrees:
+          app:
             - path: /var/www/html/data/
               subPath: data
 mariadb:
