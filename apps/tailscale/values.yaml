@@ -1,8 +1,10 @@
 app-template:
   serviceAccount:
-    name: tailscale
+    tailscale: {}
   controllers:
     tailscale:
+      serviceAccount:
+        identifier: tailscale
       containers:
         app:
           image:
