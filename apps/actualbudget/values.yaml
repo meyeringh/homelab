@@ -1,17 +1,17 @@
 app-template:
   controllers:
-    main:
+    actualbudget:
       containers:
-        main:
+        app:
           image:
             repository: docker.io/actualbudget/actual-server
             tag: 25.2.1-alpine
   service:
-    main:
+    app:
+      controller: actualbudget
       ports:
         http:
           port: 5006
-          protocol: HTTP
   ingress:
     main:
       enabled: true
@@ -27,8 +27,8 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
-                port: http
+                identifier: app
+                port: 5006
       tls:
         - hosts:
             - *host
