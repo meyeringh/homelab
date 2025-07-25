@@ -45,7 +45,7 @@ app-template:
       size: 1Gi
       retain: true
       advancedMounts:
-        proton:
+        proton-state:
           app:
             - path: /root
               subPath: proton-state
