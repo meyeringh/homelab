@@ -13,10 +13,6 @@ app-template:
               enabled: false
             startup:
               enabled: false
-          volumeMounts:
-            - name: state
-              mountPath: /root
-              subPath: proton-state
   service:
     app:
       controller: proton
