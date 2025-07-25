@@ -28,7 +28,7 @@ post-install:
 
 # TODO maybe there's a better way to manage backup with GitOps?
 backup:
-	./scripts/backup --action setup --namespace=actualbudget --pvc=actualbudget-data
+	./scripts/backup --action setup --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action setup --namespace=jellyfin --pvc=jellyfin-data
 	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
 	./scripts/backup --action setup --namespace=baikal --pvc=baikal-data
@@ -41,7 +41,7 @@ backup:
 	./scripts/backup --action setup --namespace=proton --pvc=proton
 
 restore:
-	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget-data
+	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action restore --namespace=jellyfin --pvc=jellyfin-data
 	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
 	./scripts/backup --action restore --namespace=baikal --pvc=baikal-data
