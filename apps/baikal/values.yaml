@@ -1,17 +1,17 @@
 app-template:
   controllers:
-    main:
+    baikal:
       containers:
-        main:
+        app:
           image:
             repository: ckulka/baikal
             tag: 0.10.1-nginx
   service:
-    main:
+    app:
+      controller: baikal
       ports:
         http:
           port: 80
-          protocol: HTTP
   ingress:
     main:
       enabled: true
@@ -26,8 +26,8 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
-                port: http
+                identifier: app
+                port: 80
       tls:
         - hosts:
             - *host
@@ -37,8 +37,8 @@ app-template:
       accessMode: ReadWriteOnce
       size: 10Gi
       advancedMounts:
-        main:
-          main:
+        baikal:
+          app:
             - path: /var/www/baikal/Specific
               subPath: data
             - path: /var/www/baikal/config
