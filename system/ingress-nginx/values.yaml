@@ -9,3 +9,4 @@ ingress-nginx:
         enabled: true
   tcp:
     22: gitea/gitea-ssh:22
+    587: proton/proton:1025
