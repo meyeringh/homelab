@@ -1,0 +1,77 @@
+app-template:
+  controllers:
+    minecraft:
+      pod:
+        securityContext:
+          fsGroup: 1000
+      containers:
+        app:
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          image:
+            repository: gameservermanagers/gameserver
+            tag: mc
+  configMaps:
+    config:
+      enabled: true
+      data:
+        common.cfg: |
+          ##################################
+          ######## Common Settings #########
+          ##################################
+          # PLACE GLOBAL SETTINGS HERE
+          ## These settings will apply to all instances.
+
+          #### Game Server Settings ####
+          javaram="1024"
+          mcversion="latest"
+          branch="release"
+  service:
+    app:
+      controller: minecraft
+      ports:
+        http:
+          port: 25565
+  ingress:
+    main:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+      hosts:
+        - host: &host minecraft.meyeringh.org
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: app
+                port: 25565
+      tls:
+        - hosts:
+            - *host
+          secretName: minecraft-tls-certificate
+  persistence:
+    data:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      retain: true
+      advancedMounts:
+        minecraft:
+          app:
+            - path: /data
+              subPath: data
+    common-config:
+      enabled: true
+      type: configMap
+      identifier: config
+      globalMounts:
+        - path: /data/config-lgsm/mcserver/common.cfg
+          subPath: common.cfg
