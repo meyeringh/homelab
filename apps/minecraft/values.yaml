@@ -31,6 +31,13 @@ app-template:
           javaram="1024"
           mcversion="latest"
           branch="release"
+        server.properties: |
+          # Minecraft Server Properties
+          gamemode=survival
+          motd=LinuxGSM
+          white-list=true
+          spawn-protection=0
+          difficulty=normal
   service:
     app:
       controller: minecraft
@@ -68,10 +75,17 @@ app-template:
           app:
             - path: /data
               subPath: data
-    common-config:
+    common-cfg:
       enabled: true
       type: configMap
       identifier: config
       globalMounts:
         - path: /data/config-lgsm/mcserver/common.cfg
           subPath: common.cfg
+    server-properties:
+      enabled: true
+      type: configMap
+      identifier: config
+      globalMounts:
+        - path: /data/serverfiles/server.properties
+          subPath: server.properties
