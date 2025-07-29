@@ -27,6 +27,12 @@ home-assistant:
           - *host
         secretName: home-tls-certificate
 
+  configuration:
+    enabled: true
+    forceInit: true
+    trusted_proxies:
+      - 10.0.0.0/8
+
   persistence:
     enabled: true
     accessMode: ReadWriteOnce
