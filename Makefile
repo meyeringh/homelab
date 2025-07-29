@@ -39,6 +39,8 @@ backup:
 	./scripts/backup --action setup --namespace=webtrees --pvc=data-webtrees-mariadb-0
 	./scripts/backup --action setup --namespace=webtrees --pvc=webtrees
 	./scripts/backup --action setup --namespace=proton --pvc=proton
+	./scripts/backup --action setup --namespace=minecraft --pvc=minecraft
+	./scripts/backup --action setup --namespace=home --pvc=home-home-assistant-home-home-assistant-0
 
 restore:
 	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget
@@ -52,6 +54,8 @@ restore:
 	./scripts/backup --action restore --namespace=webtrees --pvc=data-webtrees-mariadb-0
 	./scripts/backup --action restore --namespace=webtrees --pvc=webtrees
 	./scripts/backup --action restore --namespace=proton --pvc=proton
+	./scripts/backup --action restore --namespace=minecraft --pvc=minecraft
+	./scripts/backup --action restore  --namespace=home --pvc=home-home-assistant-home-home-assistant-0
 
 test:
 	make -C test
