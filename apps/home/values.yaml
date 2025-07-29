@@ -1,32 +1,33 @@
-env:
-  - name: TZ
-    value: Europe/Berlin
+home-assistant:
+  env:
+    - name: TZ
+      value: Europe/Berlin
 
-service:
-  type: ClusterIP
-  port: 8123
+  service:
+    type: ClusterIP
+    port: 8123
 
-ingress:
-  enabled: true
-  className: "nginx"
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-  hosts:
-    - host: &host home.meyeringh.org
-      paths:
-        - path: /
-          pathType: Prefix
-          service:
-            identifier: app
-            port: 8123
-  tls:
-    - hosts:
-        - *host
-      secretName: home-tls-certificate
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    hosts:
+      - host: &host home.meyeringh.org
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: 8123
+    tls:
+      - hosts:
+          - *host
+        secretName: home-tls-certificate
 
-persistence:
-  enabled: true
-  accessMode: ReadWriteOnce
-  size: 5Gi
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 5Gi
