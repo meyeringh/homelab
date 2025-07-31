@@ -6,9 +6,9 @@ home-assistant:
   resources:
     requests:
       cpu: 10m
-      memory: 360Mi
+      memory: 500Mi
     limits:
-      memory: 360Mi
+      memory: 500Mi
 
   service:
     type: ClusterIP

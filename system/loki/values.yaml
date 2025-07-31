@@ -13,6 +13,6 @@ loki-stack:
     resources:
       requests:
         cpu: 51m
-        memory: 145Mi
+        memory: 200Mi
       limits:
-        memory: 145Mi
+        memory: 200Mi
