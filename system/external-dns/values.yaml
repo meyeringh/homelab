@@ -1,6 +1,14 @@
 external-dns:
   provider: cloudflare
   txtOwnerId: homelab
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+
   env:
     - name: CF_API_TOKEN
       valueFrom:

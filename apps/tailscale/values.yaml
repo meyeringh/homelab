@@ -10,6 +10,12 @@ app-template:
           image:
             repository: ghcr.io/tailscale/tailscale
             tag: latest
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
           env:
             TS_HOSTNAME: homelab-router
             TS_USERSPACE: false

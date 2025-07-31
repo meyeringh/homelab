@@ -1,6 +1,71 @@
 rook-ceph:
   monitoring:
     enabled: true
+
+  resources:
+    requests:
+      cpu: 55m
+      memory: 143Mi
+    limits:
+      memory: 143Mi
+
+  csi:
+    cephfsplugin:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
+
+    rbdplugin:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 154Mi
+        limits:
+          memory: 154Mi
+
+    csiAddons:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
+
+    provisioner:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
+
+    snapshotter:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
+
+    attacher:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
+
+    resizer:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
+
 rook-ceph-cluster:
   monitoring:
     enabled: true
@@ -18,22 +83,34 @@ rook-ceph-cluster:
     resources:
       mgr:
         limits:
-          memory: "1Gi"
+          memory: "665Mi"
         requests:
-          cpu: "100m"
-          memory: "512Mi"
+          cpu: "40m"
+          memory: "665Mi"
       mon:
         limits:
-          memory: "2Gi"
+          memory: "512Mi"
         requests:
-          cpu: "100m"
-          memory: "100Mi"
+          cpu: "26m"
+          memory: "512Mi"
       osd:
         limits:
-          memory: "4Gi"
+          memory: "3400Mi"
         requests:
-          cpu: "100m"
-          memory: "512Mi"
+          cpu: "65m"
+          memory: "3163Mi"
+      crashcollector:
+        limits:
+          memory: "100Mi"
+        requests:
+          cpu: "10m"
+          memory: "100Mi"
+      exporter:
+        limits:
+          memory: "100Mi"
+        requests:
+          cpu: "15m"
+          memory: "100Mi"
   cephBlockPools:
     - name: builtin-mgr
       spec:
@@ -81,9 +158,9 @@ rook-ceph-cluster:
           activeStandby: false
           resources:
             limits:
-              memory: "4Gi"
+              memory: "100Mi"
             requests:
-              cpu: "100m"
+              cpu: "10m"
               memory: "100Mi"
           priorityClassName: system-cluster-critical
       storageClass:

@@ -1,0 +1,7 @@
+volsync:
+  resources:
+    requests:
+      cpu: 51m
+      memory: 964Mi
+    limits:
+      memory: 964Mi

@@ -1,4 +1,18 @@
 loki-stack:
   loki:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 244Mi
+      limits:
+        memory: 244Mi
     serviceMonitor:
       enabled: true
+
+  promtail:
+    resources:
+      requests:
+        cpu: 51m
+        memory: 145Mi
+      limits:
+        memory: 145Mi

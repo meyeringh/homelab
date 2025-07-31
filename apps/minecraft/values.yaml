@@ -16,6 +16,12 @@ app-template:
           image:
             repository: gameservermanagers/gameserver
             tag: mc
+          resources:
+            requests:
+              cpu: 10m
+              memory: 983Mi
+            limits:
+              memory: 983Mi
   configMaps:
     config:
       enabled: true

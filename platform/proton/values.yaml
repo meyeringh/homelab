@@ -6,6 +6,12 @@ app-template:
           image:
             repository: shenxn/protonmail-bridge
             tag: 3.19.0-1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 283Mi
+            limits:
+              memory: 283Mi
           probes:
             liveness:
               enabled: false

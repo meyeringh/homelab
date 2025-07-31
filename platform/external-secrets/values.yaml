@@ -1,6 +1,4 @@
-cert-manager:
-  installCRDs: true
-
+external-secrets:
   resources:
     requests:
       cpu: 10m
@@ -8,7 +6,7 @@ cert-manager:
     limits:
       memory: 100Mi
 
-  cainjector:
+  certController:
     resources:
       requests:
         cpu: 10m
@@ -23,8 +21,3 @@ cert-manager:
         memory: 100Mi
       limits:
         memory: 100Mi
-
-  prometheus:
-    enabled: true
-    servicemonitor:
-      enabled: true

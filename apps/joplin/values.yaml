@@ -6,6 +6,12 @@ app-template:
           image:
             repository: joplin/server
             tag: 3.0.1-beta
+          resources:
+            requests:
+              cpu: 11m
+              memory: 281Mi
+            limits:
+              memory: 281Mi
           env:
             APP_BASE_URL: https://notes.meyeringh.org
             APP_PORT: 22300
@@ -56,3 +62,9 @@ postgresql:
   primary:
     persistence:
       enabled: true
+    resources:
+      requests:
+        cpu: 13m
+        memory: 206Mi
+      limits:
+        memory: 206Mi

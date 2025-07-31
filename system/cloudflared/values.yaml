@@ -6,6 +6,12 @@ app-template:
           image:
             repository: docker.io/cloudflare/cloudflared
             tag: 2024.4.0
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
           args:
             - tunnel
             - --config

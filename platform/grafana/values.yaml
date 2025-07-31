@@ -1,4 +1,31 @@
 grafana:
+  resources:
+    requests:
+      cpu: 78m
+      memory: 189Mi
+    limits:
+      memory: 189Mi
+
+  sidecar:
+    dashboards:
+      enabled: true
+      searchNamespace: monitoring-system
+      resources:
+        requests:
+          cpu: 67m
+          memory: 127Mi
+        limits:
+          memory: 127Mi
+    datasources:
+      enabled: true
+      searchNamespace: monitoring-system
+      resources:
+        requests:
+          cpu: 82m
+          memory: 118Mi
+        limits:
+          memory: 118Mi
+
   ingress:
     enabled: true
     ingressClassName: nginx
@@ -10,13 +37,6 @@ grafana:
       - secretName: grafana-general-tls
         hosts:
           - *host
-  sidecar:
-    dashboards:
-      enabled: true
-      searchNamespace: monitoring-system
-    datasources:
-      enabled: true
-      searchNamespace: monitoring-system
   envFromSecret: grafana-secrets
   grafana.ini:
     server:

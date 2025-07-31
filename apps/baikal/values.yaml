@@ -6,6 +6,12 @@ app-template:
           image:
             repository: ckulka/baikal
             tag: 0.10.1-nginx
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
   service:
     main:
       ports:

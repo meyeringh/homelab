@@ -1,6 +1,12 @@
 ingress-nginx:
   controller:
     allowSnippetAnnotations: true
+    resources:
+      requests:
+        cpu: 31m
+        memory: 344Mi
+      limits:
+        memory: 344Mi
     admissionWebhooks:
       timeoutSeconds: 30
     metrics:

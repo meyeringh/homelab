@@ -3,6 +3,13 @@ home-assistant:
     - name: TZ
       value: Europe/Berlin
 
+  resources:
+    requests:
+      cpu: 10m
+      memory: 360Mi
+    limits:
+      memory: 360Mi
+
   service:
     type: ClusterIP
     port: 8123

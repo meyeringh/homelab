@@ -9,36 +9,72 @@ app-template:
           image:
             repository: docker.io/jellyfin/jellyfin
             tag: 10.10.5
+          resources:
+            requests:
+              cpu: 10m
+              memory: 516Mi
+            limits:
+              memory: 516Mi
         sabnzbd:
           image:
             repository: lscr.io/linuxserver/sabnzbd
             tag: 4.4.1
           env:
             TZ: Europe/Berlin
+          resources:
+            requests:
+              cpu: 10m
+              memory: 302Mi
+            limits:
+              memory: 302Mi
         prowlarr:
           image:
             repository: lscr.io/linuxserver/prowlarr
             tag: 1.13.3
           env:
             TZ: Europe/Berlin
+          resources:
+            requests:
+              cpu: 10m
+              memory: 163Mi
+            limits:
+              memory: 163Mi
         radarr:
           image:
             repository: lscr.io/linuxserver/radarr
             tag: 5.3.6
           env:
             TZ: Europe/Berlin
+          resources:
+            requests:
+              cpu: 10m
+              memory: 209Mi
+            limits:
+              memory: 209Mi
         sonarr:
           image:
             repository: lscr.io/linuxserver/sonarr
             tag: 4.0.2
           env:
             TZ: Europe/Berlin
+          resources:
+            requests:
+              cpu: 10m
+              memory: 236Mi
+            limits:
+              memory: 236Mi
         jellyseerr:
           image:
             repository: docker.io/fallenbagel/jellyseerr
             tag: 2.3.0
           env:
             TZ: Europe/Berlin
+          resources:
+            requests:
+              cpu: 10m
+              memory: 367Mi
+            limits:
+              memory: 367Mi
         lazylibrarian:
           image:
             repository: lscr.io/linuxserver/lazylibrarian
@@ -46,6 +82,12 @@ app-template:
           env:
             TZ: Europe/Berlin
             DOCKER_MODS: linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg
+          resources:
+            requests:
+              cpu: 10m
+              memory: 821Mi
+            limits:
+              memory: 821Mi
   service:
     main:
       ports:

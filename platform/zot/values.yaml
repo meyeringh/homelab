@@ -1,4 +1,11 @@
 zot:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 330Mi
+    limits:
+      memory: 330Mi
+
   ingress:
     enabled: true
     annotations:

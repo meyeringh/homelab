@@ -1,4 +1,28 @@
 kube-prometheus-stack:
+  prometheusOperator:
+    resources:
+      requests:
+        cpu: 11m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+
+  kube-state-metrics:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+
+  prometheus-node-exporter:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+
   grafana:
     enabled: false
     forceDeployDatasources: true
@@ -9,15 +33,42 @@ kube-prometheus-stack:
         url: http://loki.loki:3100
   prometheus:
     prometheusSpec:
+      resources:
+        requests:
+          cpu: 127m
+          memory: 1569Mi
+        limits:
+          memory: 1569Mi
+      containers:
+        - name: config-reloader
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
       ruleSelectorNilUsesHelmValues: false
       serviceMonitorSelectorNilUsesHelmValues: false
       podMonitorSelectorNilUsesHelmValues: false
       probeSelectorNilUsesHelmValues: false
+
   alertmanager:
     alertmanagerSpec:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
       containers:
         - name: ntfy-relay
           image: ghcr.io/khuedoan/webhook-transformer:v0.0.3
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
           args:
             - --port=8081
             - --config=/config/alertmanager-to-ntfy.jsonnet
@@ -28,6 +79,13 @@ kube-prometheus-stack:
           volumeMounts:
             - name: config
               mountPath: /config
+        - name: config-reloader
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
       volumes:
         - name: config
           configMap:

@@ -1,4 +1,11 @@
 gitea:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 163Mi
+    limits:
+      memory: 163Mi
+
   ingress:
     enabled: true
     className: nginx
@@ -37,3 +44,21 @@ gitea:
         ENABLED: false
       webhook:
         ALLOWED_HOST_LIST: private
+
+postgresql-ha:
+  postgresql:
+    resources:
+      requests:
+        cpu: 32m
+        memory: 132Mi
+      limits:
+        memory: 132Mi
+
+redis-cluster:
+  redis:
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        memory: 100Mi

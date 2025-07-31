@@ -6,6 +6,12 @@ app-template:
           image:
             repository: lscr.io/linuxserver/wireguard
             tag: latest
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
           env:
             LOG_CONFS: false
             USE_COREDNS: true
