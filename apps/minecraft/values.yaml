@@ -33,7 +33,7 @@ app-template:
               enabled: false
           image:
             repository: gameservermanagers/gameserver
-            tag: mc
+            tag: pmc
           resources:
             requests:
               cpu: 10m
