@@ -27,6 +27,8 @@ app-template:
           metrics: 0.0.0.0:2000
           no-autoupdate: true
           ingress:
+            - hostname: minecraft.meyeringh.org
+              service: tcp://ingress-nginx-controller.ingress-nginx:25565
             - hostname: '*.meyeringh.org'
               service: https://ingress-nginx-controller.ingress-nginx
               originRequest:
