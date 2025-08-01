@@ -53,7 +53,7 @@ app-template:
 
           #### Game Server Settings ####
           javaram="1024"
-          mcversion="1.13.2"
+          mcversion="1.20.6"
           branch="release"
         server.properties: |
           # Minecraft Server Properties
