@@ -4,8 +4,27 @@ app-template:
       pod:
         securityContext:
           fsGroup: 1000
-          runAsUser: 1000
-          runAsGroup: 1000
+        initContainers:
+          fix-permissions:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - |
+                # Copy config files with correct permissions
+                cp /tmp/config/common.cfg /data/config-lgsm/mcserver/common.cfg
+                cp /tmp/config/server.properties /data/serverfiles/server.properties
+                # Set ownership to linuxgsm user (UID 1000)
+                chown -R 1000:1000 /data/config-lgsm/mcserver/common.cfg /data/serverfiles/server.properties
+                chmod 644 /data/config-lgsm/mcserver/common.cfg /data/serverfiles/server.properties
+            volumeMounts:
+              - name: config-temp
+                mountPath: /tmp/config
+              - name: data
+                mountPath: /data
+                subPath: data
       containers:
         app:
           probes:
@@ -83,20 +102,17 @@ app-template:
           app:
             - path: /data
               subPath: data
-    common-cfg:
+          fix-permissions:
+            - path: /data
+              subPath: data
+    config-temp:
       enabled: true
       type: configMap
       identifier: config
-      globalMounts:
-        - path: /data/config-lgsm/mcserver/common.cfg
-          subPath: common.cfg
-    server-properties:
-      enabled: true
-      type: configMap
-      identifier: config
-      globalMounts:
-        - path: /data/serverfiles/server.properties
-          subPath: server.properties
+      advancedMounts:
+        minecraft:
+          fix-permissions:
+            - path: /tmp/config
     drive:
       enabled: true
       existingClaim: my-files-pvc
