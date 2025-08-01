@@ -58,10 +58,10 @@ app-template:
         server.properties: |
           # Minecraft Server Properties
           gamemode=survival
-          motd=LinuxGSM
+          motd=LinuxGSMtest
           white-list=true
           spawn-protection=0
-          difficulty=normal
+          difficulty=2
   service:
     app:
       controller: minecraft
