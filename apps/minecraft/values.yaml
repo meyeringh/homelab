@@ -68,17 +68,13 @@ app-template:
       ports:
         minecraft:
           port: 25565
-          protocol: TCP
+          targetPort: 25565
   ingress:
     main:
       enabled: true
       className: nginx
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-        nginx.ingress.kubernetes.io/configuration-snippet: |
-          return 404 "This is a Minecraft server. Connect using minecraft.meyeringh.org:25565";
       hosts:
         - host: &host minecraft.meyeringh.org
           paths:
@@ -86,11 +82,11 @@ app-template:
               pathType: Prefix
               service:
                 identifier: app
-                port: minecraft
+                port: 25565
       tls:
-        - hosts:
+        - secretName: minecraft-tls-certificate
+          hosts:
             - *host
-          secretName: minecraft-tls-certificate
   persistence:
     data:
       enabled: true
