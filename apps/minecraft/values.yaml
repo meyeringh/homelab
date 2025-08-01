@@ -35,7 +35,7 @@ app-template:
 
           #### Game Server Settings ####
           javaram="1024"
-          mcversion="latest"
+          mcversion="1.13.2"
           branch="release"
         server.properties: |
           # Minecraft Server Properties
