@@ -19,9 +19,10 @@ app-template:
               # Copy config files with correct permissions
               cp /tmp/config/common.cfg /data/config-lgsm/pmcserver/common.cfg
               cp /tmp/config/server.properties /data/serverfiles/server.properties
+              cp /tmp/config/eula.txt /data/serverfiles/eula.txt
               # Set ownership to linuxgsm user (UID 1000)
-              chown -R 1000:1000 /data/config-lgsm/pmcserver/common.cfg /data/serverfiles/server.properties
-              chmod 644 /data/config-lgsm/pmcserver/common.cfg /data/serverfiles/server.properties
+              chown -R 1000:1000 /data/config-lgsm/pmcserver/common.cfg /data/serverfiles/server.properties /data/serverfiles/eula.txt
+              chmod 644 /data/config-lgsm/pmcserver/common.cfg /data/serverfiles/server.properties /data/serverfiles/eula.txt
       containers:
         app:
           probes:
@@ -63,6 +64,10 @@ app-template:
           spawn-protection=0
           difficulty=2
           online-mode=false
+        eula.txt: |
+          # Minecraft End User License Agreement
+          # This must be true to run the server.
+          eula=true
   service:
     app:
       controller: minecraft
