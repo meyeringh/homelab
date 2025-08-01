@@ -58,10 +58,11 @@ app-template:
         server.properties: |
           # Minecraft Server Properties
           gamemode=survival
-          motd=LinuxGSMtest
+          motd=\u00a77\u00a7ku\u00a7f\u00a7ku\u00a77\u00a7ku\u00a7f \u25b6\u00a7r \u00a7nWelcome \u00a78\u00a7nto\u00a7r\u00a7n the \u00a78\u00a7nserver\u00a7f \u25c0\u00a77\u00a7k u\u00a7f\u00a7ku\u00a77\u00a7ku
           white-list=true
           spawn-protection=0
           difficulty=2
+          online-mode=false
   service:
     app:
       controller: minecraft
