@@ -76,7 +76,7 @@ app-template:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           return 404 "This is a Minecraft server. Connect using minecraft.meyeringh.org:25565";
       hosts:
