@@ -2,29 +2,9 @@ grafana:
   resources:
     requests:
       cpu: 78m
-      memory: 300Mi
+      memory: 400Mi
     limits:
-      memory: 300Mi
-
-  sidecar:
-    dashboards:
-      enabled: true
-      searchNamespace: monitoring-system
-      resources:
-        requests:
-          cpu: 67m
-          memory: 127Mi
-        limits:
-          memory: 127Mi
-    datasources:
-      enabled: true
-      searchNamespace: monitoring-system
-      resources:
-        requests:
-          cpu: 82m
-          memory: 118Mi
-        limits:
-          memory: 118Mi
+      memory: 400Mi
 
   ingress:
     enabled: true
