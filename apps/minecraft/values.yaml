@@ -16,13 +16,18 @@ app-template:
               # Create directories if they don't exist
               mkdir -p /data/config-lgsm/pmcserver
               mkdir -p /data/serverfiles
+              mkdir -p /data/serverfiles/plugins
               # Copy config files with correct permissions
               cp /tmp/config/common.cfg /data/config-lgsm/pmcserver/common.cfg
               cp /tmp/config/server.properties /data/serverfiles/server.properties
               cp /tmp/config/eula.txt /data/serverfiles/eula.txt
+              # Get plugins
+              wget https://github.com/dmulloy2/ProtocolLib/releases/download/5.3.0/ProtocolLib.jar -O /data/serverfiles/plugins/ProtocolLib.jar
+              wget https://www.spigotmc.org/resources/loginsecurity.19362/download?version=524224 -O /data/serverfiles/plugins/LoginSecurity.jar
               # Set ownership to linuxgsm user (UID 1000)
-              chown -R 1000:1000 /data/config-lgsm/pmcserver/common.cfg /data/serverfiles/server.properties /data/serverfiles/eula.txt
+              chown -R 1000:1000 /data
               chmod 644 /data/config-lgsm/pmcserver/common.cfg /data/serverfiles/server.properties /data/serverfiles/eula.txt
+              chmod 744 /data/serverfiles/plugins/ProtocolLib.jar /data/serverfiles/plugins/LoginSecurity.jar
       containers:
         app:
           probes:
