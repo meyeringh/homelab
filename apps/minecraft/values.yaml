@@ -4,27 +4,24 @@ app-template:
       pod:
         securityContext:
           fsGroup: 1000
-        initContainers:
-          fix-permissions:
-            image:
-              repository: busybox
-              tag: latest
-            command:
-              - sh
-              - -c
-              - |
-                # Copy config files with correct permissions
-                cp /tmp/config/common.cfg /data/config-lgsm/mcserver/common.cfg
-                cp /tmp/config/server.properties /data/serverfiles/server.properties
-                # Set ownership to linuxgsm user (UID 1000)
-                chown -R 1000:1000 /data/config-lgsm/mcserver/common.cfg /data/serverfiles/server.properties
-                chmod 644 /data/config-lgsm/mcserver/common.cfg /data/serverfiles/server.properties
-            volumeMounts:
-              - name: config-temp
-                mountPath: /tmp/config
-              - name: data
-                mountPath: /data
-                subPath: data
+      initContainers:
+        fix-permissions:
+          image:
+            repository: busybox
+            tag: latest
+          command:
+            - sh
+            - -c
+            - |
+              # Create directories if they don't exist
+              mkdir -p /data/config-lgsm/mcserver
+              mkdir -p /data/serverfiles
+              # Copy config files with correct permissions
+              cp /tmp/config/common.cfg /data/config-lgsm/mcserver/common.cfg
+              cp /tmp/config/server.properties /data/serverfiles/server.properties
+              # Set ownership to linuxgsm user (UID 1000)
+              chown -R 1000:1000 /data/config-lgsm/mcserver/common.cfg /data/serverfiles/server.properties
+              chmod 644 /data/config-lgsm/mcserver/common.cfg /data/serverfiles/server.properties
       containers:
         app:
           probes:
