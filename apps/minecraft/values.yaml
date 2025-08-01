@@ -97,11 +97,8 @@ app-template:
           subPath: server.properties
     drive:
       enabled: true
-      type: persistentVolumeClaim
       existingClaim: my-files-pvc
-      size: 10Gi
-      accessMode: ReadWriteOnce
       advancedMounts:
-        main:
-          main:
+        minecraft:
+          app:
             - path: /my-files
