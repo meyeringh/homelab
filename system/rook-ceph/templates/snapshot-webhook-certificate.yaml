@@ -1,3 +1,4 @@
+# We do all this here, because volsync needs to talk to the webhook
 # Self-signed CA for internal webhook certificates
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
