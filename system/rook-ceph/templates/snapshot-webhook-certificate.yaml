@@ -1,0 +1,49 @@
+# Self-signed CA for internal webhook certificates
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: webhook-selfsigned-issuer
+spec:
+  selfSigned: {}
+---
+# CA Certificate for internal webhooks
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: webhook-ca-certificate
+  namespace: cert-manager
+spec:
+  secretName: webhook-ca-secret
+  issuerRef:
+    name: webhook-selfsigned-issuer
+    kind: ClusterIssuer
+  commonName: "Webhook CA"
+  isCA: true
+  duration: 26280h # 3 years
+  renewBefore: 8760h # 1 year
+---
+# CA Issuer using the CA certificate
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: webhook-ca-issuer
+spec:
+  ca:
+    secretName: webhook-ca-secret
+---
+# Webhook certificate signed by internal CA
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: rook-ceph-snapshot-validation-webhook-tls
+  namespace: rook-ceph
+spec:
+  secretName: rook-ceph-snapshot-validation-webhook-tls
+  issuerRef:
+    name: webhook-ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - rook-ceph-snapshot-validation-webhook.rook-ceph.svc
+    - rook-ceph-snapshot-validation-webhook.rook-ceph.svc.cluster.local
+  duration: 8760h # 1 year
+  renewBefore: 720h # 30 days
