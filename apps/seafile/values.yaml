@@ -82,8 +82,8 @@ app-template:
       enabled: true
       existingClaim: my-files-pvc
       advancedMounts:
-        minecraft:
-          app:
+        main:
+          main:
             - path: /my-files
 mariadb:
   auth:
