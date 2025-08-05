@@ -120,10 +120,3 @@ app-template:
         minecraft:
           fix-permissions:
             - path: /tmp/config
-    drive:
-      enabled: true
-      existingClaim: my-files-pvc
-      advancedMounts:
-        minecraft:
-          app:
-            - path: /my-files
