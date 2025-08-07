@@ -15,7 +15,7 @@ app-template:
               enabled: false
           image:
             repository: dtjs48jkt/webtrees
-            tag: 2.2.1
+            tag: 2.2.4
           resources:
             requests:
               cpu: 10m
