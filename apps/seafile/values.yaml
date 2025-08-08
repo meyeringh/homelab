@@ -15,12 +15,6 @@ app-template:
           image:
             repository: seafileltd/seafile-mc
             tag: 12.0.7
-          resources:
-            requests:
-              cpu: 80m
-              memory: 1783Mi
-            limits:
-              memory: 1783Mi
           env:
             DB_HOST: seafile-mariadb
             DB_ROOT_PASSWD:
@@ -96,21 +90,9 @@ mariadb:
       accessModes:
         - ReadWriteOnce
       size: 10Gi
-    resources:
-      requests:
-        cpu: 20m
-        memory: 177Mi
-      limits:
-        memory: 177Mi
 
 memcached:
   fullnameOverride: "memcached"
   architecture: "standalone"
   persistence:
     enabled: false
-  resources:
-    requests:
-      memory: 100Mi
-      cpu: 10m
-    limits:
-      memory: 100Mi
