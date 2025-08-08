@@ -15,6 +15,30 @@ app-template:
               memory: 516Mi
             limits:
               memory: 516Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8096
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8096
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8096
+                periodSeconds: 10
+                failureThreshold: 30
         sabnzbd:
           image:
             repository: lscr.io/linuxserver/sabnzbd
@@ -27,6 +51,30 @@ app-template:
               memory: 302Mi
             limits:
               memory: 302Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8080
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8080
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8080
+                periodSeconds: 10
+                failureThreshold: 30
         prowlarr:
           image:
             repository: lscr.io/linuxserver/prowlarr
@@ -39,6 +87,30 @@ app-template:
               memory: 163Mi
             limits:
               memory: 163Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 9696
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 9696
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 9696
+                periodSeconds: 10
+                failureThreshold: 30
         radarr:
           image:
             repository: lscr.io/linuxserver/radarr
@@ -51,6 +123,30 @@ app-template:
               memory: 209Mi
             limits:
               memory: 209Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 7878
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 7878
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 7878
+                periodSeconds: 10
+                failureThreshold: 30
         sonarr:
           image:
             repository: lscr.io/linuxserver/sonarr
@@ -63,6 +159,30 @@ app-template:
               memory: 236Mi
             limits:
               memory: 236Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8989
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8989
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 8989
+                periodSeconds: 10
+                failureThreshold: 30
         jellyseerr:
           image:
             repository: docker.io/fallenbagel/jellyseerr
@@ -75,6 +195,30 @@ app-template:
               memory: 367Mi
             limits:
               memory: 367Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 5055
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 5055
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 5055
+                periodSeconds: 10
+                failureThreshold: 30
         lazylibrarian:
           image:
             repository: lscr.io/linuxserver/lazylibrarian
@@ -88,6 +232,30 @@ app-template:
               memory: 821Mi
             limits:
               memory: 821Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 5299
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 5299
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 5299
+                periodSeconds: 10
+                failureThreshold: 30
   service:
     main:
       ports:

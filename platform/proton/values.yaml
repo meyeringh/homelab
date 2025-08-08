@@ -14,11 +14,28 @@ app-template:
               memory: 283Mi
           probes:
             liveness:
-              enabled: false
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 25
+                periodSeconds: 10
+                failureThreshold: 3
             readiness:
-              enabled: false
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 25
+                periodSeconds: 10
             startup:
-              enabled: false
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 25
+                periodSeconds: 10
+                failureThreshold: 60
   service:
     app:
       controller: proton
