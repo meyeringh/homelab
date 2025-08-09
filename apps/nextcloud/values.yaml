@@ -71,7 +71,7 @@ nextcloud:
       server_name: collabora.meyeringh.org
       aliasgroups:
         - host: https://cloud.meyeringh.org
-      extra_params: "--o:ssl.enabled=false --o:ssl.termination=true"
+      extra_params: "--o:ssl.enable=false --o:ssl.termination=true"
     ingress:
       enabled: true
       className: nginx
