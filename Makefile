@@ -32,8 +32,6 @@ backup:
 	./scripts/backup --action setup --namespace=jellyfin --pvc=jellyfin-data
 	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
 	./scripts/backup --action setup --namespace=baikal --pvc=baikal-data
-	./scripts/backup --action setup --namespace=seafile --pvc=data-seafile-mariadb-0
-	./scripts/backup --action setup --namespace=seafile --pvc=seafile-data
 	./scripts/backup --action setup --namespace=joplin --pvc=data-joplin-postgresql-0
 	./scripts/backup --action setup --namespace=paperless --pvc=paperless-data
 	./scripts/backup --action setup --namespace=webtrees --pvc=data-webtrees-mariadb-0
@@ -47,8 +45,6 @@ restore:
 	./scripts/backup --action restore --namespace=jellyfin --pvc=jellyfin-data
 	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
 	./scripts/backup --action restore --namespace=baikal --pvc=baikal-data
-	./scripts/backup --action restore --namespace=seafile --pvc=data-seafile-mariadb-0
-	./scripts/backup --action restore --namespace=seafile --pvc=seafile-data
 	./scripts/backup --action restore --namespace=joplin --pvc=data-joplin-postgresql-0
 	./scripts/backup --action restore --namespace=paperless --pvc=paperless-data
 	./scripts/backup --action restore --namespace=webtrees --pvc=data-webtrees-mariadb-0
