@@ -8,7 +8,7 @@ app-template:
         fix-permissions:
           image:
             repository: busybox
-            tag: latest
+            tag: 1.37
           command:
             - sh
             - -c

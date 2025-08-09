@@ -9,7 +9,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/tailscale/tailscale
-            tag: latest
+            tag: v1.86.2
           resources:
             requests:
               cpu: 10m
