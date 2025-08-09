@@ -70,7 +70,7 @@ nextcloud:
     collabora:
       server_name: collabora.meyeringh.org
       aliasgroups:
-        - https://cloud.meyeringh.org
+        - host: https://cloud.meyeringh.org
       extra_params: "--o:ssl.enabled=false --o:ssl.termination=true"
     ingress:
       enabled: true
