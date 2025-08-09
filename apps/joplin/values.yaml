@@ -25,6 +25,30 @@ app-template:
                 secretKeyRef:
                   name: joplin-db
                   key: userPassword
+            MAILER_ENABLED: 1
+            MAILER_HOST: smtp.gmail.com
+            MAILER_PORT: 587
+            MAILER_SECURITY: starttls
+            MAILER_AUTH_USER:
+              valueFrom:
+                secretKeyRef:
+                  name: joplin-mail-secret
+                  key: username
+            MAILER_AUTH_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: joplin-mail-secret
+                  key: password
+            MAILER_NOREPLY_NAME:
+              valueFrom:
+                secretKeyRef:
+                  name: joplin-mail-secret
+                  key: sender
+            MAILER_NOREPLY_EMAIL:
+              valueFrom:
+                secretKeyRef:
+                  name: joplin-mail-secret
+                  key: sender_mail
   service:
     main:
       ports:
