@@ -60,6 +60,13 @@ nextcloud:
       secretName: nextcloud
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
+    extraVolumes:
+      - name: my-files
+        persistentVolumeClaim:
+          claimName: my-files-pvc
+    extraVolumeMounts:
+      - name: my-files
+        mountPath: /my-files
   persistence:
     enabled: true
     size: 7Ti
