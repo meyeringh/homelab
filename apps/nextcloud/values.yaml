@@ -49,10 +49,6 @@ nextcloud:
       - secretName: nextcloud-tls-certificate
         hosts:
           - *frontend_host
-
-  hpa:
-    enabled: false
-
   nextcloud:
     host: cloud.meyeringh.org
     trustedDomains:
@@ -64,17 +60,34 @@ nextcloud:
       secretName: nextcloud
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
-
   persistence:
     enabled: true
     size: 7Ti
-
   imaginary:
     enabled: true
-
-  nginx:
-    enabled: false
-
+  collabora:
+    enabled: true
+    collabora:
+      server_name: collabora.meyeringh.org
+      aliasgroups:
+        - https://cloud.meyeringh.org
+      extra_params: "--o:ssl.enabled=false --o:ssl.termination=true"
+    ingress:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+      hosts:
+        - host: collabora.meyeringh.org
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: collabora-tls-certificate
+          hosts:
+            - collabora.meyeringh.org
   postgresql:
     enabled: true
     global:
@@ -84,10 +97,8 @@ nextcloud:
           secretKeys:
             adminPasswordKey: postgres-password
             userPasswordKey: password
-
   internalDatabase:
     enabled: false
-
   externalDatabase:
     enabled: true
     type: postgresql
@@ -95,11 +106,3 @@ nextcloud:
       enabled: true
       secretName: nextcloud-postgresql
       passwordKey: password
-
-  fullnameOverride: nextcloud
-
-  image:
-    repository: nextcloud
-    tag: 30.0.4-apache
-    pullPolicy: IfNotPresent
-    flavor: fpm
