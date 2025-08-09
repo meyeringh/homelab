@@ -88,6 +88,11 @@ nextcloud:
         - secretName: collabora-tls-certificate
           hosts:
             - collabora.meyeringh.org
+    securityContext:
+      capabilities:
+        add:
+          - SYS_ADMIN
+          - SYS_CHROOT
   postgresql:
     enabled: true
     global:
