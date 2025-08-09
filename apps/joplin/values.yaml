@@ -26,7 +26,7 @@ app-template:
                   name: joplin-db
                   key: userPassword
             MAILER_ENABLED: 1
-            MAILER_HOST: smtp.gmail.com
+            MAILER_HOST: mail.meyeringh.org
             MAILER_PORT: 587
             MAILER_SECURITY: starttls
             MAILER_AUTH_USER:
