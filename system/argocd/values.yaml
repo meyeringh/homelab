@@ -89,6 +89,9 @@ argocd-apps:
       template:
         metadata:
           name: '{{path.basename}}'
+          annotations:
+            argocd.argoproj.io/sync-wave: '{{ if or (hasPrefix "system/external-secrets" .path) (hasPrefix "system/volsync-system" .path) (hasPrefix "system/cert-manager" .path) (hasPrefix "system/rook-ceph" .path) }}0{{ else if hasPrefix "system/" .path }}1{{ else if hasPrefix "platform/" .path }}5{{ else if hasPrefix "apps/" .path }}10{{ else }}15{{ end }}'
+            argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
         spec:
           destination:
             name: in-cluster
