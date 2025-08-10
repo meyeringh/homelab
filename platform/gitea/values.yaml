@@ -44,3 +44,27 @@ gitea:
         ENABLED: false
       webhook:
         ALLOWED_HOST_LIST: private
+    additionalConfigFromEnvs:
+      - name: GITEA__mailer__ENABLED
+        value: "true"
+      - name: GITEA__mailer__PROTOCOL
+        value: "smtp+starttls"
+      - name: GITEA__mailer__SMTP_ADDR
+        value: mail.meyeringh.org
+      - name: GITEA__mailer__SMTP_PORT
+        value: "587"
+      - name: GITEA__mailer__USER
+        valueFrom:
+          secretKeyRef:
+            name: gitea-mail-secret
+            key: username
+      - name: GITEA__mailer__PASSWD
+        valueFrom:
+          secretKeyRef:
+            name: gitea-mail-secret
+            key: password
+      - name: GITEA__mailer__FROM
+        valueFrom:
+          secretKeyRef:
+            name: gitea-mail-secret
+            key: sender_mail
