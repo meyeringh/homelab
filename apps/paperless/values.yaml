@@ -18,6 +18,33 @@ app-template:
             PAPERLESS_URL: https://paperless.meyeringh.org
           envFrom:
             - secret: "{{ .Release.Name }}-secret"
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/health
+                  port: 8000
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/health
+                  port: 8000
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/health
+                  port: 8000
+                periodSeconds: 10
+                failureThreshold: 120
         redis:
           image:
             repository: docker.io/library/redis
@@ -28,6 +55,30 @@ app-template:
               memory: 100Mi
             limits:
               memory: 100Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 6379
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 6379
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 6379
+                periodSeconds: 10
+                failureThreshold: 60
   service:
     main:
       ports:

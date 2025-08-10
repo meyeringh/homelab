@@ -17,6 +17,23 @@ vaultwarden:
       external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
 
   domain: "https://vault.meyeringh.org"
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+    periodSeconds: 10
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /
+      port: http
+    periodSeconds: 10
+    failureThreshold: 60
   
   adminToken:
     existingSecret: "vaultwarden-admin"
