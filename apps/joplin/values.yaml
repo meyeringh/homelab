@@ -55,8 +55,13 @@ app-template:
               custom: true
               spec:
                 httpGet:
-                  path: /
+                  path: /api/ping
                   port: 22300
+                  httpHeaders:
+                    - name: Host
+                      value: notes.meyeringh.org
+                    - name: X-Forwarded-Proto
+                      value: https
                 periodSeconds: 10
                 failureThreshold: 3
             readiness:
@@ -64,16 +69,26 @@ app-template:
               custom: true
               spec:
                 httpGet:
-                  path: /
+                  path: /api/ping
                   port: 22300
+                  httpHeaders:
+                    - name: Host
+                      value: notes.meyeringh.org
+                    - name: X-Forwarded-Proto
+                      value: https
                 periodSeconds: 10
             startup:
               enabled: true
               custom: true
               spec:
                 httpGet:
-                  path: /
+                  path: /api/ping
                   port: 22300
+                  httpHeaders:
+                    - name: Host
+                      value: notes.meyeringh.org
+                    - name: X-Forwarded-Proto
+                      value: https
                 periodSeconds: 10
                 failureThreshold: 60
   service:
