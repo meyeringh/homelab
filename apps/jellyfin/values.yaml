@@ -114,7 +114,7 @@ app-template:
         radarr:
           image:
             repository: lscr.io/linuxserver/radarr
-            tag: 5.3.6
+            tag: 5.26.2
           env:
             TZ: Europe/Berlin
           resources:
