@@ -48,7 +48,7 @@ app-template:
         redis:
           image:
             repository: docker.io/library/redis
-            tag: 7.2.4
+            tag: 7.4.5
           resources:
             requests:
               cpu: 10m
