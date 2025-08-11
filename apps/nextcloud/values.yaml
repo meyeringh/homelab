@@ -88,9 +88,12 @@ nextcloud:
           secretKeys:
             adminPasswordKey: postgres-password
             userPasswordKey: password
-    persistence:
-      enabled: true
-      size: 50Gi
+    primary:
+      persistence:
+        enabled: true
+        size: 50Gi
+      persistentVolumeClaimRetentionPolicy:
+        enabled: true
   internalDatabase:
     enabled: false
   externalDatabase:
