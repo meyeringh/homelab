@@ -150,7 +150,7 @@ app-template:
         sonarr:
           image:
             repository: lscr.io/linuxserver/sonarr
-            tag: 4.0.2
+            tag: 4.0.15
           env:
             TZ: Europe/Berlin
           resources:
