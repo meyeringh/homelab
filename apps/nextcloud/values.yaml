@@ -88,6 +88,10 @@ nextcloud:
           secretKeys:
             adminPasswordKey: postgres-password
             userPasswordKey: password
+    primary:
+      persistence:
+        enabled: true
+        size: 50Gi
   internalDatabase:
     enabled: false
   externalDatabase:
