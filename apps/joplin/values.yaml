@@ -5,7 +5,7 @@ app-template:
         main:
           image:
             repository: joplin/server
-            tag: 3.0.1-beta
+            tag: 3.3.9-beta
           resources:
             requests:
               cpu: 11m
