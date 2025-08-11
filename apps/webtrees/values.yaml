@@ -8,31 +8,11 @@ app-template:
         app:
           probes:
             liveness:
-              enabled: true
-              custom: true
-              spec:
-                httpGet:
-                  path: /
-                  port: 80
-                periodSeconds: 10
-                failureThreshold: 3
+              enabled: false
             readiness:
-              enabled: true
-              custom: true
-              spec:
-                httpGet:
-                  path: /
-                  port: 80
-                periodSeconds: 10
+              enabled: false
             startup:
-              enabled: true
-              custom: true
-              spec:
-                httpGet:
-                  path: /
-                  port: 80
-                periodSeconds: 10
-                failureThreshold: 60
+              enabled: false
           image:
             repository: dtjs48jkt/webtrees
             tag: 2.2.4
