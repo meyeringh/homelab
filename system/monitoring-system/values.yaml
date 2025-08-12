@@ -23,6 +23,21 @@ kube-prometheus-stack:
       limits:
         memory: 100Mi
 
+  # Disable controller manager monitoring for K3s
+  # K3s embeds controller manager in the main server process
+  kubeControllerManager:
+    enabled: false
+
+  # Disable scheduler monitoring for K3s
+  # K3s embeds scheduler in the main server process
+  kubeScheduler:
+    enabled: false
+
+  # Disable etcd monitoring for K3s
+  # K3s uses embedded etcd that doesn't expose metrics by default
+  kubeEtcd:
+    enabled: false
+
   grafana:
     enabled: false
     forceDeployDatasources: true
