@@ -1,6 +1,6 @@
 # Homelab
 
-**[Features](#features) • [Get Started](#get-started) • [Documentation](https://homelab.khuedoan.com)**
+[Documentation](https://homelab.khuedoan.com)**
 
 ## Overview
 
