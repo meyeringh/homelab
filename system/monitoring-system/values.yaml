@@ -38,6 +38,11 @@ kube-prometheus-stack:
   kubeEtcd:
     enabled: false
 
+  # Disable kube-proxy monitoring for K3s
+  # K3s doesn't use traditional kube-proxy, it uses a different networking approach
+  kubeProxy:
+    enabled: false
+
   grafana:
     enabled: false
     forceDeployDatasources: true
