@@ -1,6 +1,6 @@
 # Homelab
 
-[Documentation](https://homelab.khuedoan.com)**
+[Documentation](https://homelab.khuedoan.com)
 
 ## Overview
 
