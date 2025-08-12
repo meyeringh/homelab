@@ -51,8 +51,7 @@ kube-prometheus-stack:
       serviceMonitorSelectorNilUsesHelmValues: false
       podMonitorSelectorNilUsesHelmValues: false
       probeSelectorNilUsesHelmValues: false
-  kubeControllerManager:
-    enabled: false
+
   alertmanager:
     alertmanagerSpec:
       resources:
