@@ -99,6 +99,18 @@ rook-ceph-cluster:
         requests:
           cpu: "65m"
           memory: "3163Mi"
+      crashcollector:
+        limits:
+          memory: "100Mi"
+        requests:
+          cpu: "10m"
+          memory: "100Mi"
+      exporter:
+        limits:
+          memory: "100Mi"
+        requests:
+          cpu: "15m"
+          memory: "100Mi"
   cephBlockPools:
     - name: builtin-mgr
       spec:
