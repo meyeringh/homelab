@@ -2,6 +2,6 @@ volsync:
   resources:
     requests:
       cpu: 51m
-      memory: 964Mi
+      memory: 100Mi
     limits:
-      memory: 964Mi
+      memory: 100Mi

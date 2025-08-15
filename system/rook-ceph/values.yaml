@@ -95,10 +95,10 @@ rook-ceph-cluster:
           memory: "512Mi"
       osd:
         limits:
-          memory: "3400Mi"
+          memory: "2846Mi"
         requests:
           cpu: "65m"
-          memory: "3163Mi"
+          memory: "2846Mi"
       crashcollector:
         limits:
           memory: "100Mi"
