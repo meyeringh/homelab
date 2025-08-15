@@ -33,9 +33,9 @@ argo-cd:
     resources:
       requests:
         cpu: 17m
-        memory: 941Mi
+        memory: 781Mi
       limits:
-        memory: 941Mi
+        memory: 781Mi
     metrics: *metrics
 
   applicationSet:

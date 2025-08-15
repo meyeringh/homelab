@@ -43,9 +43,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 1500Mi
+              memory: 1100Mi
             limits:
-              memory: 1500Mi
+              memory: 1100Mi
   configMaps:
     config:
       enabled: true

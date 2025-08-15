@@ -12,9 +12,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 516Mi
+              memory: 256Mi
             limits:
-              memory: 516Mi
+              memory: 256Mi
           probes:
             liveness:
               enabled: true
@@ -48,9 +48,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 302Mi
+              memory: 100Mi
             limits:
-              memory: 302Mi
+              memory: 100Mi
           probes:
             liveness:
               enabled: true
@@ -84,9 +84,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 163Mi
+              memory: 100Mi
             limits:
-              memory: 163Mi
+              memory: 100Mi
           probes:
             liveness:
               enabled: true
@@ -120,9 +120,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 209Mi
+              memory: 100Mi
             limits:
-              memory: 209Mi
+              memory: 100Mi
           probes:
             liveness:
               enabled: true
@@ -156,9 +156,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 236Mi
+              memory: 100Mi
             limits:
-              memory: 236Mi
+              memory: 100Mi
           probes:
             liveness:
               enabled: true
@@ -192,9 +192,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 367Mi
+              memory: 150Mi
             limits:
-              memory: 367Mi
+              memory: 150Mi
           probes:
             liveness:
               enabled: true

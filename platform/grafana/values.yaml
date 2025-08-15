@@ -2,9 +2,9 @@ grafana:
   resources:
     requests:
       cpu: 78m
-      memory: 400Mi
+      memory: 264Mi
     limits:
-      memory: 400Mi
+      memory: 264Mi
 
   ingress:
     enabled: true

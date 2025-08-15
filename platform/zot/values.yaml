@@ -2,9 +2,9 @@ zot:
   resources:
     requests:
       cpu: 10m
-      memory: 330Mi
+      memory: 172Mi
     limits:
-      memory: 330Mi
+      memory: 172Mi
 
   ingress:
     enabled: true
