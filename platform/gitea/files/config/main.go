@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"code.gitea.io/sdk/gitea"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 type Organization struct {
