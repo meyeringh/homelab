@@ -1,6 +1,6 @@
 module git.meyeringh.org/khuedoan/homelab/platform/secret-generator
 
-go 1.24.0
+go 1.24
 
 require (
 	github.com/sethvargo/go-password v0.2.0
