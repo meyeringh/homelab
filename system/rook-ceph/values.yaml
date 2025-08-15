@@ -71,6 +71,8 @@ rook-ceph-cluster:
     enabled: true
     createPrometheusRules: true
   cephClusterSpec:
+    cephVersion:
+      image: quay.io/ceph/ceph:v18.2.4-20240916
     mon:
       count: 1
     mgr:
