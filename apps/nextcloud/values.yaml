@@ -60,13 +60,6 @@ nextcloud:
       secretName: nextcloud
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
-    extraVolumes:
-      - name: my-files
-        persistentVolumeClaim:
-          claimName: my-files-pvc
-    extraVolumeMounts:
-      - name: my-files
-        mountPath: /my-files
   # Disable all probes
   livenessProbe:
     enabled: false
