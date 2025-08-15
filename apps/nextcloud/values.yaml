@@ -60,7 +60,7 @@ nextcloud:
       secretName: nextcloud
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
-    securityContext:
+    podSecurityContext:
       fsGroupChangePolicy: "OnRootMismatch" # We do this because container startup takes ages otherwise
   persistence:
     enabled: true
