@@ -72,7 +72,7 @@ rook-ceph-cluster:
     createPrometheusRules: true
   cephClusterSpec:
     cephVersion:
-      image: quay.io/ceph/ceph:v18.2.7-20250507
+      image: quay.io/ceph/ceph:v19.2.3-20250717
     mon:
       count: 1
     mgr:
