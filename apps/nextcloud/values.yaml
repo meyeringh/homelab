@@ -60,13 +60,6 @@ nextcloud:
       secretName: nextcloud
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
-  # Disable all probes
-  livenessProbe:
-    enabled: false
-  readinessProbe:
-    enabled: false
-  startupProbe:
-    enabled: false
   persistence:
     enabled: true
     size: 7Ti
