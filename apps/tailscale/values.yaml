@@ -30,17 +30,3 @@ app-template:
             capabilities:
               add:
                 - NET_ADMIN
-          readinessProbe:
-            exec:
-              command:
-                - tailscale
-                - status
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            exec:
-              command:
-                - tailscale
-                - status
-            initialDelaySeconds: 15
-            periodSeconds: 20
