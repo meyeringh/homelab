@@ -60,6 +60,8 @@ nextcloud:
       secretName: nextcloud
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
+    securityContext:
+      fsGroupChangePolicy: "OnRootMismatch" # We do this because container startup takes ages otherwise
   persistence:
     enabled: true
     size: 7Ti
