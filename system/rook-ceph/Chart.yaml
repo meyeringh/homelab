@@ -6,7 +6,7 @@ dependencies:
     version: 1.17.7
     repository: https://charts.rook.io/release
   - name: rook-ceph-cluster
-    version: 1.16.9
+    version: 1.17.7
     repository: https://charts.rook.io/release
   # TODO switch to official chart when there is one
   # https://github.com/kubernetes-csi/external-snapshotter/issues/812
