@@ -1,6 +1,8 @@
 ingress-nginx:
   controller:
     allowSnippetAnnotations: true
+    config:
+      annotations-risk-level: "Critical"
     resources:
       requests:
         cpu: 31m
