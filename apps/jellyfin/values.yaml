@@ -219,43 +219,6 @@ app-template:
                   port: 5055
                 periodSeconds: 10
                 failureThreshold: 30
-        lazylibrarian:
-          image:
-            repository: lscr.io/linuxserver/lazylibrarian
-            tag: version-07258e88
-          env:
-            TZ: Europe/Berlin
-            DOCKER_MODS: linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg
-          resources:
-            requests:
-              cpu: 10m
-              memory: 821Mi
-            limits:
-              memory: 821Mi
-          probes:
-            liveness:
-              enabled: true
-              custom: true
-              spec:
-                tcpSocket:
-                  port: 5299
-                periodSeconds: 10
-                failureThreshold: 3
-            readiness:
-              enabled: true
-              custom: true
-              spec:
-                tcpSocket:
-                  port: 5299
-                periodSeconds: 10
-            startup:
-              enabled: true
-              custom: true
-              spec:
-                tcpSocket:
-                  port: 5299
-                periodSeconds: 10
-                failureThreshold: 30
   service:
     main:
       ports:
@@ -276,9 +239,6 @@ app-template:
           protocol: HTTP
         jellyseerr:
           port: 5055
-          protocol: HTTP
-        lazylibrarian:
-          port: 5299
           protocol: HTTP
   ingress:
     main:
@@ -342,13 +302,6 @@ app-template:
               service:
                 name: main
                 port: sonarr
-        - host: &lazylibrarianHost lazylibrarian.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                name: main
-                port: lazylibrarian
       tls:
         - secretName: servarr-tls-certificate
           hosts:
@@ -356,7 +309,6 @@ app-template:
             - *prowlarrHost
             - *radarrHost
             - *sonarrHost
-            - *lazylibrarianHost
   persistence:
     data:
       enabled: true
@@ -397,10 +349,3 @@ app-template:
           jellyseerr:
             - path: /app/config
               subPath: jellyseerr/config
-          lazylibrarian:
-            - path: /config
-              subPath: lazylibrarian/config
-            - path: /downloads
-              subPath: sabnzbd/downloads/complete
-            - path: /books
-              subPath: books
