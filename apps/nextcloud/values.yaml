@@ -131,6 +131,12 @@ nextcloud:
             adminPasswordKey: postgres-password
             userPasswordKey: password
     primary:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 256Mi
       persistence:
         enabled: true
         size: 50Gi
