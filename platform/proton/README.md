@@ -11,7 +11,8 @@
     --from-literal=username='username_login_for_proton_bridge' \
     --from-literal=password='password_login_for_proton_bridge' \
     --from-literal=sender='sender_name_to_send_mail_from' \
-    --from-literal=sender_mail='sender_mail_to_send_mail_from'
+    --from-literal=sender_mail='sender_mail_to_send_mail_from' \
+    --from-literal=domain='sender_domain_to_send_mail_from'
     ```
 6. Create `/root/cert.pem` and `/root/key.pem` with contents from secret proton/mail-tls-certificate
 7. In proton console: `cert import` and follow instructions
