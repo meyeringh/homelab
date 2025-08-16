@@ -147,7 +147,7 @@ nextcloud:
     auth:
       enabled: true
       existingSecret: nextcloud-redis
-      existingSecretPasswordKey: redis-password
+      existingSecretPasswordKey: password
   postgresql:
     enabled: true
     global:
