@@ -62,6 +62,21 @@ nextcloud:
       passwordKey: nextcloud-password
     mail:
       enabled: false # We need to use env vars here, because otherwise we cant set secrets and its either all or nothing
+    configs:
+      security.config.php: |-
+        <?php
+        $CONFIG = array (
+          'maintenance_window_start' => 1,
+          'trusted_proxies' => [
+            '10.0.0.0/8',
+            '172.16.0.0/12', 
+            '192.168.0.0/16'
+          ],
+          'forwarded_for_headers' => ['HTTP_X_FORWARDED_FOR', 'HTTP_FORWARDED'],
+          'overwriteprotocol' => 'https',
+          'overwrite.cli.url' => 'https://cloud.meyeringh.org',
+        );
+        ?>
     extraEnv:
       - name: MAIL_FROM_ADDRESS
         valueFrom:
