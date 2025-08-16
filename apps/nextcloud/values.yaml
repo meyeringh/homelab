@@ -142,6 +142,9 @@ nextcloud:
     successThreshold: 1
   imaginary:
     enabled: true
+  redis:
+    enabled: true
+    existingSecret: nextcloud-redis
   postgresql:
     enabled: true
     global:
