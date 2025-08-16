@@ -61,12 +61,7 @@ nextcloud:
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
     mail:
-      enabled: true
-      smtp:
-        host: mail.meyeringh.org
-        secure: ssl
-        port: 587
-        authtype: LOGIN
+      enabled: false # We need to use env vars here, because otherwise we cant set secrets and its either all or nothing
     extraEnv:
       - name: MAIL_FROM_ADDRESS
         valueFrom:
@@ -78,6 +73,14 @@ nextcloud:
           secretKeyRef:
             name: nextcloud-mail-secret
             key: domain
+      - name: SMTP_HOST
+        value: mail.meyeringh.org
+      - name: SMTP_SECURE
+        value: ssl
+      - name: SMTP_PORT
+        value: "587"
+      - name: SMTP_AUTHTYPE
+        value: LOGIN
       - name: SMTP_NAME
         valueFrom:
           secretKeyRef:
