@@ -93,24 +93,6 @@ nextcloud:
             key: password
     podSecurityContext:
       fsGroupChangePolicy: "OnRootMismatch" # We do this because container startup takes ages otherwise
-    livenessProbe:
-      enabled: true
-      initialDelaySeconds: 30
-      periodSeconds: 15
-      timeoutSeconds: 10
-      failureThreshold: 5
-    readinessProbe:
-      enabled: true
-      initialDelaySeconds: 30
-      periodSeconds: 15
-      timeoutSeconds: 10
-      failureThreshold: 5
-    startupProbe:
-      enabled: true
-      initialDelaySeconds: 30
-      periodSeconds: 10
-      timeoutSeconds: 10
-      failureThreshold: 30
   cronjob:
     enabled: true
   persistence:
@@ -118,7 +100,7 @@ nextcloud:
     size: 7Ti
   livenessProbe:
     enabled: true
-    initialDelaySeconds: 30
+    initialDelaySeconds: 30 # We need to set super high liveness probe, so we dont fail during upgrades
     periodSeconds: 15
     timeoutSeconds: 10
     failureThreshold: 30
