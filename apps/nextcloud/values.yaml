@@ -62,31 +62,32 @@ nextcloud:
       passwordKey: nextcloud-password
     mail:
       enabled: true
-      fromAddress:
-        valueFrom:
-          secretKeyRef:
-            name: nextcloud-mail-secret
-            key: sender
-      domain:
-        valueFrom:
-          secretKeyRef:
-            name: nextcloud-mail-secret
-            key: sender_mail
       smtp:
         host: mail.meyeringh.org
         secure: ssl
         port: 587
         authtype: LOGIN
-        name:
-          valueFrom:
-            secretKeyRef:
-              name: nextcloud-mail-secret
-              key: username
-        password:
-          valueFrom:
-            secretKeyRef:
-              name: nextcloud-mail-secret
-              key: password
+    extraEnv:
+      - name: MAIL_FROM_ADDRESS
+        valueFrom:
+          secretKeyRef:
+            name: nextcloud-mail-secret
+            key: sender
+      - name: MAIL_DOMAIN
+        valueFrom:
+          secretKeyRef:
+            name: nextcloud-mail-secret
+            key: domain
+      - name: SMTP_NAME
+        valueFrom:
+          secretKeyRef:
+            name: nextcloud-mail-secret
+            key: username
+      - name: SMTP_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: nextcloud-mail-secret
+            key: password
     podSecurityContext:
       fsGroupChangePolicy: "OnRootMismatch" # We do this because container startup takes ages otherwise
   cronjob:
