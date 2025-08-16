@@ -76,7 +76,7 @@ nextcloud:
       - name: SMTP_HOST
         value: mail.meyeringh.org
       - name: SMTP_SECURE
-        value: ssl
+        value: tls
       - name: SMTP_PORT
         value: "587"
       - name: SMTP_AUTHTYPE
