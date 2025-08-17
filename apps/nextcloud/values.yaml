@@ -88,7 +88,7 @@ nextcloud:
         $CONFIG = array (
           'allow_user_to_change_display_name' => false,
           'lost_password_link' => 'disabled',
-          'oidc_login_provider_url' => 'https://auth.meyeringh.org/oauth2/openid/dex',
+          'oidc_login_provider_url' => 'https://dex.meyeringh.org',
           'oidc_login_client_id' => 'nextcloud',
           'oidc_login_client_secret' => getenv('OIDC_LOGIN_CLIENT_SECRET'),
           'oidc_login_button_text' => 'Log in with Dex',
@@ -120,7 +120,7 @@ nextcloud:
         valueFrom:
           secretKeyRef:
             name: nextcloud-sso-secrets
-            key: NEXTCLOUD_CLIENT_SECRET
+            key: NEXTCLOUD_CLIENT_SECRETa
       - name: MAIL_FROM_ADDRESS
         valueFrom:
           secretKeyRef:
