@@ -31,7 +31,6 @@ app-template:
                       }
                     }
                   ],
-                  "OAUTH_PKCE_ENABLED": "True"
                 }
               }
           envFrom:
