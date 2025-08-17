@@ -83,7 +83,44 @@ nextcloud:
         $CONFIG = array (
           'default_phone_region' => 'DE'
         );
+      sso.config.php: |-
+        <?php
+        $CONFIG = array (
+          'allow_user_to_change_display_name' => false,
+          'lost_password_link' => 'disabled',
+          'oidc_login_provider_url' => 'https://auth.meyeringh.org/oauth2/openid/dex',
+          'oidc_login_client_id' => 'nextcloud',
+          'oidc_login_client_secret' => getenv('OIDC_LOGIN_CLIENT_SECRET'),
+          'oidc_login_button_text' => 'Log in with Dex',
+          'oidc_login_auto_redirect' => false,
+          'oidc_login_hide_password_form' => false,
+          'oidc_login_password_authentication' => false,
+          'oidc_login_end_session_redirect' => false,
+          'oidc_login_use_id_token' => false,
+          'oidc_login_attributes' => array(
+            'id'     => 'sub',
+            'name'   => 'name',
+            'mail'   => 'email',
+            'groups' => 'groups',
+          ),
+          'oidc_login_scope' => 'openid profile email groups',
+          'oidc_login_disable_registration' => true,
+          'oidc_login_default_group' => 'user',
+          'oidc_create_groups' => false,
+          'oidc_login_tls_verify' => true,
+          'oidc_login_webdav_enabled' => true,
+          'oidc_login_public_key_caching_time' => 86400,
+          'oidc_login_min_time_between_jwks_requests' => 10,
+          'oidc_login_well_known_caching_time' => 86400,
+          'oidc_login_update_avatar' => false,
+          'oidc_login_code_challenge_method' => 'S256',
+        );
     extraEnv:
+      - name: OIDC_LOGIN_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: NEXTCLOUD_CLIENT_SECRET
+            key: client_secret
       - name: MAIL_FROM_ADDRESS
         valueFrom:
           secretKeyRef:
