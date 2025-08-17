@@ -98,7 +98,7 @@ nextcloud:
           'oidc_login_end_session_redirect' => false,
           'oidc_login_use_id_token' => false,
           'oidc_login_attributes' => array(
-            'id'     => 'sub',
+            'id'     => 'preferred_username',
             'name'   => 'name',
             'mail'   => 'email',
             'groups' => 'groups',
