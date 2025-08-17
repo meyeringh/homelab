@@ -4,8 +4,61 @@ app-template:
       pod:
         securityContext:
           fsGroup: 1001
+      initContainers:
+        install-oauth2-module:
+          image:
+            repository: alpine
+            tag: 3.20
+          command:
+            - sh
+            - -c
+            - |
+              set -euo pipefail
+              apk add --no-cache unzip curl
+              mkdir -p /modules_v4
+              TMPDIR=$(mktemp -d)
+              curl -fsSL -o "$TMPDIR/oauth2_client.zip" https://github.com/Jefferson49/webtrees-oauth2-client/releases/download/v1.1.8/oauth2_client_v1.1.8.zip \
+              unzip -o "$TMPDIR/oauth2_client.zip" -d "$TMPDIR"
+              rm -rf /modules_v4/oauth2_client
+              mv "$TMPDIR/oauth2_client" /modules_v4/
+          volumeMounts:
+            - name: modules
+              mountPath: /modules_v4
       containers:
         app:
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - |
+                    set -euo pipefail
+                    CONFIG="/var/www/html/data/config.ini.php"
+                    # Wait for config.ini.php to be created by webtrees on first-run
+                    for i in $(seq 1 60); do
+                      if [ -f "$CONFIG" ]; then
+                        break
+                      fi
+                      sleep 5
+                    done
+                    if [ ! -f "$CONFIG" ]; then
+                      exit 0
+                    fi
+                    # Only append our settings if not already present
+                    if ! grep -q "^Generic_clientId='webtrees'" "$CONFIG"; then
+                      cat >> "$CONFIG" << 'EOF'
+                      
+                      ; OAuth2 Generic provider (Dex)
+                      Generic_clientId='webtrees'
+                      Generic_clientSecret='${WEBTREES_CLIENT_SECRET}'
+                      Generic_urlAuthorize='https://dex.meyeringh.org/auth'
+                      Generic_urlAccessToken='https://dex.meyeringh.org/token'
+                      Generic_urlResourceOwnerDetails='https://dex.meyeringh.org/userinfo'
+                      Generic_signInButtonLabel='Dex'
+                      EOF
+                    fi
+                  
           probes:
             liveness:
               enabled: true
@@ -59,6 +112,8 @@ app-template:
             BASE_URL: "https://family.meyeringh.org"
             DISABLE_SSL: "TRUE"
             PORT: 80
+          envFrom:
+            - secret: webtrees-sso-secrets
   service:
     app:
       controller: webtrees
@@ -96,6 +151,15 @@ app-template:
           app:
             - path: /var/www/html/data/
               subPath: data
+    modules:
+      enabled: true
+      type: emptyDir
+      advancedMounts:
+        webtrees:
+          install-oauth2-module:
+            - path: /modules_v4
+          app:
+            - path: /var/www/html/modules_v4
 mariadb:
   auth:
     existingSecret: webtrees-db
