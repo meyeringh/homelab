@@ -88,7 +88,7 @@ nextcloud:
         $CONFIG = array (
           'allow_user_to_change_display_name' => false,
           'lost_password_link' => 'disabled',
-          'oidc_login_provider_url' => 'https://dex.meyeringh.org/.well-known/openid-configuration',
+          'oidc_login_provider_url' => 'https://dex.meyeringh.org',
           'oidc_login_client_id' => 'nextcloud',
           'oidc_login_client_secret' => getenv('OIDC_LOGIN_CLIENT_SECRET'),
           'oidc_login_button_text' => 'Log in with Dex',
