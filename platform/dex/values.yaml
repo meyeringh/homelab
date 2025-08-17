@@ -51,6 +51,12 @@ dex:
         redirectURIs:
           - 'https://paperless.meyeringh.org/accounts/oidc/dex/login/callback/'
         secretEnv: PAPERLESS_CLIENT_SECRET
+      - id: webtrees
+        name: Webtrees
+        redirectURIs:
+          - 'https://family.meyeringh.org/index.php?route=/OAuth2Client'
+          - 'https://family.meyeringh.org/index.php/OAuth2Client'
+        secretEnv: WEBTREES_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets
