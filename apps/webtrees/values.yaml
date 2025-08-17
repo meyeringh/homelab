@@ -33,7 +33,22 @@ app-template:
                     set -euo pipefail
                     CONFIG="/var/www/html/data/config.ini.php"
                     # We only do this if the config file exists, so basically the container needs to be restarted once on first install
-                    echo "test" > /usr/share/message
+                    if [ -e "$CONFIG" ]
+                    then
+                      if ! grep -q "^Generic_clientId='webtrees'" "$CONFIG"; then
+                        cat >> "$CONFIG" << 'EOF'
+
+                        Generic_clientId='webtrees'
+                        Generic_clientSecret='${WEBTREES_CLIENT_SECRET}'
+                        Generic_urlAuthorize='https://dex.meyeringh.org/auth'
+                        Generic_urlAccessToken='https://dex.meyeringh.org/token'
+                        Generic_urlResourceOwnerDetails='https://dex.meyeringh.org/userinfo'
+                        Generic_signInButtonLabel='Dex'
+                        EOF
+                      fi
+                    else
+                      echo "test" > /usr/share/message
+                    fi
           probes:
             liveness:
               enabled: true
