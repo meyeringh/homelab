@@ -20,12 +20,18 @@ app-template:
             PAPERLESS_SOCIALACCOUNT_PROVIDERS: |
               {
                 "openid_connect": {
-                  "Dex": {
-                    "SERVER_URL": "https://dex.meyeringh.org",
-                    "CLIENT_ID": "paperless",
-                    "SECRET": "$(PAPERLESS_CLIENT_SECRET)",
-                    "SCOPE": ["openid", "profile", "email", "groups"]
-                  }
+                  "APPS": [
+                    {
+                      "provider_id": "dex",
+                      "name": "Dex",
+                      "client_id": "paperless",
+                      "secret": "$(PAPERLESS_CLIENT_SECRET)",
+                      "settings": {
+                        "server_url": "https://dex.meyeringh.org/.well-known/openid-configuration"
+                      }
+                    }
+                  ],
+                  "OAUTH_PKCE_ENABLED": "True"
                 }
               }
           envFrom:
