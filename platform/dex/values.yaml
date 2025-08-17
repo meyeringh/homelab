@@ -41,6 +41,11 @@ dex:
         redirectURIs:
           - 'https://git.meyeringh.org/user/oauth2/Dex/callback'
         secretEnv: GITEA_CLIENT_SECRET
+      - id: nextcloud
+        name: Nextcloud
+        redirectURIs:
+          - 'https://cloud.meyeringh.org/index.php/apps/oidc_login/oidc'
+        secretEnv: NEXTCLOUD_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets
