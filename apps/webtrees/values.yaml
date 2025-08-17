@@ -23,6 +23,39 @@ app-template:
               mv "$TMPDIR/oauth2_client" /modules_v4/
       containers:
         app:
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - |
+                    set -euo pipefail
+                    CONFIG="/var/www/html/data/config.ini.php"
+                    # Wait for config.ini.php to be created by webtrees on first-run
+                    for i in $(seq 1 60); do
+                      if [ -f "$CONFIG" ]; then
+                        break
+                      fi
+                      sleep 5
+                    done
+                    if [ ! -f "$CONFIG" ]; then
+                      exit 0
+                    fi
+                    # Only append our settings if not already present
+                    if ! grep -q "^Generic_clientId='webtrees'" "$CONFIG"; then
+                      cat >> "$CONFIG" << 'EOF'
+                      
+                      ; OAuth2 Generic provider (Dex)
+                      Generic_clientId='webtrees'
+                      Generic_clientSecret='${WEBTREES_CLIENT_SECRET}'
+                      Generic_urlAuthorize='https://dex.meyeringh.org/auth'
+                      Generic_urlAccessToken='https://dex.meyeringh.org/token'
+                      Generic_urlResourceOwnerDetails='https://dex.meyeringh.org/userinfo'
+                      Generic_signInButtonLabel='Dex'
+                      EOF
+                    fi
+                  
           probes:
             liveness:
               enabled: true
