@@ -119,8 +119,8 @@ nextcloud:
       - name: OIDC_LOGIN_CLIENT_SECRET
         valueFrom:
           secretKeyRef:
-            name: NEXTCLOUD_CLIENT_SECRET
-            key: client_secret
+            name: nextcloud-sso-secrets
+            key: NEXTCLOUD_CLIENT_SECRET
       - name: MAIL_FROM_ADDRESS
         valueFrom:
           secretKeyRef:
