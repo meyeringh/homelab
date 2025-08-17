@@ -49,7 +49,7 @@ dex:
       - id: paperless
         name: Paperless
         redirectURIs:
-          - 'https://paperless.meyeringh.org/accounts/oidc/callback/'
+          - 'https://paperless.meyeringh.org/accounts/oidc/dex/login/callback/'
         secretEnv: PAPERLESS_CLIENT_SECRET
   envFrom:
     - secretRef:
