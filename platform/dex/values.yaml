@@ -44,7 +44,7 @@ dex:
       - id: nextcloud
         name: Nextcloud
         redirectURIs:
-          - 'https://cloud.meyeringh.org/index.php/apps/oidc_login/oidc'
+          - 'https://cloud.meyeringh.org/apps/oidc_login/oidc'
         secretEnv: NEXTCLOUD_CLIENT_SECRET
   envFrom:
     - secretRef:
