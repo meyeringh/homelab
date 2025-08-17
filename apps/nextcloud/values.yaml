@@ -120,7 +120,7 @@ nextcloud:
         valueFrom:
           secretKeyRef:
             name: nextcloud-sso-secrets
-            key: NEXTCLOUD_CLIENT_SECRETa
+            key: NEXTCLOUD_CLIENT_SECRET
       - name: MAIL_FROM_ADDRESS
         valueFrom:
           secretKeyRef:
