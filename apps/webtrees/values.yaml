@@ -30,6 +30,7 @@ app-template:
                   - /bin/sh
                   - -c
                   - |
+                    set -euo pipefail
                     CONFIG="/var/www/html/data/config.ini.php"
                     # We only do this if the config file exists, so basically the container needs to be restarted once on first install
                     echo "test" > /usr/share/message
