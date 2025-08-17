@@ -55,6 +55,7 @@ dex:
         name: Webtrees
         redirectURIs:
           - 'https://family.meyeringh.org/index.php?route=/OAuth2Client'
+          - 'https://family.meyeringh.org/index.php/OAuth2Client'
         secretEnv: WEBTREES_CLIENT_SECRET
   envFrom:
     - secretRef:
