@@ -41,6 +41,7 @@ app-template:
                         echo "Generic_urlAccessToken='https://dex.meyeringh.org/token'" >> "$CONFIG"
                         echo "Generic_urlResourceOwnerDetails='https://dex.meyeringh.org/userinfo'" >> "$CONFIG"
                         echo "Generic_signInButtonLabel='Dex'" >> "$CONFIG"
+                        echo "Generic_scopes='openid profile email'" >> "$CONFIG"
                       fi
                     else
                       echo "No configuration found. Restart the pod after webtrees is done with init" > /usr/share/message
