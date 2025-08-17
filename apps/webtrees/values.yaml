@@ -34,14 +34,12 @@ app-template:
                     # We only do this if the config file exists, so basically the container needs to be restarted once on first install
                     if [ -e "$CONFIG" ]
                     then
-                      if ! grep -q "^Generic_clientId='webtrees'" "$CONFIG"; then
-                        echo "Generic_clientId='webtrees'" >> "$CONFIG"
-                        echo "Generic_clientSecret='${WEBTREES_CLIENT_SECRET}'" >> "$CONFIG"
-                        echo "Generic_urlAuthorize='https://dex.meyeringh.org/auth'" >> "$CONFIG"
-                        echo "Generic_urlAccessToken='https://dex.meyeringh.org/token'" >> "$CONFIG"
-                        echo "Generic_urlResourceOwnerDetails='https://dex.meyeringh.org/userinfo'" >> "$CONFIG"
-                        echo "Generic_signInButtonLabel='Dex'" >> "$CONFIG"
-                        echo "Generic_scopes='openid profile email'" >> "$CONFIG"
+                      if ! grep -q "^Kanidm_clientId='webtrees'" "$CONFIG"; then
+                        echo "Kanidm_clientId='webtrees'" >> "$CONFIG"
+                        echo "Kanidm_clientSecret='${WEBTREES_CLIENT_SECRET}'" >> "$CONFIG"
+                        echo "Kanidm_kanidmUrl='https://dex.meyeringh.org'" >> "$CONFIG"
+                        echo "Kanidm_signInButtonLabel='Dex'" >> "$CONFIG"
+                        echo "Kanidm_pkceMethod='S256'" >> "$CONFIG"
                       fi
                     else
                       echo "No configuration found. Restart the pod after webtrees is done with init" > /usr/share/message
