@@ -46,6 +46,11 @@ dex:
         redirectURIs:
           - 'https://cloud.meyeringh.org/apps/oidc_login/oidc'
         secretEnv: NEXTCLOUD_CLIENT_SECRET
+      - id: paperless
+        name: Paperless
+        redirectURIs:
+          - 'https://paperless.meyeringh.org/accounts/oidc/callback/'
+        secretEnv: PAPERLESS_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets
