@@ -16,8 +16,20 @@ app-template:
             PAPERLESS_PORT: 8000
             PAPERLESS_ADMIN_USER: admin
             PAPERLESS_URL: https://paperless.meyeringh.org
+            PAPERLESS_SOCIALACCOUNT_PROVIDERS: |
+              {
+                "openid_connect": {
+                  "DEX": {
+                    "SERVER_URL": "https://dex.meyeringh.org",
+                    "CLIENT_ID": "paperless",
+                    "SECRET": "$(PAPERLESS_CLIENT_SECRET)",
+                    "SCOPE": ["openid", "profile", "email", "groups"]
+                  }
+                }
+              }
           envFrom:
             - secret: "{{ .Release.Name }}-secret"
+            - secret: "paperless-sso-secrets"
           probes:
             liveness:
               enabled: true
