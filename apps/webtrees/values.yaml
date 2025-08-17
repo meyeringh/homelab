@@ -27,10 +27,10 @@ app-template:
             postStart:
               exec:
                 command:
-                  - bin/sh
+                  - sh
                   - -c
                   - |
-                    echo "lmao yeet"
+                    set -euo pipefail
                     sleep 500
           probes:
             liveness:
