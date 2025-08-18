@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-shim
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: oauth2-shim }
+  template:
+    metadata:
+      labels: { app: oauth2-shim }
+    spec:
+      volumes:
+        - name: oauth2-shim-source
+          configMap:
+            name: oauth2-shim-source
+        - name: go-build-cache
+          emptyDir: {}
+      containers:
+        - name: oauth2-shim
+          image: golang:1.24-alpine
+          env:
+            - name: DEX_USERINFO_URL
+              value: "https://dex.meyeringh.org/userinfo"
+            - name: LISTEN_ADDR
+              value: ":8080"
+            # avoid writing build cache to the image fs
+            - name: GOCACHE
+              value: /tmp/go-build
+          workingDir: /go/src/oauth2-shim
+          command: ["sh", "-c"]
+          args: ["go run ."]
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: oauth2-shim-source
+              mountPath: /go/src/oauth2-shim
+              readOnly: true
+            - name: go-build-cache
+              mountPath: /tmp/go-build
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          readinessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: "5m"
+              memory: "16Mi"
+            limits:
+              memory: "64Mi"
