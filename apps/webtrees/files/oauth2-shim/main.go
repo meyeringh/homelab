@@ -17,7 +17,7 @@ func getenv(key, def string) string {
 }
 
 func main() {
-	listenAddr := getenv("LISTEN_ADDR", ":8080")
+	listenAddr := getenv("LISTEN_ADDR", ":80")
 	dexUserinfo := getenv("DEX_USERINFO_URL", "https://dex.meyeringh.org/userinfo")
 
 	client := &http.Client{
