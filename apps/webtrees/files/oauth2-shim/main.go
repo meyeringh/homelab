@@ -1,50 +1,61 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
-func getenv(key, def string) string {
-	if v := os.Getenv(key); v != "" {
+func getenv(k, def string) string {
+	if v := os.Getenv(k); v != "" {
 		return v
 	}
 	return def
 }
 
+func writeJSON(w http.ResponseWriter, code int, v any) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	_ = json.NewEncoder(w).Encode(v)
+}
+
 func main() {
-	listenAddr := getenv("LISTEN_ADDR", ":80")
-	dexUserinfo := getenv("DEX_USERINFO_URL", "https://dex.meyeringh.org/userinfo")
+	listen := getenv("LISTEN_ADDR", ":80")
+	upstream := getenv("DEX_USERINFO_URL", "https://dex.meyeringh.org/userinfo")
+	insecure := os.Getenv("TLS_INSECURE_SKIP_VERIFY") == "false"
 
 	client := &http.Client{
 		Timeout: 10 * time.Second,
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: insecure},
+		},
 	}
 
-	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte("ok"))
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, _ *http.Request) {
+		writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
 	})
 
 	http.HandleFunc("/userinfo", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			w.Header().Set("Allow", http.MethodGet)
-			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		if r.Method != http.MethodGet && r.Method != http.MethodPost {
+			w.Header().Set("Allow", "GET, POST")
+			writeJSON(w, http.StatusMethodNotAllowed, map[string]string{"error": "method not allowed"})
 			return
 		}
 
 		auth := r.Header.Get("Authorization")
 		if auth == "" {
-			http.Error(w, "missing Authorization header", http.StatusUnauthorized)
+			writeJSON(w, http.StatusUnauthorized, map[string]string{"error": "missing Authorization header"})
 			return
 		}
 
-		req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, dexUserinfo, nil)
+		req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, upstream, nil)
 		if err != nil {
-			http.Error(w, "failed to build upstream request", http.StatusInternalServerError)
+			writeJSON(w, http.StatusInternalServerError, map[string]string{"error": "failed to build upstream request"})
 			return
 		}
 		req.Header.Set("Authorization", auth)
@@ -52,31 +63,42 @@ func main() {
 
 		resp, err := client.Do(req)
 		if err != nil {
-			http.Error(w, "upstream error contacting Dex", http.StatusBadGateway)
+			writeJSON(w, http.StatusBadGateway, map[string]string{"error": "upstream error contacting Dex"})
 			return
 		}
 		defer resp.Body.Close()
 
-		// If Dex didn't return 200, just relay it.
+		body, _ := io.ReadAll(resp.Body)
+		preview := string(body)
+		if len(preview) > 256 {
+			preview = preview[:256] + "...(truncated)"
+		}
+		log.Printf("Dex /userinfo -> %d, body preview: %q", resp.StatusCode, preview)
+
 		if resp.StatusCode != http.StatusOK {
-			w.WriteHeader(resp.StatusCode)
-			_, _ = io.Copy(w, resp.Body)
+			// try to pass through JSON error bodies; otherwise wrap
+			var asJSON any
+			if json.Unmarshal(body, &asJSON) == nil {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(resp.StatusCode)
+				_, _ = w.Write(body)
+			} else {
+				writeJSON(w, resp.StatusCode, map[string]string{
+					"error":       "upstream non-JSON",
+					"status":      http.StatusText(resp.StatusCode),
+					"raw_preview": strings.TrimSpace(preview),
+				})
+			}
 			return
 		}
 
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			http.Error(w, "failed to read upstream body", http.StatusBadGateway)
-			return
-		}
-
-		// Parse, inject id=sub, and return.
 		var m map[string]any
 		if err := json.Unmarshal(body, &m); err != nil {
-			// If JSON is somehow invalid, just pass through as-is.
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			_, _ = w.Write(body)
+			// If Dex returned non-JSON, wrap it so the client still gets JSON.
+			writeJSON(w, http.StatusBadGateway, map[string]string{
+				"error":       "upstream returned non-JSON",
+				"raw_preview": strings.TrimSpace(preview),
+			})
 			return
 		}
 
@@ -87,18 +109,10 @@ func main() {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		enc := json.NewEncoder(w)
-		enc.SetEscapeHTML(false)
-		if err := enc.Encode(m); err != nil {
-			http.Error(w, "failed to encode response", http.StatusInternalServerError)
-			return
-		}
+		_ = json.NewEncoder(w).Encode(m)
 	})
 
-	log.Printf("oauth2 userinfo shim listening on %s; proxying to %s", listenAddr, dexUserinfo)
-	srv := &http.Server{
-		Addr:              listenAddr,
-		ReadHeaderTimeout: 5 * time.Second,
-	}
+	log.Printf("userinfo shim on %s -> %s (insecureTLS=%v)", listen, upstream, insecure)
+	srv := &http.Server{Addr: listen, ReadHeaderTimeout: 5 * time.Second}
 	log.Fatal(srv.ListenAndServe())
 }
