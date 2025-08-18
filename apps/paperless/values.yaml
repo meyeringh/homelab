@@ -67,12 +67,6 @@ app-template:
           image:
             repository: docker.io/library/redis
             tag: 8.2.0
-          resources:
-            requests:
-              cpu: 10m
-              memory: 100Mi
-            limits:
-              memory: 100Mi
           probes:
             liveness:
               enabled: true
