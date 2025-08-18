@@ -93,7 +93,7 @@ argocd-apps:
           destination:
             name: in-cluster
             namespace: '{{path.basename}}'
-          project: '{{`{{if hasPrefix .path "system/"}}system{{else if hasPrefix .path "platform/"}}platform{{else if hasPrefix .path "apps/"}}apps{{else}}default{{end}}`}}'
+          project: default  # TODO
           source:
             repoURL: *repoURL
             path: '{{path}}'
