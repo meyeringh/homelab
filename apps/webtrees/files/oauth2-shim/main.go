@@ -108,6 +108,12 @@ func main() {
 			}
 		}
 
+		if _, ok := m["username"]; !ok {
+			if sub, ok := m["preferred_username"].(string); ok && sub != "" {
+				m["username"] = sub
+			}
+		}
+
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(m)
 	})
