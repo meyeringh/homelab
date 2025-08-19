@@ -11,8 +11,8 @@ app-template:
             repository: registry.k8s.io/git-sync/git-sync
             tag: v4.4.2
           args:
-            - "--repo=http://gitea-http.gitea:3000/ops/meyeringh-org.git"
-            - "--ref=main"
+            - "--repo=http://gitea-http.gitea:3000/ops/meyeringh-org"
+            - "--ref=HEAD"
             - "--depth=1"
             - "--root=/tmp/git/root"
             - "--link=/usr/share/nginx/html/site"
