@@ -1,0 +1,59 @@
+app-template:
+  controllers:
+    meyeringh.org:
+      containers:
+        nginx:
+          image:
+            repository: nginxinc/nginx-unprivileged
+            tag: stable-alpine3.21
+        git-sync:
+          image:
+            repository: registry.k8s.io/git-sync/git-sync
+            tag: v4.4.2
+          args:
+            - "--repo=http://gitea-http.gitea:3000/ops/meyeringh.org.git"
+            - "--branch=main"
+            - "--depth=1"
+            - "--root=/tmp/git/root"
+            - "--link=/usr/share/nginx/html"
+            - "--period=1m"
+  service:
+    nginx:
+      controller: meyeringh.org
+      ports:
+        http:
+          port: 8080
+  ingress:
+    main:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+      hosts:
+        - host: &host meyeringh.org
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: nginx
+                port: 8080
+      tls:
+        - hosts:
+            - *host
+          secretName: meyeringh.org-tls-certificate
+  persistence:
+    data:
+      enabled: true
+      accessMode: ReadWriteMany
+      size: 1Gi
+      retain: true
+      advancedMounts:
+        meyeringh.org:
+          nginx:
+            - path: /usr/share/nginx/html
+              subPath: content
+          git-sync:
+            - path: /usr/share/nginx/html
+              subPath: content
