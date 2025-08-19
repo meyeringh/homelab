@@ -66,7 +66,7 @@ app-template:
         redis:
           image:
             repository: docker.io/library/redis
-            tag: 8.2.0
+            tag: 8.2.1
           probes:
             liveness:
               enabled: true
