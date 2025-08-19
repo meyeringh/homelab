@@ -10,3 +10,9 @@ repositories:
     migrate:
       source: https://github.com/meyeringh/homelab
       mirror: true
+  - name: meyeringh.org
+    owner: ops
+    private: false
+    migrate:
+      source: https://github.com/meyeringh/meyeringh.org
+      mirror: true
