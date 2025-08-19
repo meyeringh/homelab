@@ -1,6 +1,6 @@
 app-template:
   controllers:
-    meyeringh.org:
+    meyeringh-org:
       containers:
         nginx:
           image:
@@ -11,7 +11,7 @@ app-template:
             repository: registry.k8s.io/git-sync/git-sync
             tag: v4.4.2
           args:
-            - "--repo=http://gitea-http.gitea:3000/ops/meyeringh.org.git"
+            - "--repo=http://gitea-http.gitea:3000/ops/meyeringh-org.git"
             - "--branch=main"
             - "--depth=1"
             - "--root=/tmp/git/root"
@@ -19,7 +19,7 @@ app-template:
             - "--period=1m"
   service:
     nginx:
-      controller: meyeringh.org
+      controller: meyeringh-org
       ports:
         http:
           port: 8080
@@ -42,7 +42,7 @@ app-template:
       tls:
         - hosts:
             - *host
-          secretName: meyeringh.org-tls-certificate
+          secretName: meyeringh-org-tls-certificate
   persistence:
     data:
       enabled: true
@@ -50,7 +50,7 @@ app-template:
       size: 1Gi
       retain: true
       advancedMounts:
-        meyeringh.org:
+        meyeringh-org:
           nginx:
             - path: /usr/share/nginx/html
               subPath: content
