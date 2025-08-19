@@ -12,10 +12,10 @@ app-template:
             tag: v4.4.2
           args:
             - "--repo=http://gitea-http.gitea:3000/ops/meyeringh-org.git"
-            - "--branch=main"
+            - "--ref=main"
             - "--depth=1"
             - "--root=/tmp/git/root"
-            - "--link=/usr/share/nginx/html"
+            - "--link=/usr/share/nginx/html/site"
             - "--period=1m"
   service:
     nginx:
