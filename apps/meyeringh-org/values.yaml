@@ -17,7 +17,8 @@ app-template:
             - "--repo=http://gitea-http.gitea:3000/ops/meyeringh-org"
             - "--ref=HEAD"
             - "--depth=1"
-            - "--root=/usr/share/nginx/html"
+            - "--root=/usr/share/nginx"
+            - "--link=/usr/share/nginx/html"
             - "--period=1m"
   service:
     nginx:
