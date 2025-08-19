@@ -17,7 +17,7 @@ app-template:
             - "--repo=http://gitea-http.gitea:3000/ops/meyeringh-org"
             - "--ref=HEAD"
             - "--depth=1"
-            - "--root=/tmp/git/root"
+            - "--root=/usr/share/nginx"
             - "--link=/usr/share/nginx/html/site"
             - "--period=1m"
   service:
@@ -56,8 +56,8 @@ app-template:
       advancedMounts:
         meyeringh-org:
           nginx:
-            - path: /usr/share/nginx/html
+            - path: /usr/share/nginx
               subPath: content
           git-sync:
-            - path: /usr/share/nginx/html
+            - path: /usr/share/nginx
               subPath: content
