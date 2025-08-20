@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: volsync-metrics-prometheus
+  labels:
+    app.kubernetes.io/name: volsync
+    app.kubernetes.io/instance: volsync-system
+subjects:
+- kind: ServiceAccount
+  name: monitoring-system-kube-pro-prometheus
+  namespace: monitoring-system
+roleRef:
+  kind: ClusterRole
+  name: volsync-system-metrics-reader
+  apiGroup: rbac.authorization.k8s.io
