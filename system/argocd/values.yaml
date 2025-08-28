@@ -82,6 +82,8 @@ argo-cd:
     rbac:
       policy.default: role:readonly
       policy.csv: |
+        # Default readonly users should be able to view ApplicationSets
+        p, role:readonly, applicationsets, get, */*, allow
         # Editor group permissions - can do everything except delete
         p, editor, clusters, get, *, allow
         p, editor, clusters, create, *, allow
@@ -103,9 +105,9 @@ argo-cd:
         p, editor, applications, sync, *, allow
         p, editor, applications, action/*, *, allow
         p, editor, applications, override, *, allow
-        p, editor, applicationsets, get, *, allow
-        p, editor, applicationsets, create, *, allow
-        p, editor, applicationsets, update, *, allow
+        p, editor, applicationsets, get, */*, allow
+        p, editor, applicationsets, create, */*, allow
+        p, editor, applicationsets, update, */*, allow
         p, editor, logs, get, *, allow
         p, editor, exec, create, *, allow
         # Grant editor group to users in the editor group
