@@ -51,6 +51,11 @@ dex:
         redirectURIs:
           - 'https://paperless.meyeringh.org/accounts/oidc/dex/login/callback/'
         secretEnv: PAPERLESS_CLIENT_SECRET
+      - id: argocd
+        name: ArgoCD
+        redirectURIs:
+          - 'https://argocd.meyeringh.org/auth/callback'
+        secretEnv: ARGOCD_CLIENT_SECRET
       - id: webtrees
         name: Webtrees
         redirectURIs:

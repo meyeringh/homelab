@@ -72,6 +72,16 @@ argo-cd:
       resource.customizations.ignoreResourceUpdates.all: |
         jsonPointers:
           - /status
+      oidc.config: |
+        name: Dex
+        issuer: https://dex.meyeringh.org
+        clientId: argocd
+        clientSecret: $oidc.dex.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
+        requestedIDTokenClaims: {"groups": {"essential": true}}
+  rbac:
+    policy.default: role:readonly
+    scopes: "[groups]"
   dex:
     enabled: false
 argocd-apps:
