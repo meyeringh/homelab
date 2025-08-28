@@ -79,9 +79,9 @@ argo-cd:
         clientSecret: $oidc.dex.clientSecret
         requestedScopes: ["openid", "profile", "email", "groups"]
         requestedIDTokenClaims: {"groups": {"essential": true}}
-  rbac:
-    policy.default: role:readonly
-    scopes: "[groups]"
+    rbac:
+      policy.default: role:readonly
+      scopes: "[groups]"
   dex:
     enabled: false
 argocd-apps:
