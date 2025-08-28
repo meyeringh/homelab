@@ -81,6 +81,35 @@ argo-cd:
         requestedIDTokenClaims: {"groups": {"essential": true}}
     rbac:
       policy.default: role:readonly
+      policy.csv: |
+        # Editor group permissions - can do everything except delete
+        p, editor, clusters, get, *, allow
+        p, editor, clusters, create, *, allow
+        p, editor, clusters, update, *, allow
+        p, editor, repositories, get, *, allow
+        p, editor, repositories, create, *, allow
+        p, editor, repositories, update, *, allow
+        p, editor, certificates, get, *, allow
+        p, editor, certificates, create, *, allow
+        p, editor, accounts, get, *, allow
+        p, editor, gpgkeys, get, *, allow
+        p, editor, gpgkeys, create, *, allow
+        p, editor, projects, get, *, allow
+        p, editor, projects, create, *, allow
+        p, editor, projects, update, *, allow
+        p, editor, applications, get, *, allow
+        p, editor, applications, create, *, allow
+        p, editor, applications, update, *, allow
+        p, editor, applications, sync, *, allow
+        p, editor, applications, action/*, *, allow
+        p, editor, applications, override, *, allow
+        p, editor, applicationsets, get, *, allow
+        p, editor, applicationsets, create, *, allow
+        p, editor, applicationsets, update, *, allow
+        p, editor, logs, get, *, allow
+        p, editor, exec, create, *, allow
+        # Grant editor group to users in the editor group
+        g, editor, editor
       scopes: "[groups]"
   dex:
     enabled: false
