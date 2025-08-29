@@ -1,8 +1,8 @@
 app-template:
   controllers:
-    main:
+    paperless:
       containers:
-        main:
+        paperless:
           image:
             repository: ghcr.io/paperless-ngx/paperless-ngx
             tag: 2.18.2
@@ -92,13 +92,14 @@ app-template:
                 periodSeconds: 10
                 failureThreshold: 60
   service:
-    main:
+    paperless:
+      controller: paperless
       ports:
         http:
           port: 8000
           protocol: HTTP
   ingress:
-    main:
+    paperless:
       enabled: true
       className: nginx
       annotations:
@@ -112,7 +113,7 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: paperless
                 port: http
       tls:
         - hosts:
@@ -124,8 +125,8 @@ app-template:
       size: 10Gi
       retain: true
       advancedMounts:
-        main:
-          main:
+        paperless:
+          paperless:
             - path: /usr/src/paperless/data
               subPath: data
             - path: /usr/src/paperless/media
