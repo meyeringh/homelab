@@ -62,13 +62,6 @@ nextcloud:
       secretName: nextcloud
       usernameKey: nextcloud-username
       passwordKey: nextcloud-password
-    extraVolumes:
-      - name: my-files
-        persistentVolumeClaim:
-          claimName: my-files-pvc
-    extraVolumeMounts:
-      - name: my-files
-        mountPath: /my-files
     mail:
       enabled: false # We need to use env vars here, because otherwise we cant set secrets and its either all or nothing
     configs:
