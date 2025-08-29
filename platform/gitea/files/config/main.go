@@ -73,7 +73,7 @@ func main() {
 				RepoName:       repo.Name,
 				RepoOwner:      repo.Owner,
 				CloneAddr:      repo.Migrate.Source,
-				Service:        gitea.GitServicePlain,
+				Service:        gitea.GitServiceGithub,
 				Mirror:         repo.Migrate.Mirror,
 				Private:        repo.Private,
 				MirrorInterval: "10m",
