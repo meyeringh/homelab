@@ -1,8 +1,8 @@
 app-template:
   controllers:
-    main:
+    joplin:
       containers:
-        main:
+        joplin:
           image:
             repository: joplin/server
             tag: 3.4.2
@@ -92,13 +92,14 @@ app-template:
                 periodSeconds: 10
                 failureThreshold: 60
   service:
-    main:
+    joplin:
+      controller: joplin
       ports:
         http:
           port: 22300
           protocol: HTTP
   ingress:
-    main:
+    joplin:
       enabled: true
       className: nginx
       annotations:
@@ -111,7 +112,7 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: joplin
                 port: http
       tls:
         - hosts:
