@@ -3,9 +3,9 @@ app-template:
     securityContext:
       fsGroup: 1000
   controllers:
-    main:
+    jellyfin:
       containers:
-        main:
+        jellyfin:
           image:
             repository: docker.io/jellyfin/jellyfin
             tag: 10.10.7
@@ -220,7 +220,8 @@ app-template:
                 periodSeconds: 10
                 failureThreshold: 30
   service:
-    main:
+    jellyfin:
+      controller: jellyfin
       ports:
         http:
           port: 8096
@@ -241,7 +242,7 @@ app-template:
           port: 5055
           protocol: HTTP
   ingress:
-    main:
+    jellyfin:
       enabled: true
       className: nginx
       annotations:
@@ -254,14 +255,14 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: jellyfin
                 port: http
         - host: &jellyseerrHost requests.meyeringh.org
           paths:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: jellyfin
                 port: jellyseerr
       tls:
         - secretName: jellyfin-tls-certificate
@@ -279,28 +280,28 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: jellyfin
                 port: sabnzbd
         - host: &prowlarrHost prowlarr.meyeringh.org
           paths:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: jellyfin
                 port: prowlarr
         - host: &radarrHost radarr.meyeringh.org
           paths:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: jellyfin
                 port: radarr
         - host: &sonarrHost sonarr.meyeringh.org
           paths:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: jellyfin
                 port: sonarr
       tls:
         - secretName: servarr-tls-certificate
@@ -316,8 +317,8 @@ app-template:
       size: 100Gi
       retain: true
       advancedMounts:
-        main:
-          main:
+        jellyfin:
+          jellyfin:
             - path: /config
               subPath: jellyfin/config
             - path: /media/movies
