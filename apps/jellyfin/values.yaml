@@ -42,7 +42,7 @@ app-template:
         sabnzbd:
           image:
             repository: lscr.io/linuxserver/sabnzbd
-            tag: 4.5.2
+            tag: 4.5.3
           env:
             TZ: Europe/Berlin
           resources:
