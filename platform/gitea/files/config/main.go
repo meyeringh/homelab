@@ -67,6 +67,7 @@ func main() {
 		}
 	}
 
+	// Creating migrations is not working right now. I dont understand why. For now They need to be created in the gui
 	for _, repo := range config.Repositories {
 		if repo.Migrate.Source != "" {
 			_, _, err = client.MigrateRepo(gitea.MigrateRepoOption{
