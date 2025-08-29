@@ -3,6 +3,7 @@ package main
 // TODO WIP clean this up
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -77,6 +78,13 @@ func main() {
 				Mirror:         repo.Migrate.Mirror,
 				Private:        repo.Private,
 				MirrorInterval: "10m",
+				Description:    fmt.Sprintf("Mirror of %s", repo.Migrate.Source),
+				Wiki:           false,
+				Milestones:     false,
+				Labels:         false,
+				Issues:         false,
+				PullRequests:   false,
+				Releases:       false,
 			})
 
 			if err != nil {
