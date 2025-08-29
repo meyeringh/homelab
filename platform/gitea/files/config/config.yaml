@@ -14,5 +14,5 @@ repositories:
     owner: ops
     private: false
     migrate:
-      source: https://github.com/meyeringh/meyeringh-org
+      source: https://github.com/meyeringh/meyeringh-org.git
       mirror: true
