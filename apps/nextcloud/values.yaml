@@ -186,7 +186,7 @@ nextcloud:
       existingSecret: nextcloud-redis
       existingSecretPasswordKey: password
     replica:
-      replicaCount: 1
+      replicaCount: 0
   collabora:
     enabled: true
     collabora:
