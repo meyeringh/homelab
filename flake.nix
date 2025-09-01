@@ -42,7 +42,6 @@
             pre-commit
             qrencode
             shellcheck
-            wireguard-tools
             yamllint
 
             (python3.withPackages (p: with p; [
