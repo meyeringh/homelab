@@ -4,10 +4,8 @@ metadata:
   name: "{{ .Release.Name }}-postgres"
   namespace: "{{ .Release.Namespace }}"
 spec:
-  imageCatalogRef:
-    apiGroup: postgresql.cnpg.io
-    major: 17
   instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.5
   bootstrap:
     initdb:
       database: joplin
