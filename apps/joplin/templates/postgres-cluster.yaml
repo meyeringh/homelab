@@ -5,6 +5,7 @@ metadata:
   namespace: "{{ .Release.Namespace }}"
 spec:
   imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
     major: 17
   instances: 1
   bootstrap:
