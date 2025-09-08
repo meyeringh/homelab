@@ -4,7 +4,9 @@ metadata:
   name: "{{ .Release.Name }}-postgres"
   namespace: "{{ .Release.Namespace }}"
 spec:
-  instances: 1    
+  imageCatalogRef:
+    major: 17
+  instances: 1
   bootstrap:
     initdb:
       database: joplin
