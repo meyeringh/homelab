@@ -1,0 +1,18 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: "{{ .Release.Name }}-postgres-auth"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: global-secrets
+  target:
+    template:
+      type: kubernetes.io/basic-auth
+      data:
+        username: joplin
+        password: "{{ `{{ .userPassword | toString }}` }}"
+  dataFrom:
+    - extract:
+        key: joplin.joplin-db

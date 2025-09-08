@@ -1,0 +1,26 @@
+# CloudNativePG PostgreSQL cluster for Joplin
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: "{{ .Release.Name }}-postgres"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  instances: 1    
+  bootstrap:
+    initdb:
+      database: joplin
+      owner: joplin
+      secret:
+        name: "{{ .Release.Name }}-postgres-auth"
+  storage:
+    size: 1Gi
+    storageClass: ceph-block
+  monitoring:
+    enabled: true
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
