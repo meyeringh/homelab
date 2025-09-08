@@ -1,0 +1,3 @@
+cloudnative-pg:
+  monitoring:
+    enabled: true
