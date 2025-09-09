@@ -19,12 +19,12 @@ app-template:
             POSTGRES_DATABASE: joplin
             POSTGRES_USER: joplin
             POSTGRES_PORT: 5432
-            POSTGRES_HOST: joplin-postgresql
+            POSTGRES_HOST: joplin-postgres-rw
             POSTGRES_PASSWORD: 
               valueFrom:
                 secretKeyRef:
-                  name: joplin-db
-                  key: userPassword
+                  name: joplin-postgres-app
+                  key: password
             MAILER_ENABLED: 1
             MAILER_HOST: mail.meyeringh.org
             MAILER_PORT: 587
