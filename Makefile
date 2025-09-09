@@ -31,7 +31,7 @@ backup:
 	./scripts/backup --action setup --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action setup --namespace=jellyfin --pvc=jellyfin
 	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
-	./scripts/backup --action setup --namespace=joplin --pvc=data-joplin-postgresql-0
+	./scripts/backup --action setup --namespace=joplin --pvc=joplin-postgres-1
 	./scripts/backup --action setup --namespace=paperless --pvc=paperless
 	./scripts/backup --action setup --namespace=webtrees --pvc=data-webtrees-mariadb-0
 	./scripts/backup --action setup --namespace=webtrees --pvc=webtrees
@@ -46,7 +46,7 @@ restore:
 	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action restore --namespace=jellyfin --pvc=jellyfin
 	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
-	./scripts/backup --action restore --namespace=joplin --pvc=data-joplin-postgresql-0
+	./scripts/backup --action restore --namespace=joplin --pvc=joplin-postgres-1
 	./scripts/backup --action restore --namespace=paperless --pvc=paperless
 	./scripts/backup --action restore --namespace=webtrees --pvc=data-webtrees-mariadb-0
 	./scripts/backup --action restore --namespace=webtrees --pvc=webtrees
