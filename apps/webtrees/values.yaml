@@ -122,6 +122,16 @@ app-template:
             - *host
           secretName: webtrees-tls-certificate
   persistence:
+    data:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      retain: true
+      advancedMounts:
+        webtrees:
+          app:
+            - path: /var/www/html/data/
+              subPath: data
     modules:
       enabled: true
       type: emptyDir
