@@ -57,14 +57,6 @@
     - key: nextcloud-password
       length: 32
       special: true
-- name: nextcloud.nextcloud-postgresql
-  data:
-    - key: password
-      length: 32
-      special: true
-    - key: postgres-password
-      length: 32
-      special: true
 - name: nextcloud.redis
   data:
     - key: password
@@ -80,16 +72,6 @@
 - name: vaultwarden.vaultwarden
   data:
     - key: ADMIN_TOKEN
-      length: 32
-      special: true
-
-# Joplin
-- name: joplin.joplin-db
-  data:
-    - key: adminPassword
-      length: 32
-      special: true
-    - key: userPassword
       length: 32
       special: true
 
