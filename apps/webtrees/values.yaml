@@ -73,12 +73,6 @@ app-template:
           image:
             repository: dtjs48jkt/webtrees
             tag: 2.2.4
-          resources:
-            requests:
-              cpu: 10m
-              memory: 169Mi
-            limits:
-              memory: 169Mi
           env:
             DB_TYPE: pgsql
             DB_HOST: webtrees-postgres-rw
