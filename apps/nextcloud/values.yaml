@@ -229,3 +229,4 @@ nextcloud:
       enabled: true
       secretName: nextcloud-postgres-app
       passwordKey: password
+      usernameKey: username
