@@ -16,6 +16,12 @@ app-template:
             PAPERLESS_PORT: 8000
             PAPERLESS_ADMIN_USER: admin
             PAPERLESS_URL: https://paperless.meyeringh.org
+            PAPERLESS_DBHOST: paperless-postgres-rw
+            PAPERLESS_DBPASS:
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-postgres-app
+                  key: password
             PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
             PAPERLESS_SOCIALACCOUNT_PROVIDERS: |
               {

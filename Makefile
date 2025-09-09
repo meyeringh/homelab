@@ -33,6 +33,7 @@ backup:
 	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
 	./scripts/backup --action setup --namespace=joplin --pvc=joplin-postgres-1
 	./scripts/backup --action setup --namespace=paperless --pvc=paperless
+	./scripts/backup --action setup --namespace=paperless --pvc=paperless-postgres-1
 	./scripts/backup --action setup --namespace=webtrees --pvc=data-webtrees-mariadb-0
 	./scripts/backup --action setup --namespace=webtrees --pvc=webtrees
 	./scripts/backup --action setup --namespace=proton --pvc=proton
@@ -48,6 +49,7 @@ restore:
 	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
 	./scripts/backup --action restore --namespace=joplin --pvc=joplin-postgres-1
 	./scripts/backup --action restore --namespace=paperless --pvc=paperless
+	./scripts/backup --action restore --namespace=paperless --pvc=paperless-postgres-1
 	./scripts/backup --action restore --namespace=webtrees --pvc=data-webtrees-mariadb-0
 	./scripts/backup --action restore --namespace=webtrees --pvc=webtrees
 	./scripts/backup --action restore --namespace=proton --pvc=proton
