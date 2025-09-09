@@ -1,4 +1,6 @@
 volsync:
+  metrics:
+    disableAuth: true
   resources:
     requests:
       cpu: 51m
