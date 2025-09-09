@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: secret-generator-{{ include (print $.Template.BasePath "/secret-generator/configmap.yaml") . | sha256sum | trunc 7 }}
-  namespace: {{ .Release.Namespace }}
+  namespace: "{{ .Release.Namespace }}"
 spec:
   backoffLimit: 3
   template:

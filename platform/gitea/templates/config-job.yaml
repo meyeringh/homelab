@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: gitea-config-{{ include (print $.Template.BasePath "/config-source.yaml") . | sha256sum | trunc 7 }}
-  namespace: {{ .Release.Namespace }}
+  namespace: "{{ .Release.Namespace }}"
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
