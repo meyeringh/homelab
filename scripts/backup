@@ -142,7 +142,7 @@ if args.action == "setup":
                     "pruneIntervalDays": 0,
                     "repository": secret,
                     "retain": {
-                        "weekly": 1,
+                        "weekly": 2,
                         "daily": 2,
                     },
                     "copyMethod": "Snapshot",
