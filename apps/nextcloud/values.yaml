@@ -216,32 +216,16 @@ nextcloud:
           hosts:
             - collabora.meyeringh.org
   postgresql:
-    enabled: true
-    global:
-      postgresql:
-        auth:
-          existingSecret: nextcloud-postgresql
-          secretKeys:
-            adminPasswordKey: postgres-password
-            userPasswordKey: password
-    primary:
-      resources:
-        requests:
-          cpu: 100m
-          memory: 256Mi
-        limits:
-          memory: 256Mi
-      persistence:
-        enabled: true
-        size: 50Gi
-      persistentVolumeClaimRetentionPolicy:
-        enabled: true
+    enabled: false
   internalDatabase:
     enabled: false
   externalDatabase:
     enabled: true
     type: postgresql
+    host: nextcloud-postgres-rw
+    database: nextcloud
+    user: nextcloud
     existingSecret:
       enabled: true
-      secretName: nextcloud-postgresql
+      secretName: nextcloud-postgres-app
       passwordKey: password

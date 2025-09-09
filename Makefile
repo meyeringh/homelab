@@ -39,7 +39,7 @@ backup:
 	./scripts/backup --action setup --namespace=proton --pvc=proton
 	./scripts/backup --action setup --namespace=minecraft --pvc=minecraft
 	./scripts/backup --action setup --namespace=home --pvc=home-home-assistant-home-home-assistant-0
-	./scripts/backup --action setup --namespace=nextcloud --pvc=data-nextcloud-postgresql-0
+	./scripts/backup --action setup --namespace=nextcloud --pvc=nextcloud-postgres-1
 	./scripts/backup --action setup --namespace=nextcloud --pvc=nextcloud-nextcloud
 	./scripts/backup --action setup --namespace=nextcloud --pvc=redis-data-nextcloud-redis-master-0
 
@@ -55,7 +55,7 @@ restore:
 	./scripts/backup --action restore --namespace=proton --pvc=proton
 	./scripts/backup --action restore --namespace=minecraft --pvc=minecraft
 	./scripts/backup --action restore --namespace=home --pvc=home-home-assistant-home-home-assistant-0
-	./scripts/backup --action restore --namespace=nextcloud --pvc=data-nextcloud-postgresql-0
+	./scripts/backup --action restore --namespace=nextcloud --pvc=nextcloud-postgres-1
 	./scripts/backup --action restore --namespace=nextcloud --pvc=nextcloud-nextcloud
 	./scripts/backup --action restore --namespace=nextcloud --pvc=redis-data-nextcloud-redis-master-0
 
