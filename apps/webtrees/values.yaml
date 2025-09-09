@@ -15,12 +15,12 @@ app-template:
             - |
               set -euo pipefail
               apk add --no-cache unzip curl
-              mkdir -p /modules_v4
               TMPDIR=$(mktemp -d)
               curl -fsSL -o "$TMPDIR/oauth2_client.zip" https://github.com/Jefferson49/webtrees-oauth2-client/releases/download/v1.1.8/oauth2_client_v1.1.8.zip
               unzip -o "$TMPDIR/oauth2_client.zip" -d "$TMPDIR"
               rm -rf /modules_v4/oauth2_client
               mv "$TMPDIR/oauth2_client" /modules_v4/
+              chown -R 33:33 /modules_v4/
       containers:
         app:
           lifecycle:
