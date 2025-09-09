@@ -74,14 +74,13 @@ app-template:
             repository: dtjs48jkt/webtrees
             tag: 2.2.4
           env:
-            DB_HOST: webtrees-postgres-rw
-            DB_PORT: 5432
-            DB_USER: webtrees
+            DB_HOST: webtrees-mariadb
+            DB_USER: root
             DB_PASSWORD:
               valueFrom:
                 secretKeyRef:
-                  name: webtrees-postgres-app
-                  key: password
+                  name: webtrees-db
+                  key: mariadb-root-password
             DB_NAME: webtrees
             WT_ADMIN: admin
             WT_ADMINPW:
