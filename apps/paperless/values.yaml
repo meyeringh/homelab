@@ -9,9 +9,9 @@ app-template:
           resources:
             requests:
               cpu: 919m
-              memory: 1500Mi
+              memory: 2500Mi
             limits:
-              memory: 1500Mi
+              memory: 2500Mi
           env:
             PAPERLESS_PORT: 8000
             PAPERLESS_ADMIN_USER: admin
