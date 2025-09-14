@@ -1,26 +1,24 @@
 data "cloudflare_zone" "zone" {
-  name = "meyeringh.org"
+  filter = {
+    name = "meyeringh.org"
+  }
 }
-
-data "cloudflare_api_token_permission_groups" "all" {}
 
 resource "random_password" "tunnel_secret" {
   length  = 64
   special = false
 }
 
-resource "cloudflare_tunnel" "homelab" {
+resource "cloudflare_zero_trust_tunnel_cloudflared" "homelab" {
   account_id = var.cloudflare_account_id
   name       = "homelab"
-  secret     = base64encode(random_password.tunnel_secret.result)
 }
 
-# Not proxied, not accessible. Just a record for auto-created CNAMEs by external-dns.
-resource "cloudflare_record" "tunnel" {
-  zone_id = data.cloudflare_zone.zone.id
+resource "cloudflare_dns_record" "tunnel" {
+  zone_id = data.cloudflare_zone.zone.zone_id
   type    = "CNAME"
   name    = "homelab-tunnel"
-  value   = "${cloudflare_tunnel.homelab.id}.cfargotunnel.com"
+  content = "${cloudflare_zero_trust_tunnel_cloudflared.homelab.id}.cfargotunnel.com"
   proxied = false
   ttl     = 1 # Auto
 }
@@ -38,9 +36,9 @@ resource "kubernetes_secret" "cloudflared_credentials" {
   data = {
     "credentials.json" = jsonencode({
       AccountTag   = var.cloudflare_account_id
-      TunnelName   = cloudflare_tunnel.homelab.name
-      TunnelID     = cloudflare_tunnel.homelab.id
-      TunnelSecret = base64encode(random_password.tunnel_secret.result)
+      TunnelName   = cloudflare_zero_trust_tunnel_cloudflared.homelab.name
+      TunnelID     = cloudflare_zero_trust_tunnel_cloudflared.homelab.id
+      TunnelSecret = random_password.tunnel_secret.result
     })
   }
 }
@@ -48,15 +46,18 @@ resource "kubernetes_secret" "cloudflared_credentials" {
 resource "cloudflare_api_token" "external_dns" {
   name = "homelab_external_dns"
 
-  policy {
-    permission_groups = [
-      data.cloudflare_api_token_permission_groups.all.zone["Zone Read"],
-      data.cloudflare_api_token_permission_groups.all.zone["DNS Write"]
-    ]
-    resources = {
-      "com.cloudflare.api.account.zone.*" = "*"
+  policies = [
+    {
+      permission_groups = [
+        { id = "c8fed203ed3043cba015a93ad1616f1f" }, # Zone:Zone:Read
+        { id = "4755a26eedb94da69e1066d98aa820be" }  # Zone:DNS:Edit
+      ]
+      resources = {
+        "com.cloudflare.api.account.zone.*" = "*"
+      }
+      effect = "allow"
     }
-  }
+  ]
 }
 
 resource "kubernetes_secret" "external_dns_token" {
@@ -77,15 +78,18 @@ resource "kubernetes_secret" "external_dns_token" {
 resource "cloudflare_api_token" "cert_manager" {
   name = "homelab_cert_manager"
 
-  policy {
-    permission_groups = [
-      data.cloudflare_api_token_permission_groups.all.zone["Zone Read"],
-      data.cloudflare_api_token_permission_groups.all.zone["DNS Write"]
-    ]
-    resources = {
-      "com.cloudflare.api.account.zone.*" = "*"
+  policies = [
+    {
+      permission_groups = [
+        { id = "c8fed203ed3043cba015a93ad1616f1f" }, # Zone:Zone:Read
+        { id = "4755a26eedb94da69e1066d98aa820be" }  # Zone:DNS:Edit
+      ]
+      resources = {
+        "com.cloudflare.api.account.zone.*" = "*"
+      }
+      effect = "allow"
     }
-  }
+  ]
 }
 
 resource "kubernetes_secret" "cert_manager_token" {
@@ -100,5 +104,37 @@ resource "kubernetes_secret" "cert_manager_token" {
 
   data = {
     "api-token" = cloudflare_api_token.cert_manager.value
+  }
+}
+
+resource "cloudflare_api_token" "cf_switch" {
+  name = "homelab_cf_switch"
+
+  policies = [
+    {
+      permission_groups = [
+        { id = "c8fed203ed3043cba015a93ad1616f1f" }, # Zone:Zone:Read
+        { id = "3030687196b94b638145a3953da2b699" }  # Zone:Zone Settings:Write
+      ]
+      resources = {
+        "com.cloudflare.api.account.zone.*" = "*"
+      }
+      effect = "allow"
+    }
+  ]
+}
+
+resource "kubernetes_secret" "cf_switch_token" {
+  metadata {
+    name      = "cloudflare-api-token"
+    namespace = "cf-switch"
+
+    annotations = {
+      "app.kubernetes.io/managed-by" = "Terraform"
+    }
+  }
+
+  data = {
+    "token" = cloudflare_api_token.cf_switch.value
   }
 }
