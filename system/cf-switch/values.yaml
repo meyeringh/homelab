@@ -1,0 +1,25 @@
+cf-switch:
+  env:
+    DEST_HOSTNAMES: "paperless.meyeringh.org,media.meyeringh.org"
+    CLOUDFLARE_ZONE_ID: "fba9ac534a86b7363e4864046275a256"
+    CLOUDFLARE_API_TOKEN:
+      valueFrom:
+        secretKeyRef:
+          name: cloudflare-api-token
+          key: token
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    hosts:
+      - host: &host cf-switch.meyeringh.org
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - *host
+        secretName: cf-switch-tls-certificate

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: cf-switch
+version: 0.0.0
+dependencies:
+  - name: cf-switch
+    version: 0.1.0
+    repository: https://github.com/meyeringh/cf-switch
