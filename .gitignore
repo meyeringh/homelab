@@ -1,6 +1,7 @@
 .venv/
 book/
 .direnv/
+.ansible/
 
 *.iso
 *.log
