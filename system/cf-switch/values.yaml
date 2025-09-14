@@ -1,7 +1,9 @@
 cf-switch:
   env:
-    DEST_HOSTNAMES: "paperless.meyeringh.org,media.meyeringh.org"
-    CLOUDFLARE_ZONE_ID: "fba9ac534a86b7363e4864046275a256"
+    DEST_HOSTNAMES:
+      value: "paperless.meyeringh.org,media.meyeringh.org"
+    CLOUDFLARE_ZONE_ID:
+      value: "fba9ac534a86b7363e4864046275a256"
     CLOUDFLARE_API_TOKEN:
       valueFrom:
         secretKeyRef:
