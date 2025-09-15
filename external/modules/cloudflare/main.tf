@@ -1,7 +1,5 @@
-data "cloudflare_zone" "zone" {
-  filter = {
-    name = "meyeringh.org"
-  }
+data "cloudflare_zones" "zone" {
+  name = "meyeringh.org"
 }
 
 resource "random_password" "tunnel_secret" {
@@ -15,7 +13,7 @@ resource "cloudflare_zero_trust_tunnel_cloudflared" "homelab" {
 }
 
 resource "cloudflare_dns_record" "tunnel" {
-  zone_id = data.cloudflare_zone.zone.zone_id
+  zone_id = data.cloudflare_zones.zone.result[0].id
   type    = "CNAME"
   name    = "homelab-tunnel"
   content = "${cloudflare_zero_trust_tunnel_cloudflared.homelab.id}.cfargotunnel.com"
@@ -38,14 +36,13 @@ resource "kubernetes_secret" "cloudflared_credentials" {
       AccountTag   = var.cloudflare_account_id
       TunnelName   = cloudflare_zero_trust_tunnel_cloudflared.homelab.name
       TunnelID     = cloudflare_zero_trust_tunnel_cloudflared.homelab.id
-      TunnelSecret = random_password.tunnel_secret.result
+      TunnelSecret = base64encode(random_password.tunnel_secret.result)
     })
   }
 }
 
 resource "cloudflare_api_token" "external_dns" {
   name = "homelab_external_dns"
-
   policies = [
     {
       permission_groups = [
