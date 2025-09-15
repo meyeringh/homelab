@@ -2,14 +2,14 @@ data "cloudflare_zones" "zone" {
   name = "meyeringh.org"
 }
 
-resource "random_password" "tunnel_secret" {
-  length  = 64
-  special = false
+resource "random_id" "tunnel_secret" {
+  byte_length = 32
 }
 
 resource "cloudflare_zero_trust_tunnel_cloudflared" "homelab" {
-  account_id = var.cloudflare_account_id
-  name       = "homelab"
+  account_id    = var.cloudflare_account_id
+  name          = "homelab"
+  tunnel_secret = random_id.tunnel_secret.b64_std
 }
 
 resource "cloudflare_dns_record" "tunnel" {
@@ -36,7 +36,7 @@ resource "kubernetes_secret" "cloudflared_credentials" {
       AccountTag   = var.cloudflare_account_id
       TunnelName   = cloudflare_zero_trust_tunnel_cloudflared.homelab.name
       TunnelID     = cloudflare_zero_trust_tunnel_cloudflared.homelab.id
-      TunnelSecret = base64encode(random_password.tunnel_secret.result)
+      TunnelSecret = random_id.tunnel_secret.b64_std
     })
   }
 }
