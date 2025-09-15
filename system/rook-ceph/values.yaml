@@ -5,9 +5,9 @@ rook-ceph:
   resources:
     requests:
       cpu: 55m
-      memory: 143Mi
+      memory: 500Mi
     limits:
-      memory: 143Mi
+      memory: 500Mi
 
   csi:
     cephfsplugin:
