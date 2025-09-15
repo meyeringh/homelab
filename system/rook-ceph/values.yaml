@@ -14,9 +14,9 @@ rook-ceph:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 101Mi
         limits:
-          memory: 100Mi
+          memory: 101Mi
 
     rbdplugin:
       resources:
@@ -30,41 +30,41 @@ rook-ceph:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 102Mi
         limits:
-          memory: 100Mi
+          memory: 102Mi
 
     provisioner:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 103Mi
         limits:
-          memory: 100Mi
+          memory: 103Mi
 
     snapshotter:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 104Mi
         limits:
-          memory: 100Mi
+          memory: 104Mi
 
     attacher:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 105Mi
         limits:
-          memory: 100Mi
+          memory: 105Mi
 
     resizer:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 106Mi
         limits:
-          memory: 100Mi
+          memory: 106Mi
 
 rook-ceph-cluster:
   monitoring:
@@ -101,16 +101,16 @@ rook-ceph-cluster:
           memory: "2846Mi"
       crashcollector:
         limits:
-          memory: "100Mi"
+          memory: "107Mi"
         requests:
           cpu: "10m"
-          memory: "100Mi"
+          memory: "107Mi"
       exporter:
         limits:
-          memory: "100Mi"
+          memory: "108Mi"
         requests:
           cpu: "15m"
-          memory: "100Mi"
+          memory: "108Mi"
   cephBlockPools:
     - name: builtin-mgr
       spec:
