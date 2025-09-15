@@ -156,12 +156,6 @@ rook-ceph-cluster:
         metadataServer:
           activeCount: 1
           activeStandby: false
-          resources:
-            limits:
-              memory: "100Mi"
-            requests:
-              cpu: "10m"
-              memory: "100Mi"
           priorityClassName: system-cluster-critical
       storageClass:
         enabled: true
