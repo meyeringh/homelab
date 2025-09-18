@@ -12,7 +12,7 @@ app-template:
         git-sync:
           image:
             repository: registry.k8s.io/git-sync/git-sync
-            tag: v4.4.3
+            tag: v4.5.0
           args:
             - "--repo=http://gitea-http.gitea:3000/ops/meyeringh-org"
             - "--ref=HEAD"
