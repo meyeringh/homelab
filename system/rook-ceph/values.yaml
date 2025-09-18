@@ -1,71 +1,6 @@
 rook-ceph:
   monitoring:
     enabled: true
-
-  resources:
-    requests:
-      cpu: 55m
-      memory: 500Mi
-    limits:
-      memory: 500Mi
-
-  csi:
-    cephfsplugin:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 101Mi
-        limits:
-          memory: 101Mi
-
-    rbdplugin:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 154Mi
-        limits:
-          memory: 154Mi
-
-    csiAddons:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 102Mi
-        limits:
-          memory: 102Mi
-
-    provisioner:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 103Mi
-        limits:
-          memory: 103Mi
-
-    snapshotter:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 104Mi
-        limits:
-          memory: 104Mi
-
-    attacher:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 105Mi
-        limits:
-          memory: 105Mi
-
-    resizer:
-      resources:
-        requests:
-          cpu: 10m
-          memory: 106Mi
-        limits:
-          memory: 106Mi
-
 rook-ceph-cluster:
   monitoring:
     enabled: true
@@ -81,36 +16,6 @@ rook-ceph-cluster:
       enabled: false
     removeOSDsIfOutAndSafeToRemove: true
     resources:
-      mgr:
-        limits:
-          memory: "665Mi"
-        requests:
-          cpu: "40m"
-          memory: "665Mi"
-      mon:
-        limits:
-          memory: "512Mi"
-        requests:
-          cpu: "26m"
-          memory: "512Mi"
-      osd:
-        limits:
-          memory: "2846Mi"
-        requests:
-          cpu: "65m"
-          memory: "2846Mi"
-      crashcollector:
-        limits:
-          memory: "107Mi"
-        requests:
-          cpu: "10m"
-          memory: "107Mi"
-      exporter:
-        limits:
-          memory: "108Mi"
-        requests:
-          cpu: "15m"
-          memory: "108Mi"
   cephBlockPools:
     - name: builtin-mgr
       spec:
