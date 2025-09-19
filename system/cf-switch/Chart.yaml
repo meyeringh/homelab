@@ -3,5 +3,5 @@ name: cf-switch
 version: 0.0.0
 dependencies:
   - name: cf-switch
-    version: 0.8.0
+    version: 0.9.0
     repository: https://meyeringh.github.io/cf-switch/
