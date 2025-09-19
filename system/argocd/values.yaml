@@ -177,3 +177,7 @@ argocd-apps:
             kind: ClusterRoleBinding
             jsonPointers:
             - /metadata/labels
+      # This is here so we can temporarily pause syncing
+      ignoreApplicationDifferences:
+        - jsonPointers:
+            - /spec/syncPolicy
