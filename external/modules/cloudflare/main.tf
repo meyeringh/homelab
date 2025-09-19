@@ -111,7 +111,8 @@ resource "cloudflare_api_token" "cf_switch" {
     {
       permission_groups = [
         { id = "c8fed203ed3043cba015a93ad1616f1f" }, # Zone:Zone:Read
-        { id = "3030687196b94b638145a3953da2b699" }  # Zone:Zone Settings:Write
+        { id = "dbc512b354774852af2b5a5f4ba3d470" }, # Zone:Zone WAF:Read
+        { id = "fb6778dc191143babbfaa57993f1d275" } # Zone:Zone WAF:Write
       ]
       resources = {
         "com.cloudflare.api.account.zone.*" = "*"
