@@ -12,8 +12,8 @@ This is based on [Khue's Homelab](https://github.com/khuedoan/homelab). Go there
 
 - `Gigabyte B450 AORUS ELITE V2`:
     - CPU: `AMD Ryzen 5 2600`
-    - RAM: `32GB`
-    - SSD: `256GB`
+    - RAM: `64GB`
+    - SSD: `512GB`
     - 4 × HDD: `4TB`
 - Backup Server: `Raspberry Pi 4`
     - PoE HAT
