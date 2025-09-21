@@ -5,6 +5,6 @@ renovate:
     config: |
       {
         "platform": "github",
-        "repositories": ["meyeringh/homelab"]
+        "repositories": ["meyeringh/homelab", "meyeringh/cf-switch"]
       }
   existingSecret: renovate-secret
