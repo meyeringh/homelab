@@ -3,5 +3,5 @@ name: vaultwarden
 version: 0.0.0
 dependencies:
   - name: vaultwarden
-    version: 0.34.3
+    version: 0.34.4
     repository: https://guerzon.github.io/vaultwarden
