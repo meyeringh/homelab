@@ -142,6 +142,7 @@ if args.action == "setup":
                     "pruneIntervalDays": 0,
                     "repository": secret,
                     "retain": {
+                        "monthly": 2,
                         "weekly": 2,
                         "daily": 2,
                     },
