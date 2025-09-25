@@ -39,7 +39,7 @@ gitea:
         DEFAULT_BRANCH: master
       oauth2_client:
         ENABLE_AUTO_REGISTRATION: true
-        USERNAME: preferred_username
+        USERNAME: name
       service.explore:
         DISABLE_USERS_PAGE: true
       actions:
