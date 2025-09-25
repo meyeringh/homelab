@@ -39,7 +39,7 @@ gitea:
         DEFAULT_BRANCH: master
       oauth2_client:
         ENABLE_AUTO_REGISTRATION: true
-        USERNAME: name
+        # We dont't set USERNAME and stuff here, because no matter what i tried i could not get it to work. So now the user has to set his username and email afer initial login.
       service.explore:
         DISABLE_USERS_PAGE: true
       actions:
