@@ -26,8 +26,8 @@ gitea:
     oauth:
     - name: Dex
       provider: openidConnect
+      secret: gitea-sso-secrets
       key: GITEA_CLIENT_SECRET
-      existingSecret: gitea-sso-secrets
       autoDiscoverUrl: https://dex.meyeringh.org/.well-known/openid-configuration
     config:
       server:
