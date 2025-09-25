@@ -37,9 +37,9 @@ gitea:
         DISABLED_REPO_UNITS: repo.wiki,repo.projects,repo.packages
         DISABLE_STARS: true
         DEFAULT_BRANCH: master
-        oauth2_client:
-          ENABLE_AUTO_REGISTRATION: true
-          USERNAME: userid
+      oauth2_client:
+        ENABLE_AUTO_REGISTRATION: true
+        USERNAME: userid
       service.explore:
         DISABLE_USERS_PAGE: true
       actions:
