@@ -97,6 +97,26 @@ app-template:
                   port: 6379
                 periodSeconds: 10
                 failureThreshold: 60
+        rclone:
+          image:
+            repository: rclone/rclone
+            tag: 1.71.1
+          command: ["/bin/sh","-c"]
+          args:
+            - >
+              mkdir -p /paperless-data/consume &&
+              while true; do
+                rclone move nextcloud: /paperless-data/consume
+                  --config /config/rclone.conf
+                  --include "*.pdf" --include "*.jpg" --include "*.jpeg" --include "*.png" --include "*.tif" --include "*.tiff"
+                  --no-traverse
+                sleep 30;
+              done
+          volumeMounts:
+            - name: rclone-config
+              mountPath: /config
+            - name: data
+              mountPath: /paperless-data
   service:
     paperless:
       controller: paperless
@@ -137,3 +157,13 @@ app-template:
               subPath: data
             - path: /usr/src/paperless/media
               subPath: media
+            - path: /usr/src/paperless/consume
+              subPath: consume
+    rclone-config:
+      type: secret
+      name: nextcloud-webdav-secret
+      defaultMode: 0440
+      advancedMounts:
+        paperless:
+          rclone:
+            - path: /config
