@@ -65,6 +65,7 @@ dex:
         name: Jellyfin
         redirectURIs:
           - 'https://media.meyeringh.org/sso/OID/redirect/dex'
+          - 'http://media.meyeringh.org/sso/OID/redirect/dex'
         secretEnv: JELLYFIN_CLIENT_SECRET
   envFrom:
     - secretRef:
