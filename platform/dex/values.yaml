@@ -64,7 +64,7 @@ dex:
       - id: jellyfin
         name: Jellyfin
         redirectURIs:
-          - 'https://family.meyeringh.org/index.php?route=/OAuth2Client'
+          - 'https://media.meyeringh.org/sso/OID/redirect/dex'
         secretEnv: JELLYFIN_CLIENT_SECRET
   envFrom:
     - secretRef:
