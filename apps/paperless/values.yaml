@@ -106,10 +106,8 @@ app-template:
             - >
               mkdir -p /consume &&
               while true; do
-                rclone move nextcloud: /consume
-                  --config /config/rclone.conf
-                  --include "*.pdf" --include "*.jpg" --include "*.jpeg" --include "*.png" --include "*.tif" --include "*.tiff"
-                  --no-traverse
+                chown -R 1000:1000 /consume &&
+                rclone move nextcloud: /consume --config /config/rclone.conf --include "*.pdf" --include "*.jpg" --include "*.jpeg" --include "*.png" --include "*.tif" --include "*.tiff" --no-traverse &&
                 sleep 30;
               done
   service:
