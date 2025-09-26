@@ -104,19 +104,14 @@ app-template:
           command: ["/bin/sh","-c"]
           args:
             - >
-              mkdir -p /paperless-data/consume &&
+              mkdir -p /consume &&
               while true; do
-                rclone move nextcloud: /paperless-data/consume
+                rclone move nextcloud: /consume
                   --config /config/rclone.conf
                   --include "*.pdf" --include "*.jpg" --include "*.jpeg" --include "*.png" --include "*.tif" --include "*.tiff"
                   --no-traverse
                 sleep 30;
               done
-          volumeMounts:
-            - name: rclone-config
-              mountPath: /config
-            - name: data
-              mountPath: /paperless-data
   service:
     paperless:
       controller: paperless
@@ -158,6 +153,9 @@ app-template:
             - path: /usr/src/paperless/media
               subPath: media
             - path: /usr/src/paperless/consume
+              subPath: consume
+          rclone:
+            - path: /consume
               subPath: consume
     rclone-config:
       type: secret
