@@ -18,6 +18,19 @@ grafana:
         hosts:
           - *host
   envFromSecret: grafana-secrets
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://kube-prometheus-stack-prometheus.monitoring-system:9090
+          access: proxy
+          isDefault: true
+        - name: Loki
+          type: loki
+          url: http://loki.loki:3100
+          access: proxy
   grafana.ini:
     server:
       root_url: https://grafana.meyeringh.org
