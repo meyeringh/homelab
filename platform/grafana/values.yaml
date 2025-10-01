@@ -24,7 +24,7 @@ grafana:
       datasources:
         - name: Prometheus
           type: prometheus
-          url: http://kube-prometheus-stack-prometheus.monitoring-system:9090
+          url: http://monitoring-system-kube-pro-prometheus.monitoring-system:9090
           access: proxy
           isDefault: true
         - name: Loki
