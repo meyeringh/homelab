@@ -5,6 +5,10 @@ nextcloud:
         http:
           port: 80
           protocol: HTTP
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
   ingress:
     enabled: true
     className: nginx

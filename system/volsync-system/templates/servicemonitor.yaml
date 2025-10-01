@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: volsync-metrics
+  namespace: volsync-system
+spec:
+  selector:
+    matchLabels:
+      control-plane: volsync-controller
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
