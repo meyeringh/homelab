@@ -32,14 +32,6 @@ argo-cd:
         memory: 781Mi
     metrics: *metrics
 
-  applicationSet:
-    resources:
-      requests:
-        cpu: 61m
-        memory: 100Mi
-      limits:
-        memory: 100Mi
-
   notifications:
     resources:
       requests:
