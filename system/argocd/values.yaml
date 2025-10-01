@@ -3,12 +3,6 @@ argo-cd:
     domain: argocd.meyeringh.org
   
   controller:
-    resources:
-      requests:
-        cpu: 129m
-        memory: 596Mi
-      limits:
-        memory: 596Mi
     metrics: &metrics
       enabled: true
       serviceMonitor:
