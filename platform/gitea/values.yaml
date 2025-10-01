@@ -28,6 +28,10 @@ gitea:
       provider: openidConnect
       existingSecret: gitea-sso-secrets
       autoDiscoverUrl: https://dex.meyeringh.org/.well-known/openid-configuration
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     config:
       server:
         LANDING_PAGE: explore

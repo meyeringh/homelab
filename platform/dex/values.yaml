@@ -6,6 +6,9 @@ dex:
     limits:
       memory: 100Mi
 
+  serviceMonitor:
+    enabled: true
+
   config:
     issuer: https://dex.meyeringh.org
     storage:

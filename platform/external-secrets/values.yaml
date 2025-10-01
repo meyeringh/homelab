@@ -6,6 +6,9 @@ external-secrets:
     limits:
       memory: 100Mi
 
+  serviceMonitor:
+    enabled: true
+
   certController:
     resources:
       requests:
@@ -13,6 +16,8 @@ external-secrets:
         memory: 120Mi
       limits:
         memory: 120Mi
+    serviceMonitor:
+      enabled: true
 
   webhook:
     resources:
@@ -21,3 +26,5 @@ external-secrets:
         memory: 100Mi
       limits:
         memory: 100Mi
+    serviceMonitor:
+      enabled: true
