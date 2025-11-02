@@ -3,7 +3,7 @@ module git.meyeringh.org/khuedoan/homelab/gitea/config
 go 1.23.0
 
 require (
-	code.gitea.io/sdk/gitea v0.22.0
+	code.gitea.io/sdk/gitea v0.22.1
 	gopkg.in/yaml.v3 v3.0.1
 )
 
