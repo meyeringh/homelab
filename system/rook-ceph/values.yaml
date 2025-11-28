@@ -15,6 +15,9 @@ rook-ceph-cluster:
     logCollector:
       enabled: false
     removeOSDsIfOutAndSafeToRemove: true
+    storage:
+      config:
+        bluestore_slow_ops_warn_threshold: "10"
     resources:
       osd:
         limits:
