@@ -7,7 +7,7 @@ rook-ceph-cluster:
     createPrometheusRules: true
   cephClusterSpec:
     cephConfig:
-      global:
+      osd:
         bluestore_slow_ops_warn_threshold: "10"
     mon:
       count: 1
