@@ -47,9 +47,9 @@ app-template:
           resources:
             requests:
               cpu: 10m
-              memory: 1000Mi
+              memory: 2000Mi
             limits:
-              memory: 1000Mi
+              memory: 2000Mi
           probes:
             liveness:
               enabled: true
