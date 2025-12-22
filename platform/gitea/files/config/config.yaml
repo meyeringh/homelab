@@ -3,10 +3,4 @@ organizations:
     description: Operations
     teams:
       - name: Owners
-repositories:
-  - name: meyeringh-org
-    owner: ops
-    private: false
-    migrate:
-      source: https://github.com/meyeringh/meyeringh-org
-      mirror: true
+repositories: []
