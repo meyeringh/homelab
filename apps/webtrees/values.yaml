@@ -143,18 +143,3 @@ app-template:
             - path: /modules_v4
           app:
             - path: /var/www/html/modules_v4
-mariadb:
-  auth:
-    existingSecret: webtrees-db
-  primary:
-    persistence:
-      enabled: true
-      accessModes:
-        - ReadWriteOnce
-      size: 5Gi
-    resources:
-      requests:
-        cpu: 22m
-        memory: 146Mi
-      limits:
-        memory: 146Mi

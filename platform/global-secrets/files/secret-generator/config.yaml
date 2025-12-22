@@ -69,17 +69,6 @@
       special: true
 
 # Webtrees
-- name: webtrees.webtrees-db
-  data:
-    - key: mariadb-root-password
-      length: 32
-      special: false
-    - key: mariadb-replication-password
-      length: 32
-      special: false
-    - key: mariadb-password
-      length: 32
-      special: false
 - name: webtrees.webtrees
   data:
     - key: adminPassword
