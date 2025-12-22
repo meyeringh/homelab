@@ -4,12 +4,6 @@ organizations:
     teams:
       - name: Owners
 repositories:
-  - name: homelab
-    owner: ops
-    private: false
-    migrate:
-      source: https://github.com/meyeringh/homelab
-      mirror: true
   - name: meyeringh-org
     owner: ops
     private: false

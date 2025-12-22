@@ -107,7 +107,7 @@ argocd-apps:
       namespace: argocd
       generators:
         - git:
-            repoURL: &repoURL http://gitea-http.gitea:3000/ops/homelab
+            repoURL: &repoURL https://github.com/meyeringh/homelab
             revision: &revision master
             directories:
               - path: system/*
