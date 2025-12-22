@@ -75,13 +75,14 @@ app-template:
             tag: 2.2.4
             pullPolicy: Always
           env:
-            DB_HOST: webtrees-mariadb
-            DB_USER: root
+            DB_TYPE: postgres
+            DB_HOST: webtrees-postgres-rw
+            DB_USER: webtrees
             DB_PASSWORD:
               valueFrom:
                 secretKeyRef:
-                  name: webtrees-db
-                  key: mariadb-root-password
+                  name: webtrees-postgres-app
+                  key: password
             DB_NAME: webtrees
             WT_ADMIN: admin
             WT_ADMINPW:
