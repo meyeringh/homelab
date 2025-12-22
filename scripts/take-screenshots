@@ -14,10 +14,6 @@ from selenium import webdriver
 
 apps = [
     {
-        'name': 'gitea',
-        'url': 'https://git.khuedoan.com/ops/homelab'
-    },
-    {
         'name': 'argocd',
         'url': 'https://argocd.khuedoan.com/applications/root'
     },

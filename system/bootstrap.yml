@@ -11,8 +11,9 @@
     - name: Check if this is the first installation
       kubernetes.core.k8s_info:
         kind: Pod
+        namespace: monitoring-system
         label_selectors:
-          - app.kubernetes.io/instance=gitea
+          - app.kubernetes.io/name=prometheus
         field_selectors:
           - status.phase=Running
       register: first_install

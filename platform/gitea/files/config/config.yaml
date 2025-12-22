@@ -1,6 +1,0 @@
-organizations:
-  - name: ops
-    description: Operations
-    teams:
-      - name: Owners
-repositories: []
