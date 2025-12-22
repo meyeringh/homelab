@@ -73,6 +73,7 @@ app-template:
           image:
             repository: dtjs48jkt/webtrees
             tag: 2.2.4
+            pullPolicy: Always
           env:
             DB_HOST: webtrees-mariadb
             DB_USER: root
