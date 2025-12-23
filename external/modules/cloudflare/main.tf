@@ -21,7 +21,7 @@ resource "cloudflare_dns_record" "tunnel" {
   ttl     = 1 # Auto
 }
 
-resource "kubernetes_secret" "cloudflared_credentials" {
+resource "kubernetes_secret_v1" "cloudflared_credentials" {
   metadata {
     name      = "cloudflared-credentials"
     namespace = "cloudflared"
@@ -49,15 +49,13 @@ resource "cloudflare_api_token" "external_dns" {
         { id = "c8fed203ed3043cba015a93ad1616f1f" }, # Zone:Zone:Read
         { id = "4755a26eedb94da69e1066d98aa820be" }  # Zone:DNS:Edit
       ]
-      resources = {
-        "com.cloudflare.api.account.zone.*" = "*"
-      }
-      effect = "allow"
+      resources = jsonencode({ "com.cloudflare.api.account.zone.*" = "*" })
+      effect    = "allow"
     }
   ]
 }
 
-resource "kubernetes_secret" "external_dns_token" {
+resource "kubernetes_secret_v1" "external_dns_token" {
   metadata {
     name      = "cloudflare-api-token"
     namespace = "external-dns"
@@ -81,15 +79,13 @@ resource "cloudflare_api_token" "cert_manager" {
         { id = "c8fed203ed3043cba015a93ad1616f1f" }, # Zone:Zone:Read
         { id = "4755a26eedb94da69e1066d98aa820be" }  # Zone:DNS:Edit
       ]
-      resources = {
-        "com.cloudflare.api.account.zone.*" = "*"
-      }
-      effect = "allow"
+      resources = jsonencode({ "com.cloudflare.api.account.zone.*" = "*" })
+      effect    = "allow"
     }
   ]
 }
 
-resource "kubernetes_secret" "cert_manager_token" {
+resource "kubernetes_secret_v1" "cert_manager_token" {
   metadata {
     name      = "cloudflare-api-token"
     namespace = "cert-manager"
@@ -114,15 +110,13 @@ resource "cloudflare_api_token" "cf_switch" {
         { id = "dbc512b354774852af2b5a5f4ba3d470" }, # Zone:Zone WAF:Read
         { id = "fb6778dc191143babbfaa57993f1d275" } # Zone:Zone WAF:Write
       ]
-      resources = {
-        "com.cloudflare.api.account.zone.*" = "*"
-      }
-      effect = "allow"
+      resources = jsonencode({ "com.cloudflare.api.account.zone.*" = "*" })
+      effect    = "allow"
     }
   ]
 }
 
-resource "kubernetes_secret" "cf_switch_token" {
+resource "kubernetes_secret_v1" "cf_switch_token" {
   metadata {
     name      = "cloudflare-api-token"
     namespace = "cf-switch"
