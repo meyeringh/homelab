@@ -1,0 +1,98 @@
+app-template:
+  controllers:
+    rustdesk:
+      containers:
+        hbbs:
+          image:
+            repository: rustdesk/rustdesk-server
+            tag: "1.1.14"
+          args: ["hbbs", "-r", "rustdesk.meyeringh.org:21117"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 21116
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 21116
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 21116
+                periodSeconds: 5
+                failureThreshold: 30
+        hbbr:
+          image:
+            repository: rustdesk/rustdesk-server
+            tag: "1.1.14"
+          args: ["hbbr"]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 21117
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 21117
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 21117
+                periodSeconds: 5
+                failureThreshold: 30
+  service:
+    rustdesk:
+      controller: rustdesk
+      type: LoadBalancer
+      ports:
+        hbbs-nat:
+          port: 21115
+          protocol: TCP
+        hbbs-id-tcp:
+          port: 21116
+          protocol: TCP
+        hbbs-id-udp:
+          port: 21116
+          protocol: UDP
+        hbbr-relay:
+          port: 21117
+          protocol: TCP
+  persistence:
+    data:
+      accessMode: ReadWriteOnce
+      size: 100Mi
+      retain: true
+      globalMounts:
+        - path: /root

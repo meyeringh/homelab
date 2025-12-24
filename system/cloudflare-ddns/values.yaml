@@ -1,0 +1,34 @@
+app-template:
+  controllers:
+    cloudflare-ddns:
+      containers:
+        app:
+          image:
+            repository: favonia/cloudflare-ddns
+            tag: latest
+          env:
+            IP4_DOMAINS: rustdesk.meyeringh.org
+            UPDATE_CRON: "@every 5m"
+            CLOUDFLARE_API_TOKEN:
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-api-token
+                  key: token
+          resources:
+            requests:
+              cpu: 5m
+              memory: 16Mi
+            limits:
+              memory: 32Mi
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
