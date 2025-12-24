@@ -130,3 +130,33 @@ resource "kubernetes_secret_v1" "cf_switch_token" {
     "token" = cloudflare_api_token.cf_switch.value
   }
 }
+
+resource "cloudflare_api_token" "cloudflare_ddns" {
+  name = "homelab_cloudflare_ddns"
+
+  policies = [
+    {
+      permission_groups = [
+        { id = "c8fed203ed3043cba015a93ad1616f1f" }, # Zone:Zone:Read
+        { id = "4755a26eedb94da69e1066d98aa820be" }  # Zone:DNS:Edit
+      ]
+      resources = jsonencode({ "com.cloudflare.api.account.zone.*" = "*" })
+      effect    = "allow"
+    }
+  ]
+}
+
+resource "kubernetes_secret_v1" "cloudflare_ddns_token" {
+  metadata {
+    name      = "cloudflare-api-token"
+    namespace = "cloudflare-ddns"
+
+    annotations = {
+      "app.kubernetes.io/managed-by" = "Terraform"
+    }
+  }
+
+  data = {
+    "token" = cloudflare_api_token.cloudflare_ddns.value
+  }
+}
