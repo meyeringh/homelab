@@ -59,6 +59,11 @@ dex:
         redirectURIs:
           - 'https://family.meyeringh.org/index.php?route=/OAuth2Client'
         secretEnv: WEBTREES_CLIENT_SECRET
+      - id: webtrees-test
+        name: Webtrees Test
+        redirectURIs:
+          - 'https://unrefunding-holly-wrathfully.ngrok-free.dev/index.php?route=/OAuth2Client'
+        secretEnv: WEBTREES_TEST_CLIENT_SECRET
       - id: jellyfin
         name: Jellyfin
         redirectURIs:

@@ -19,6 +19,11 @@
     - key: client_secret
       length: 32
       special: false
+- name: dex.webtrees-test
+  data:
+    - key: client_secret
+      length: 32
+      special: false
 - name: dex.argocd
   data:
     - key: client_secret
