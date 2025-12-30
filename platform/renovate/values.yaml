@@ -5,6 +5,14 @@ renovate:
     config: |
       {
         "platform": "github",
-        "repositories": ["meyeringh/homelab", "meyeringh/cf-switch"]
+        "repositories": ["meyeringh/homelab", "meyeringh/cf-switch"],
+        "automerge": true,
+        "automergeType": "pr",
+        "packageRules": [
+          {
+            "matchUpdateTypes": ["major"],
+            "automerge": false
+          }
+        ]
       }
   existingSecret: renovate-secret
