@@ -3,12 +3,6 @@ ingress-nginx:
     allowSnippetAnnotations: true
     config:
       annotations-risk-level: "Critical"
-    resources:
-      requests:
-        cpu: 31m
-        memory: 344Mi
-      limits:
-        memory: 344Mi
     admissionWebhooks:
       timeoutSeconds: 30
     metrics:
