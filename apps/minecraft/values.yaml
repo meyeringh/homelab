@@ -1,6 +1,7 @@
 app-template:
   controllers:
     minecraft:
+      replicas: 0  # Set to 0 to stop, 1 to start
       pod:
         securityContext:
           fsGroup: 1000
