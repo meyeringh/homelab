@@ -1,46 +1,83 @@
-vaultwarden:
-  resources:
-    requests:
-      cpu: 10m
-      memory: 100Mi
-    limits:
-      memory: 100Mi
+app-template:
+  controllers:
+    vaultwarden:
+      containers:
+        app:
+          image:
+            repository: docker.io/vaultwarden/server
+            tag: 1.35.2
+          env:
+            DOMAIN: "https://vault.meyeringh.org"
+            ADMIN_TOKEN:
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-admin
+                  key: ADMIN_TOKEN
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 80
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 80
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 80
+                periodSeconds: 10
+                failureThreshold: 60
+
+  service:
+    app:
+      controller: vaultwarden
+      ports:
+        http:
+          port: 80
 
   ingress:
-    enabled: true
-    class: "nginx"
-    hostname: vault.meyeringh.org
-    tlsSecret: vaultwarden-tls-certificate
-    additionalAnnotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-      external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-      external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    main:
+      enabled: true
+      className: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+      hosts:
+        - host: &host vault.meyeringh.org
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: app
+                port: 80
+      tls:
+        - hosts:
+            - *host
+          secretName: vaultwarden-tls-certificate
 
-  domain: "https://vault.meyeringh.org"
-  livenessProbe:
-    httpGet:
-      path: /
-      port: http
-    periodSeconds: 10
-    failureThreshold: 3
-  readinessProbe:
-    httpGet:
-      path: /
-      port: http
-    periodSeconds: 10
-  startupProbe:
-    httpGet:
-      path: /
-      port: http
-    periodSeconds: 10
-    failureThreshold: 60
-  
-  adminToken:
-    existingSecret: "vaultwarden-admin"
-    existingSecretKey: "ADMIN_TOKEN"
-
-  storage:
+  persistence:
     data:
-      name: "vaultwarden-data"
-      size: "15Gi"
-      accessMode: "ReadWriteOnce"
+      type: persistentVolumeClaim
+      existingClaim: vaultwarden-data-vaultwarden-0
+      globalMounts:
+        - path: /data
