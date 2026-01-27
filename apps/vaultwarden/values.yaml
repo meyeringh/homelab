@@ -27,6 +27,26 @@ app-template:
                 secretKeyRef:
                   name: vaultwarden-sso-secrets
                   key: SSO_CLIENT_SECRET
+            SSO_SCOPES: "openid email profile"
+            SMTP_HOST: "mail.meyeringh.org"
+            SMTP_PORT: "587"
+            SMTP_SECURITY: "starttls"
+            SMTP_FROM:
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-mail-secret
+                  key: sender_mail
+            SMTP_FROM_NAME: "Vaultwarden"
+            SMTP_USERNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-mail-secret
+                  key: username
+            SMTP_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-mail-secret
+                  key: password
           resources:
             requests:
               cpu: 10m
