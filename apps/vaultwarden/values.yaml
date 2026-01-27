@@ -8,6 +8,11 @@ app-template:
             tag: 1.35.2
           env:
             DOMAIN: "https://vault.meyeringh.org"
+            DATABASE_URL:
+              valueFrom:
+                secretKeyRef:
+                  name: vaultwarden-postgres-app
+                  key: uri
             ADMIN_TOKEN:
               valueFrom:
                 secretKeyRef:
