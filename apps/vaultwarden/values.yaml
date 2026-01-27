@@ -112,7 +112,8 @@ app-template:
 
   persistence:
     data:
-      type: persistentVolumeClaim
-      existingClaim: vaultwarden-data-vaultwarden-0
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      retain: true
       globalMounts:
         - path: /data
