@@ -28,6 +28,7 @@ app-template:
                   name: vaultwarden-sso-secrets
                   key: SSO_CLIENT_SECRET
             SSO_SCOPES: "openid email profile"
+            SSO_PKCE: "false"
             SMTP_HOST: "mail.meyeringh.org"
             SMTP_PORT: "587"
             SMTP_SECURITY: "starttls"
