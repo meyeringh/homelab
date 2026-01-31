@@ -6,6 +6,8 @@ rook-ceph-cluster:
     enabled: true
     createPrometheusRules: true
   cephClusterSpec:
+    cephVersion:
+      imagePullPolicy: IfNotPresent
     cephConfig:
       osd:
         bluestore_slow_ops_warn_threshold: "15"
