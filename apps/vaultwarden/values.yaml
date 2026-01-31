@@ -19,7 +19,6 @@ app-template:
                   name: vaultwarden-admin
                   key: ADMIN_TOKEN
             SSO_ENABLED: "true"
-            SSO_ONLY: "true"
             SSO_AUTHORITY: "https://dex.meyeringh.org"
             SSO_CLIENT_ID: "vaultwarden"
             SSO_CLIENT_SECRET:
