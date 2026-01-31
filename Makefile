@@ -26,11 +26,11 @@ smoke-test:
 post-install:
 	@./scripts/hacks
 
-# TODO maybe there's a better way to manage backup with GitOps?
 backup:
 	./scripts/backup --action setup --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action setup --namespace=jellyfin --pvc=jellyfin
-	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
+	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden
+	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden-postgres-1
 	./scripts/backup --action setup --namespace=paperless --pvc=paperless
 	./scripts/backup --action setup --namespace=paperless --pvc=paperless-postgres-1
 	./scripts/backup --action setup --namespace=webtrees --pvc=webtrees
@@ -45,7 +45,8 @@ backup:
 restore:
 	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action restore --namespace=jellyfin --pvc=jellyfin
-	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden-data-vaultwarden-0
+	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden
+	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden-postgres-1
 	./scripts/backup --action restore --namespace=paperless --pvc=paperless
 	./scripts/backup --action restore --namespace=paperless --pvc=paperless-postgres-1
 	./scripts/backup --action restore --namespace=webtrees --pvc=webtrees
