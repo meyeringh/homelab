@@ -18,15 +18,6 @@ app-template:
                 secretKeyRef:
                   name: vaultwarden-admin
                   key: ADMIN_TOKEN
-            SSO_ENABLED: "true"
-            SSO_AUTHORITY: "https://dex.meyeringh.org"
-            SSO_CLIENT_ID: "vaultwarden"
-            SSO_CLIENT_SECRET:
-              valueFrom:
-                secretKeyRef:
-                  name: vaultwarden-sso-secrets
-                  key: SSO_CLIENT_SECRET
-            SSO_SCOPES: "openid email profile"
             SMTP_HOST: "mail.meyeringh.org"
             SMTP_PORT: "587"
             SMTP_SECURITY: "starttls"

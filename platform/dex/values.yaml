@@ -70,11 +70,6 @@ dex:
           - 'https://media.meyeringh.org/sso/OID/redirect/dex'
           - 'http://media.meyeringh.org/sso/OID/redirect/dex'
         secretEnv: JELLYFIN_CLIENT_SECRET
-      - id: vaultwarden
-        name: Vaultwarden
-        redirectURIs:
-          - 'https://vault.meyeringh.org/identity/connect/oidc-signin'
-        secretEnv: VAULTWARDEN_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets
