@@ -74,7 +74,7 @@ rook-ceph-cluster:
               size: 2
         metadataServer:
           activeCount: 1
-          activeStandby: false
+          activeStandby: true
           priorityClassName: system-cluster-critical
       storageClass:
         enabled: true
