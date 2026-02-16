@@ -7,6 +7,7 @@ rook-ceph-cluster:
     createPrometheusRules: true
   cephClusterSpec:
     cephVersion:
+      image: quay.io/ceph/ceph:v19.2.3
       imagePullPolicy: IfNotPresent
     cephConfig:
       osd:
