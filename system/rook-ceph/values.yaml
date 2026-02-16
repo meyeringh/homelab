@@ -10,6 +10,8 @@ rook-ceph-cluster:
       image: quay.io/ceph/ceph:v19.2.3
       imagePullPolicy: IfNotPresent
     cephConfig:
+      global:
+        mon_data_avail_warn: "15"
       osd:
         bluestore_slow_ops_warn_threshold: "15"
     mon:
