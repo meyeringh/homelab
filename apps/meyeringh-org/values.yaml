@@ -12,7 +12,7 @@ app-template:
         git-sync:
           image:
             repository: registry.k8s.io/git-sync/git-sync
-            tag: v4.5.1
+            tag: v4.6.0
           args:
             - "--repo=https://github.com/meyeringh/meyeringh-org"
             - "--ref=HEAD"
