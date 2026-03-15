@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: oauth2-shim-source
-  namespace: "{{ .Release.Namespace }}"
-data:
-{{ (.Files.Glob "files/oauth2-shim/*").AsConfig | indent 2 }}
