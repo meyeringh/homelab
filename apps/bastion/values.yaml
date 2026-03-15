@@ -1,0 +1,51 @@
+app-template:
+  controllers:
+    bastion:
+      pod:
+        securityContext:
+          fsGroup: 1000
+      initContainers:
+        fix-permissions:
+          image:
+            repository: busybox
+            tag: 1.37
+          command:
+            - sh
+            - -c
+            - |
+              chown -R 1000:1000 /home/meyeringh
+      containers:
+        app:
+          image:
+            repository: ghcr.io/meyeringh/bastion
+            tag: latest
+          env:
+            SSH_HOST_KEY_DIR: /home/meyeringh/.ssh-host-keys
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+  service:
+    bastion:
+      controller: bastion
+      type: LoadBalancer
+      ports:
+        ssh:
+          port: 2222
+          protocol: TCP
+  persistence:
+    home:
+      accessMode: ReadWriteOnce
+      size: 100Gi
+      retain: true
+      globalMounts:
+        - path: /home/meyeringh
