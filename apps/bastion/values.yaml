@@ -28,6 +28,7 @@ app-template:
             - |
               set -euo pipefail
               HOST_KEY_DIR="${SSH_HOST_KEY_DIR:-/etc/ssh/host_keys}"
+              SSHD_KEY_DIR="/etc/ssh/host_keys"
               mkdir -p "$HOST_KEY_DIR"
               for type in rsa ecdsa ed25519; do
                 key="$HOST_KEY_DIR/ssh_host_${type}_key"
@@ -35,6 +36,8 @@ app-template:
                   ssh-keygen -t "$type" -f "$key" -N "" -q
                   echo "Generated $key"
                 fi
+                ln -sf "$key" "$SSHD_KEY_DIR/ssh_host_${type}_key"
+                ln -sf "${key}.pub" "$SSHD_KEY_DIR/ssh_host_${type}_key.pub"
               done
               mkdir -p "$HOME/.ssh"
               chmod 700 "$HOME/.ssh"
