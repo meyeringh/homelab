@@ -7,7 +7,7 @@ app-template:
             repository: favonia/cloudflare-ddns
             tag: latest
           env:
-            IP4_DOMAINS: rustdesk.meyeringh.org
+            IP4_DOMAINS: rustdesk.meyeringh.org,bastion.meyeringh.org
             UPDATE_CRON: "@every 5m"
             CLOUDFLARE_API_TOKEN:
               valueFrom:
