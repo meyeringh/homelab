@@ -4,6 +4,7 @@ app-template:
       pod:
         securityContext:
           fsGroup: 1000
+        terminationGracePeriodSeconds: 60
       initContainers:
         fix-permissions:
           image:
@@ -51,13 +52,37 @@ app-template:
               memory: 256Mi
             limits:
               memory: 1Gi
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - "wall 'System shutting down in 30 seconds. Save your work.' && sleep 30"
           probes:
             liveness:
-              enabled: false
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 2222
+                periodSeconds: 10
+                failureThreshold: 3
             readiness:
-              enabled: false
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 2222
+                periodSeconds: 10
             startup:
-              enabled: false
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: 2222
+                periodSeconds: 10
+                failureThreshold: 60
   service:
     bastion:
       controller: bastion
