@@ -38,7 +38,7 @@
 ### Networking & DNS
 
 - [x] **NET-01**: bastion.meyeringh.org resolves to home IP via cloudflare-ddns (proxied: false)
-- [ ] **NET-02**: User can SSH from any device (phone, laptop) to bastion.meyeringh.org:2222
+- [x] **NET-02**: User can SSH from any device (phone, laptop) to bastion.meyeringh.org:2222
 
 ### Reliability
 
@@ -97,7 +97,7 @@
 | K8S-04 | Phase 2 | Complete |
 | K8S-05 | Phase 2 | Complete |
 | NET-01 | Phase 2 | Complete |
-| NET-02 | Phase 2 | Pending |
+| NET-02 | Phase 2 | Complete |
 | REL-01 | Phase 3 | Pending |
 | REL-02 | Phase 3 | Pending |
 | REL-03 | Phase 3 | Pending |
