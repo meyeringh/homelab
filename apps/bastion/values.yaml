@@ -19,6 +19,26 @@ app-template:
           image:
             repository: ghcr.io/meyeringh/bastion
             tag: latest
+          command:
+            - /usr/bin/tini
+            - --
+          args:
+            - bash
+            - -c
+            - |
+              set -euo pipefail
+              HOST_KEY_DIR="${SSH_HOST_KEY_DIR:-/etc/ssh/host_keys}"
+              mkdir -p "$HOST_KEY_DIR"
+              for type in rsa ecdsa ed25519; do
+                key="$HOST_KEY_DIR/ssh_host_${type}_key"
+                if [ ! -f "$key" ]; then
+                  ssh-keygen -t "$type" -f "$key" -N "" -q
+                  echo "Generated $key"
+                fi
+              done
+              mkdir -p "$HOME/.ssh"
+              chmod 700 "$HOME/.ssh"
+              exec /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config
           env:
             SSH_HOST_KEY_DIR: /home/meyeringh/.ssh-host-keys
           resources:

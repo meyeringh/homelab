@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-03-15T17:54:57.382Z"
-last_activity: 2026-03-15 -- Completed 01-01 (Bastion Container Image)
+status: in-progress
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-15T18:19:42Z"
+last_activity: 2026-03-15 -- Completed 02-01 (Bastion Helm Chart + DNS)
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
-  percent: 50
+  total_plans: 4
+  completed_plans: 3
+  percent: 100
 ---
 
 # Project State
@@ -21,33 +21,34 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-15)
 
 **Core value:** A consistent, always-available dev environment reachable from anywhere via SSH
-**Current focus:** Phase 1: Container Image + CI
+**Current focus:** Phase 2: Kubernetes Deployment + External Access
 
 ## Current Position
 
-Phase: 1 of 3 (Container Image + CI) -- COMPLETE
-Plan: 2 of 2 in current phase
-Status: Phase Complete
-Last activity: 2026-03-15 -- Completed 01-02 (GitHub Actions CI Pipeline)
+Phase: 2 of 3 (Kubernetes Deployment + External Access)
+Plan: 1 of 2 in current phase
+Status: In Progress
+Last activity: 2026-03-15 -- Completed 02-01 (Bastion Helm Chart + DNS)
 
-Progress: [██████████] 100%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 3.5 min
-- Total execution time: 0.12 hours
+- Total plans completed: 3
+- Average duration: 2.7 min
+- Total execution time: 0.13 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-container-image-ci | 2 | 7 min | 3.5 min |
+| 02-kubernetes-deployment-external-access | 1 | 1 min | 1 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (4 min), 01-02 (3 min)
-- Trend: stable
+- Last 5 plans: 01-01 (4 min), 01-02 (3 min), 02-01 (1 min)
+- Trend: improving
 
 *Updated after each plan completion*
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - [01-01]: Claude Code installed via native installer, PATH set via Dockerfile ENV
 - [01-01]: SSH host key dir configurable via SSH_HOST_KEY_DIR env var
 - [Phase 01-02]: docker/metadata-action for sha+latest tag generation, GHA cache for layer caching
+- [02-01]: No probes -- deferred to Phase 3 per CONTEXT
+- [02-01]: No External-Secrets -- authorized_keys managed manually on PVC
+- [02-01]: No ingress -- SSH is raw TCP via LoadBalancer
 
 ### Pending Todos
 
@@ -76,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T17:54:57.381Z
-Stopped at: Completed 01-02-PLAN.md
-Resume file: None
+Last session: 2026-03-15T18:19:42Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: .planning/phases/02-kubernetes-deployment-external-access/02-01-SUMMARY.md

@@ -12,8 +12,8 @@ Deliver a persistent SSH dev environment in the homelab K3s cluster, accessible 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Container Image + CI** - Dockerfile with all dev tooling and GitHub Actions pipeline pushing to GHCR
-- [ ] **Phase 2: Kubernetes Deployment + External Access** - Helm chart, StatefulSet, secrets, LoadBalancer, DNS exposure
+- [x] **Phase 1: Container Image + CI** - Dockerfile with all dev tooling and GitHub Actions pipeline pushing to GHCR (completed 2026-03-15)
+- [ ] **Phase 2: Kubernetes Deployment + External Access** - Helm chart, Deployment+PVC, LoadBalancer, DNS exposure
 - [ ] **Phase 3: Reliability + Hardening** - VolSync backups, graceful shutdown, health checks
 
 ## Phase Details
@@ -30,8 +30,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Dockerfile with SRE tooling, sshd config, entrypoint, local build + verification
-- [ ] 01-02-PLAN.md — GitHub Actions CI pipeline to build and push image to GHCR
+- [x] 01-01-PLAN.md — Dockerfile with SRE tooling, sshd config, entrypoint, local build + verification
+- [x] 01-02-PLAN.md — GitHub Actions CI pipeline to build and push image to GHCR
 
 ### Phase 2: Kubernetes Deployment + External Access
 **Goal**: User can SSH into bastion.meyeringh.org:2222 from any device with their SSH key
@@ -42,12 +42,12 @@ Plans:
   2. Files written to /home/meyeringh survive pod restarts (PVC persistence)
   3. SSH host key fingerprint remains stable across pod restarts (no warnings)
   4. ArgoCD shows bastion app healthy and synced
-  5. Authorized SSH keys update automatically when the External-Secrets source changes
-**Plans**: TBD
+  5. Authorized SSH keys managed manually on PVC (External-Secrets deferred)
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Bastion Helm chart (Chart.yaml + values.yaml) and cloudflare-ddns DNS config
+- [ ] 02-02-PLAN.md — Push to git, verify ArgoCD sync, end-to-end SSH verification
 
 ### Phase 3: Reliability + Hardening
 **Goal**: The bastion survives failures gracefully and home directory is backed up
@@ -69,6 +69,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Container Image + CI | 1/2 | In Progress|  |
-| 2. Kubernetes Deployment + External Access | 0/? | Not started | - |
+| 1. Container Image + CI | 2/2 | Complete    | 2026-03-15 |
+| 2. Kubernetes Deployment + External Access | 0/2 | In Progress | - |
 | 3. Reliability + Hardening | 0/? | Not started | - |

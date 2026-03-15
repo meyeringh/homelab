@@ -7,8 +7,8 @@
 
 ### SSH & Authentication
 
-- [ ] **SSH-01**: User can SSH into bastion on port 2222 with key-based authentication only
-- [ ] **SSH-02**: SSH host keys persist across pod restarts (no fingerprint warnings)
+- [x] **SSH-01**: User can SSH into bastion on port 2222 with key-based authentication only
+- [x] **SSH-02**: SSH host keys persist across pod restarts (no fingerprint warnings)
 - [x] **SSH-03**: Password authentication and root login are disabled
 - [ ] **SSH-04**: sshd health check auto-restarts pod if SSH server crashes
 
@@ -29,15 +29,15 @@
 
 ### Kubernetes Deployment
 
-- [ ] **K8S-01**: StatefulSet with PVC for /home/meyeringh persistence (Rook-Ceph)
-- [ ] **K8S-02**: LoadBalancer service exposing port 2222 via Cilium L2 (no Cloudflare tunnel)
-- [ ] **K8S-03**: Authorized SSH keys injected via External-Secrets operator
-- [ ] **K8S-04**: Helm wrapper chart in apps/bastion/ using bjw-s app-template
-- [ ] **K8S-05**: initContainer sets correct PVC ownership (UID 1000)
+- [x] **K8S-01**: StatefulSet with PVC for /home/meyeringh persistence (Rook-Ceph)
+- [x] **K8S-02**: LoadBalancer service exposing port 2222 via Cilium L2 (no Cloudflare tunnel)
+- [x] **K8S-03**: Authorized SSH keys injected via External-Secrets operator
+- [x] **K8S-04**: Helm wrapper chart in apps/bastion/ using bjw-s app-template
+- [x] **K8S-05**: initContainer sets correct PVC ownership (UID 1000)
 
 ### Networking & DNS
 
-- [ ] **NET-01**: bastion.meyeringh.org resolves to home IP via cloudflare-ddns (proxied: false)
+- [x] **NET-01**: bastion.meyeringh.org resolves to home IP via cloudflare-ddns (proxied: false)
 - [ ] **NET-02**: User can SSH from any device (phone, laptop) to bastion.meyeringh.org:2222
 
 ### Reliability
@@ -78,8 +78,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SSH-01 | Phase 2 | Pending |
-| SSH-02 | Phase 2 | Pending |
+| SSH-01 | Phase 2 | Complete |
+| SSH-02 | Phase 2 | Complete |
 | SSH-03 | Phase 1 | Complete |
 | SSH-04 | Phase 3 | Pending |
 | TOOL-01 | Phase 1 | Complete |
@@ -91,12 +91,12 @@
 | IMG-02 | Phase 1 | Complete |
 | IMG-03 | Phase 1 | Complete |
 | IMG-04 | Phase 1 | Complete |
-| K8S-01 | Phase 2 | Pending |
-| K8S-02 | Phase 2 | Pending |
-| K8S-03 | Phase 2 | Pending |
-| K8S-04 | Phase 2 | Pending |
-| K8S-05 | Phase 2 | Pending |
-| NET-01 | Phase 2 | Pending |
+| K8S-01 | Phase 2 | Complete |
+| K8S-02 | Phase 2 | Complete |
+| K8S-03 | Phase 2 | Complete |
+| K8S-04 | Phase 2 | Complete |
+| K8S-05 | Phase 2 | Complete |
+| NET-01 | Phase 2 | Complete |
 | NET-02 | Phase 2 | Pending |
 | REL-01 | Phase 3 | Pending |
 | REL-02 | Phase 3 | Pending |
