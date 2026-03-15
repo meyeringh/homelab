@@ -41,6 +41,7 @@ app-template:
                         echo "Generic_urlAccessToken='https://dex.meyeringh.org/token'" >> "$CONFIG"
                         echo "Generic_urlResourceOwnerDetails='https://dex.meyeringh.org/userinfo'" >> "$CONFIG"
                         echo "Generic_responseResourceOwnerUsername='preferred_username'" >> "$CONFIG"
+                        echo "Generic_responseResourceOwnerId='sub'" >> "$CONFIG"
                         echo "Generic_signInButtonLabel='Dex'" >> "$CONFIG"
                         echo "Generic_scopes='openid profile email'" >> "$CONFIG"
                       fi
