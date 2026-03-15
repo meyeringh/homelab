@@ -25,7 +25,7 @@
 - [x] **IMG-01**: Custom Docker image based on Ubuntu 24.04 with all tools pre-installed
 - [x] **IMG-02**: Image uses tini as PID 1 for proper signal handling and zombie reaping
 - [x] **IMG-03**: Image runs as non-root user meyeringh (UID 1000)
-- [ ] **IMG-04**: GitHub Actions CI pipeline builds and pushes image to ghcr.io/meyeringh/bastion
+- [x] **IMG-04**: GitHub Actions CI pipeline builds and pushes image to ghcr.io/meyeringh/bastion
 
 ### Kubernetes Deployment
 
@@ -90,7 +90,7 @@
 | IMG-01 | Phase 1 | Complete |
 | IMG-02 | Phase 1 | Complete |
 | IMG-03 | Phase 1 | Complete |
-| IMG-04 | Phase 1 | Pending |
+| IMG-04 | Phase 1 | Complete |
 | K8S-01 | Phase 2 | Pending |
 | K8S-02 | Phase 2 | Pending |
 | K8S-03 | Phase 2 | Pending |
