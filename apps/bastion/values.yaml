@@ -45,6 +45,7 @@ app-template:
               done
               mkdir -p "$HOME/.ssh" "$HOME/.config/op"
               chmod 700 "$HOME/.ssh" "$HOME/.config/op"
+              chmod 600 "$HOME/.config/op"/* 2>/dev/null || true
               exec /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config
           securityContext:
             capabilities:
