@@ -52,13 +52,7 @@ app-template:
               memory: 256Mi
             limits:
               memory: 1Gi
-          lifecycle:
-            preStop:
-              exec:
-                command:
-                  - /bin/bash
-                  - -c
-                  - "wall 'System shutting down in 30 seconds. Save your work.' && sleep 30"
+
           probes:
             liveness:
               enabled: true
