@@ -47,6 +47,7 @@ app-template:
               chmod 700 "$HOME/.ssh" "$HOME/.config/op"
               chmod 600 "$HOME/.config/op"/* 2>/dev/null || true
               grep -q 'git/dotfiles/bashrc' "$HOME/.bashrc" 2>/dev/null || echo '[ -f ~/git/dotfiles/bashrc ] && source ~/git/dotfiles/bashrc' >> "$HOME/.bashrc"
+              [ -f "$HOME/.bash_profile" ] || echo '[ -f ~/.bashrc ] && source ~/.bashrc' > "$HOME/.bash_profile"
               exec /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config
           securityContext:
             capabilities:
