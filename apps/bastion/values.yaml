@@ -28,6 +28,8 @@ app-template:
             - -c
             - |
               set -euo pipefail
+              sudo mkdir -p /dev/net && sudo mknod /dev/net/tun c 10 200 2>/dev/null || true
+              sudo chmod 666 /dev/net/tun
               HOST_KEY_DIR="${SSH_HOST_KEY_DIR:-/etc/ssh/host_keys}"
               SSHD_KEY_DIR="/etc/ssh/host_keys"
               mkdir -p "$HOST_KEY_DIR"
@@ -44,6 +46,10 @@ app-template:
               mkdir -p "$HOME/.ssh"
               chmod 700 "$HOME/.ssh"
               exec /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
           env:
             SSH_HOST_KEY_DIR: /home/meyeringh/.ssh-host-keys
           resources:
