@@ -43,8 +43,8 @@ app-template:
                 ln -sf "$key" "$SSHD_KEY_DIR/ssh_host_${type}_key"
                 ln -sf "${key}.pub" "$SSHD_KEY_DIR/ssh_host_${type}_key.pub"
               done
-              mkdir -p "$HOME/.ssh"
-              chmod 700 "$HOME/.ssh"
+              mkdir -p "$HOME/.ssh" "$HOME/.config/op"
+              chmod 700 "$HOME/.ssh" "$HOME/.config/op"
               exec /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config
           securityContext:
             capabilities:
