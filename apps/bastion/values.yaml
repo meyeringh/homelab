@@ -46,6 +46,13 @@ app-template:
               mkdir -p "$HOME/.ssh" "$HOME/.config/op"
               chmod 700 "$HOME/.ssh" "$HOME/.config/op"
               chmod 600 "$HOME/.config/op"/* 2>/dev/null || true
+              # clone repos if missing
+              mkdir -p "$HOME/git"
+              for repo in dotfiles bash-git-prompt; do
+                [ -d "$HOME/git/$repo" ] || git clone "https://github.com/meyeringh/$repo.git" "$HOME/git/$repo" 2>/dev/null || true
+              done
+              [ -d "$HOME/.bash-git-prompt" ] || git clone --depth=1 "https://github.com/magicmonty/bash-git-prompt.git" "$HOME/.bash-git-prompt" 2>/dev/null || true
+              # shell config
               grep -q 'git/dotfiles/bashrc' "$HOME/.bashrc" 2>/dev/null || echo '[ -f ~/git/dotfiles/bashrc ] && source ~/git/dotfiles/bashrc' >> "$HOME/.bashrc"
               [ -f "$HOME/.bash_profile" ] || echo '[ -f ~/.bashrc ] && source ~/.bashrc' > "$HOME/.bash_profile"
               exec /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config
