@@ -48,10 +48,8 @@ app-template:
               chmod 600 "$HOME/.config/op"/* 2>/dev/null || true
               # clone repos if missing
               mkdir -p "$HOME/git"
-              for repo in dotfiles bash-git-prompt; do
-                [ -d "$HOME/git/$repo" ] || git clone "https://github.com/meyeringh/$repo.git" "$HOME/git/$repo" 2>/dev/null || true
-              done
-              [ -d "$HOME/.bash-git-prompt" ] || git clone --depth=1 "https://github.com/magicmonty/bash-git-prompt.git" "$HOME/.bash-git-prompt" 2>/dev/null || true
+              [ -d "$HOME/git/dotfiles" ] || git clone "https://github.com/meyeringh/dotfiles.git" "$HOME/git/dotfiles" 2>/dev/null || true
+              [ -d "$HOME/git/bash-git-prompt" ] || git clone --depth=1 "https://github.com/magicmonty/bash-git-prompt.git" "$HOME/git/bash-git-prompt" 2>/dev/null || true
               # shell config
               grep -q 'git/dotfiles/bashrc' "$HOME/.bashrc" 2>/dev/null || echo '[ -f ~/git/dotfiles/bashrc ] && source ~/git/dotfiles/bashrc' >> "$HOME/.bashrc"
               [ -f "$HOME/.bash_profile" ] || echo '[ -f ~/.bashrc ] && source ~/.bashrc' > "$HOME/.bash_profile"
