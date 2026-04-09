@@ -100,7 +100,7 @@ app-template:
         rclone:
           image:
             repository: rclone/rclone
-            tag: 1.73.3
+            tag: 1.73.4
           command: ["/bin/sh","-c"]
           args:
             - >
