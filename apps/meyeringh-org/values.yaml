@@ -35,7 +35,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-apex
+          sectionName: https
       hostnames:
         - meyeringh.org
       annotations:

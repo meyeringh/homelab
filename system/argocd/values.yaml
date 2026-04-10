@@ -22,7 +22,7 @@ argo-cd:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - argocd.meyeringh.org
     metrics: *metrics

@@ -20,7 +20,7 @@ nextcloud:
     parentRefs:
       - name: main
         namespace: gateway
-        sectionName: https-wildcard
+        sectionName: https
     hostnames:
       - cloud.meyeringh.org
     rules:

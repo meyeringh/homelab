@@ -47,7 +47,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - auth.meyeringh.org
       annotations:

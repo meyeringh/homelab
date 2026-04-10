@@ -9,7 +9,7 @@ spec:
   parentRefs:
     - name: main
       namespace: gateway
-      sectionName: https-wildcard
+      sectionName: https
   hostnames:
     - home.meyeringh.org
   rules:

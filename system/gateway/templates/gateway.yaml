@@ -11,19 +11,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    - name: https-wildcard
-      hostname: "*.meyeringh.org"
-      port: 443
-      protocol: HTTPS
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: wildcard-meyeringh-org-tls
-      allowedRoutes:
-        namespaces:
-          from: All
-    - name: https-apex
-      hostname: "meyeringh.org"
+    - name: https
       port: 443
       protocol: HTTPS
       tls:

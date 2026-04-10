@@ -15,7 +15,7 @@ grafana:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - grafana.meyeringh.org
   envFromSecret: grafana-secrets

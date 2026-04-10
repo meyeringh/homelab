@@ -251,7 +251,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - media.meyeringh.org
       annotations:
@@ -265,7 +265,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - requests.meyeringh.org
       annotations:
@@ -279,7 +279,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - sabnzbd.meyeringh.org
       rules:
@@ -290,7 +290,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - prowlarr.meyeringh.org
       rules:
@@ -301,7 +301,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - radarr.meyeringh.org
       rules:
@@ -312,7 +312,7 @@ app-template:
       parentRefs:
         - name: main
           namespace: gateway
-          sectionName: https-wildcard
+          sectionName: https
       hostnames:
         - sonarr.meyeringh.org
       rules:
