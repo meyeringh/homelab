@@ -242,73 +242,83 @@ app-template:
           protocol: HTTP
   ingress:
     jellyfin:
-      enabled: true
-      className: nginx
+      enabled: false
+    servarr:
+      enabled: false
+
+  route:
+    jellyfin:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - media.meyeringh.org
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      hosts:
-        - host: &jellyfinHost media.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: jellyfin
-                port: http
-        - host: &jellyseerrHost requests.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: jellyfin
-                port: jellyseerr
-      tls:
-        - secretName: jellyfin-tls-certificate
-          hosts:
-            - *jellyfinHost
-            - *jellyseerrHost
-    servarr:
-      enabled: true
-      className: nginx
+      rules:
+        - backendRefs:
+            - identifier: jellyfin
+              port: http
+    jellyseerr:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - requests.meyeringh.org
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      hosts:
-        - host: &sabnzbdHost sabnzbd.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: jellyfin
-                port: sabnzbd
-        - host: &prowlarrHost prowlarr.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: jellyfin
-                port: prowlarr
-        - host: &radarrHost radarr.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: jellyfin
-                port: radarr
-        - host: &sonarrHost sonarr.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: jellyfin
-                port: sonarr
-      tls:
-        - secretName: servarr-tls-certificate
-          hosts:
-            - *sabnzbdHost
-            - *prowlarrHost
-            - *radarrHost
-            - *sonarrHost
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+      rules:
+        - backendRefs:
+            - identifier: jellyfin
+              port: jellyseerr
+    sabnzbd:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - sabnzbd.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: jellyfin
+              port: sabnzbd
+    prowlarr:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - prowlarr.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: jellyfin
+              port: prowlarr
+    radarr:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - radarr.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: jellyfin
+              port: radarr
+    sonarr:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - sonarr.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: jellyfin
+              port: sonarr
   persistence:
     data:
       enabled: true

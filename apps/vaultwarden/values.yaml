@@ -80,24 +80,23 @@ app-template:
 
   ingress:
     main:
-      enabled: true
-      className: nginx
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - vault.meyeringh.org
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      hosts:
-        - host: &host vault.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: app
-                port: 80
-      tls:
-        - hosts:
-            - *host
-          secretName: vaultwarden-tls-certificate
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: 80
 
   persistence:
     data:

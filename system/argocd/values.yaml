@@ -16,11 +16,15 @@ argo-cd:
       limits:
         memory: 100Mi
     ingress:
+      enabled: false
+    httproute:
       enabled: true
-      ingressClassName: nginx
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      tls: true
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - argocd.meyeringh.org
     metrics: *metrics
 
   repoServer:

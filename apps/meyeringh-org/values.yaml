@@ -28,24 +28,23 @@ app-template:
           port: 8080
   ingress:
     main:
-      enabled: true
-      className: nginx
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-apex
+      hostnames:
+        - meyeringh.org
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      hosts:
-        - host: &host meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: nginx
-                port: 8080
-      tls:
-        - hosts:
-            - *host
-          secretName: meyeringh-org-tls-certificate
+      rules:
+        - backendRefs:
+            - identifier: nginx
+              port: 8080
   persistence:
     data:
       enabled: true

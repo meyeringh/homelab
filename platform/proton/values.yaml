@@ -45,22 +45,20 @@ app-template:
           targetPort: 25
   ingress:
     main:
-      enabled: true
-      className: nginx
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      hosts:
-        - host: &host mail.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: app
-                port: 1025
-      tls:
-        - secretName: mail-tls-certificate
-          hosts:
-            - *host
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - mail.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: 1025
   persistence:
     state:
       enabled: true

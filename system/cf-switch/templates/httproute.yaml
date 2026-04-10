@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: cf-switch
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+spec:
+  parentRefs:
+    - name: main
+      namespace: gateway
+      sectionName: https-wildcard
+  hostnames:
+    - cf-switch.meyeringh.org
+  rules:
+    - backendRefs:
+        - name: cf-switch
+          port: 8080

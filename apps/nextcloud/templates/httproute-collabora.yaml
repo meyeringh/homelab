@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nextcloud-collabora
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+spec:
+  parentRefs:
+    - name: main
+      namespace: gateway
+      sectionName: https-wildcard
+  hostnames:
+    - collabora.meyeringh.org
+  rules:
+    - backendRefs:
+        - name: nextcloud-collabora
+          port: 9980

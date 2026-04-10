@@ -74,18 +74,4 @@ dex:
     - secretRef:
         name: dex-secrets
   ingress:
-    enabled: true
-    className: nginx
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-      external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-      external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-    hosts:
-      - host: &host dex.meyeringh.org
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-    tls:
-      - secretName: dex-tls-certificate
-        hosts:
-          - *host
+    enabled: false

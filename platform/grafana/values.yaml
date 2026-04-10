@@ -7,16 +7,17 @@ grafana:
       memory: 264Mi
 
   ingress:
-    enabled: true
-    ingressClassName: nginx
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-    hosts:
-      - &host grafana.meyeringh.org
-    tls:
-      - secretName: grafana-general-tls
-        hosts:
-          - *host
+    enabled: false
+
+  route:
+    main:
+      enabled: true
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - grafana.meyeringh.org
   envFromSecret: grafana-secrets
   datasources:
     datasources.yaml:

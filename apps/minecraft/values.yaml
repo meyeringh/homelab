@@ -83,22 +83,7 @@ app-template:
           targetPort: 25565
   ingress:
     main:
-      enabled: true
-      className: nginx
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      hosts:
-        - host: &host minecraft.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: app
-                port: 25565
-      tls:
-        - secretName: minecraft-tls-certificate
-          hosts:
-            - *host
+      enabled: false
   persistence:
     data:
       enabled: true

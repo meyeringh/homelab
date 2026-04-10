@@ -35,29 +35,28 @@ app-template:
           port: 80
         https:
           port: 443
+          appProtocol: https
         ldap:
           port: 636
   ingress:
     main:
-      enabled: true
-      className: nginx
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - auth.meyeringh.org
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-      hosts:
-        - host: &host auth.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: app
-                port: 443
-      tls:
-        - hosts:
-            - *host
-          secretName: kanidm-tls-certificate
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: 443
   persistence:
     config:
       enabled: true

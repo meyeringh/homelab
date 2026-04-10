@@ -47,25 +47,23 @@ app-template:
           port: 5006
   ingress:
     main:
-      enabled: true
-      className: nginx
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https-wildcard
+      hostnames:
+        - budget.meyeringh.org
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-        nginx.ingress.kubernetes.io/proxy-body-size: "0"
-      hosts:
-        - host: &host budget.meyeringh.org
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: app
-                port: 5006
-      tls:
-        - hosts:
-            - *host
-          secretName: actualbudget-tls-certificate
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: 5006
   persistence:
     data:
       accessMode: ReadWriteOnce

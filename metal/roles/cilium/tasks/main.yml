@@ -1,3 +1,14 @@
+- name: Download Gateway API CRDs
+  ansible.builtin.get_url:
+    url: "https://github.com/kubernetes-sigs/gateway-api/releases/download/{{ gateway_api_version }}/{{ gateway_api_channel }}-install.yaml"
+    dest: /tmp/gateway-api-crds.yaml
+    mode: "0644"
+
+- name: Install Gateway API CRDs
+  kubernetes.core.k8s:
+    state: present
+    src: /tmp/gateway-api-crds.yaml
+
 - name: Install Cilium
   kubernetes.core.helm:
     name: cilium
@@ -14,6 +25,8 @@
   loop:
     - ciliuml2announcementpolicies.cilium.io
     - ciliumloadbalancerippools.cilium.io
+    - gateways.gateway.networking.k8s.io
+    - httproutes.gateway.networking.k8s.io
   register: crd
   until: crd.resources | length > 0
   retries: 5
