@@ -11,7 +11,6 @@ cilium_values:
     enabled: true
   gatewayAPI:
     enabled: true
-    enableAppProtocol: true
   # TODO the host and port are k3s-specific, generic solution is in progress
   # https://github.com/cilium/cilium/issues/19038
   # https://github.com/cilium/cilium/pull/28741

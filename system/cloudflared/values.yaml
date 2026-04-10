@@ -29,12 +29,8 @@ app-template:
           ingress:
             - hostname: 'meyeringh.org'
               service: https://cilium-gateway-main.gateway
-              originRequest:
-                noTLSVerify: true
             - hostname: '*.meyeringh.org'
               service: https://cilium-gateway-main.gateway
-              originRequest:
-                noTLSVerify: true
             - service: http_status:404
   persistence:
     config:

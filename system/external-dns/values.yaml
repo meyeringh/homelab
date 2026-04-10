@@ -16,7 +16,6 @@ external-dns:
           name: cloudflare-api-token
           key: value
   sources:
-    - ingress
     - gateway-httproute
   extraArgs:
     - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
