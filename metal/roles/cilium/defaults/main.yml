@@ -1,5 +1,5 @@
 cilium_repo_url: https://helm.cilium.io
-cilium_version: 1.16.1
+cilium_version: 1.19.2
 cilium_namespace: kube-system
 gateway_api_version: v1.2.1
 gateway_api_channel: experimental
