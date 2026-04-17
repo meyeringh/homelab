@@ -3,9 +3,9 @@ loki-stack:
     resources:
       requests:
         cpu: 10m
-        memory: 244Mi
+        memory: 400Mi
       limits:
-        memory: 244Mi
+        memory: 400Mi
     serviceMonitor:
       enabled: true
 
