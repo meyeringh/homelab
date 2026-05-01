@@ -74,7 +74,7 @@ app-template:
                 failureThreshold: 60
           image:
             repository: dtjs48jkt/webtrees
-            tag: 2.2.5
+            tag: 2.2.6
           env:
             DB_TYPE: postgres
             DB_HOST: webtrees-postgres-rw
