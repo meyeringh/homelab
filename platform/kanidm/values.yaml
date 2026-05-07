@@ -6,7 +6,7 @@ app-template:
         app:
           image:
             repository: docker.io/kanidm/server
-            tag: 1.10.0
+            tag: 1.10.1
         # TODO remove when Cilium supports BackendTLSPolicy (upstream TLS)
         tls-proxy:
           image:
