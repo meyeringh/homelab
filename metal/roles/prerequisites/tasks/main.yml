@@ -1,3 +1,9 @@
+- name: Ensure python3-libdnf5 is installed (required by ansible dnf module on Fedora 41+)
+  ansible.builtin.command:
+    cmd: dnf install -y python3-libdnf5
+  register: libdnf5_install
+  changed_when: "'Installing' in libdnf5_install.stdout"
+
 - name: Adjust kernel parameters
   ansible.posix.sysctl:
     name: "{{ item.name }}"
