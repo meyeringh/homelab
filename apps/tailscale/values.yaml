@@ -1,4 +1,9 @@
 app-template:
+  # Tailscale stores its state in a k8s Secret (TS_KUBE_SECRET) and needs
+  # a mounted SA token to call the kube API. app-template v5 defaults
+  # automountServiceAccountToken to false, so re-enable it explicitly.
+  defaultPodOptions:
+    automountServiceAccountToken: true
   serviceAccount:
     tailscale: {}
   controllers:
