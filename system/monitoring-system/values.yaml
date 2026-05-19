@@ -22,6 +22,13 @@ kube-prometheus-stack:
         memory: 100Mi
       limits:
         memory: 100Mi
+    # Exclude Cilium-managed virtual interfaces from netdev metrics.
+    # Stops CephNodeNetworkPacketDrops from firing on transient per-pod veths.
+    # Filesystem args repeat the chart defaults — Helm replaces the whole list.
+    extraArgs:
+      - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|run/containerd/.+|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+      - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|erofs)$
+      - --collector.netdev.device-exclude=^(lxc.*|cilium_.*|veth.*)$
 
   # Disable controller manager monitoring for K3s
   # K3s embeds controller manager in the main server process
