@@ -41,7 +41,6 @@ backup:
 	./scripts/backup --action setup --namespace=nextcloud --pvc=nextcloud-postgres-1
 	./scripts/backup --action setup --namespace=nextcloud --pvc=nextcloud-nextcloud
 	./scripts/backup --action setup --namespace=nextcloud --pvc=redis-data-nextcloud-redis-master-0
-	./scripts/backup --action setup --namespace=bastion --pvc=bastion
 
 restore:
 	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget
@@ -58,7 +57,6 @@ restore:
 	./scripts/backup --action restore --namespace=nextcloud --pvc=nextcloud-postgres-1
 	./scripts/backup --action restore --namespace=nextcloud --pvc=nextcloud-nextcloud
 	./scripts/backup --action restore --namespace=nextcloud --pvc=redis-data-nextcloud-redis-master-0
-	./scripts/backup --action restore --namespace=bastion --pvc=bastion
 
 
 test:
