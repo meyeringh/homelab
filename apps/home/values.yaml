@@ -2,6 +2,8 @@
 shelly:
   devices:
     - 192.168.1.79
+    - 192.168.1.38
+    - 192.168.1.44
 
 home-assistant:
   env:
