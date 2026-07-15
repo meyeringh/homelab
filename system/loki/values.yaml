@@ -1,18 +1,64 @@
-loki-stack:
+loki:
+  deploymentMode: SingleBinary
   loki:
+    auth_enabled: false
+    commonConfig:
+      replication_factor: 1
+    storage:
+      type: filesystem
+    schemaConfig:
+      configs:
+        - from: "2024-04-01"
+          store: tsdb
+          object_store: filesystem
+          schema: v13
+          index:
+            prefix: index_
+            period: 24h
+    limits_config:
+      retention_period: 720h
+    compactor:
+      retention_enabled: true
+      delete_request_store: filesystem
+  singleBinary:
+    replicas: 1
+    persistence:
+      size: 50Gi
+      whenDeleted: Retain
+      whenScaled: Retain
     resources:
       requests:
-        cpu: 10m
-        memory: 400Mi
+        cpu: 50m
+        memory: 512Mi
       limits:
-        memory: 400Mi
+        memory: 1Gi
+  write:
+    replicas: 0
+  read:
+    replicas: 0
+  backend:
+    replicas: 0
+  gateway:
+    enabled: false
+  lokiCanary:
+    enabled: false
+  test:
+    enabled: false
+  chunksCache:
+    enabled: false
+  resultsCache:
+    enabled: false
+  monitoring:
     serviceMonitor:
       enabled: true
 
-  promtail:
-    resources:
-      requests:
-        cpu: 51m
-        memory: 200Mi
-      limits:
-        memory: 200Mi
+promtail:
+  config:
+    clients:
+      - url: http://loki:3100/loki/api/v1/push
+  resources:
+    requests:
+      cpu: 51m
+      memory: 200Mi
+    limits:
+      memory: 200Mi
