@@ -10,7 +10,8 @@ HEADERS = {
     "Authorization": f"Bearer {os.environ['HA_TOKEN']}",
     "Content-Type": "application/json",
 }
-DEVICES = json.loads(os.environ["DEVICES"])
+with open("/app/devices.json") as f:
+    DEVICES = json.load(f)
 
 
 def api(path, data=None):

@@ -20,6 +20,7 @@ kind: ConfigMap
 metadata:
   name: shelly-sync
 data:
+  devices.json: {{ .Values.shelly.devices | toJson | quote }}
   shelly_sync.py: |
 {{ .Files.Get "files/shelly_sync.py" | indent 4 }}
 ---
@@ -42,8 +43,6 @@ spec:
           env:
             - name: HA_URL
               value: "http://home-home-assistant:8123"
-            - name: DEVICES
-              value: {{ .Values.shelly.devices | toJson | quote }}
             - name: HA_TOKEN
               valueFrom:
                 secretKeyRef:
