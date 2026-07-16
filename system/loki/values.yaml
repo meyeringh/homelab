@@ -27,6 +27,12 @@ loki:
       size: 50Gi
       whenDeleted: Retain
       whenScaled: Retain
+    resources:
+      requests:
+        cpu: 50m
+        memory: 512Mi
+      limits:
+        memory: 1Gi
   write:
     replicas: 0
   read:
@@ -48,6 +54,12 @@ alloy:
   crds:
     create: false
   alloy:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
     configMap:
       content: |
         discovery.kubernetes "pods" {
