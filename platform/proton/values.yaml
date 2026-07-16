@@ -8,7 +8,6 @@ app-template:
             tag: 3.19.0-1
           resources:
             requests:
-              cpu: 10m
               memory: 283Mi
             limits:
               memory: 283Mi

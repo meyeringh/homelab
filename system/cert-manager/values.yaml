@@ -3,7 +3,6 @@ cert-manager:
 
   resources:
     requests:
-      cpu: 10m
       memory: 100Mi
     limits:
       memory: 100Mi
@@ -11,7 +10,6 @@ cert-manager:
   cainjector:
     resources:
       requests:
-        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -19,7 +17,6 @@ cert-manager:
   webhook:
     resources:
       requests:
-        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi

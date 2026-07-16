@@ -46,7 +46,6 @@ app-template:
             TZ: Europe/Berlin
           resources:
             requests:
-              cpu: 10m
               memory: 2000Mi
             limits:
               memory: 2000Mi
@@ -82,7 +81,6 @@ app-template:
             TZ: Europe/Berlin
           resources:
             requests:
-              cpu: 10m
               memory: 1000Mi
             limits:
               memory: 1000Mi
@@ -118,7 +116,6 @@ app-template:
             TZ: Europe/Berlin
           resources:
             requests:
-              cpu: 10m
               memory: 1000Mi
             limits:
               memory: 1000Mi
@@ -154,7 +151,6 @@ app-template:
             TZ: Europe/Berlin
           resources:
             requests:
-              cpu: 10m
               memory: 1000Mi
             limits:
               memory: 1000Mi
@@ -190,7 +186,6 @@ app-template:
             TZ: Europe/Berlin
           resources:
             requests:
-              cpu: 10m
               memory: 1000Mi
             limits:
               memory: 1000Mi

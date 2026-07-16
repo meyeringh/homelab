@@ -34,9 +34,8 @@ rook-ceph-cluster:
     resources:
       osd:
         limits:
-          memory: 4Gi # rule of thumb for ceph osd memory: 1Gi per 1TB of storage
+          memory: 4Gi  # rule of thumb for ceph osd memory: 1Gi per 1TB of storage
         requests:
-          cpu: 100m
           memory: 4Gi
   cephBlockPools:
     - name: builtin-mgr

@@ -8,7 +8,6 @@ app-template:
             tag: 26.7.0-alpine
           resources:
             requests:
-              cpu: 10m
               memory: 100Mi
             limits:
               memory: 100Mi

@@ -1,7 +1,7 @@
 argo-cd:
   global:
     domain: argocd.meyeringh.org
-  
+
   controller:
     metrics: &metrics
       enabled: true
@@ -11,7 +11,6 @@ argo-cd:
   server:
     resources:
       requests:
-        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -30,7 +29,6 @@ argo-cd:
   repoServer:
     resources:
       requests:
-        cpu: 17m
         memory: 781Mi
       limits:
         memory: 781Mi
@@ -39,7 +37,6 @@ argo-cd:
   notifications:
     resources:
       requests:
-        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -47,7 +44,6 @@ argo-cd:
   redis:
     resources:
       requests:
-        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -150,23 +146,23 @@ argocd-apps:
                 # See also https://volsync.readthedocs.io/en/stable/usage/permissionmodel.html
                 volsync.backube/privileged-movers: "true"
           ignoreDifferences:
-          # This is needed to prevent ArgoCD from constantly trying to update the empty labels due to a bug (diff between null labels and empty labels)
-          - group: rbac.authorization.k8s.io
-            kind: Role
-            jsonPointers:
-            - /metadata/labels
-          - group: rbac.authorization.k8s.io
-            kind: RoleBinding
-            jsonPointers:
-            - /metadata/labels
-          - group: rbac.authorization.k8s.io
-            kind: ClusterRole
-            jsonPointers:
-            - /metadata/labels
-          - group: rbac.authorization.k8s.io
-            kind: ClusterRoleBinding
-            jsonPointers:
-            - /metadata/labels
+            # This is needed to prevent ArgoCD from constantly trying to update the empty labels due to a bug (diff between null labels and empty labels)
+            - group: rbac.authorization.k8s.io
+              kind: Role
+              jsonPointers:
+                - /metadata/labels
+            - group: rbac.authorization.k8s.io
+              kind: RoleBinding
+              jsonPointers:
+                - /metadata/labels
+            - group: rbac.authorization.k8s.io
+              kind: ClusterRole
+              jsonPointers:
+                - /metadata/labels
+            - group: rbac.authorization.k8s.io
+              kind: ClusterRoleBinding
+              jsonPointers:
+                - /metadata/labels
       # This is here so we can temporarily pause syncing
       ignoreApplicationDifferences:
         - jsonPointers:

@@ -9,7 +9,6 @@ app-template:
           args: ["hbbs", "-r", "rustdesk.meyeringh.org:21117"]
           resources:
             requests:
-              cpu: 10m
               memory: 32Mi
             limits:
               memory: 64Mi
@@ -44,7 +43,6 @@ app-template:
           args: ["hbbr"]
           resources:
             requests:
-              cpu: 10m
               memory: 32Mi
             limits:
               memory: 64Mi

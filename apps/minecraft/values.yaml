@@ -43,7 +43,6 @@ app-template:
             tag: pmc
           resources:
             requests:
-              cpu: 10m
               memory: 1100Mi
             limits:
               memory: 1100Mi

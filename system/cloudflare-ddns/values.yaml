@@ -16,7 +16,6 @@ app-template:
                   key: token
           resources:
             requests:
-              cpu: 5m
               memory: 16Mi
             limits:
               memory: 32Mi

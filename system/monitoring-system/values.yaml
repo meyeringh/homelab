@@ -2,7 +2,6 @@ kube-prometheus-stack:
   prometheusOperator:
     resources:
       requests:
-        cpu: 11m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -10,7 +9,6 @@ kube-prometheus-stack:
   kube-state-metrics:
     resources:
       requests:
-        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -18,7 +16,6 @@ kube-prometheus-stack:
   prometheus-node-exporter:
     resources:
       requests:
-        cpu: 10m
         memory: 100Mi
       limits:
         memory: 100Mi
@@ -62,7 +59,6 @@ kube-prometheus-stack:
     prometheusSpec:
       resources:
         requests:
-          cpu: 127m
           memory: 1569Mi
         limits:
           memory: 1569Mi
@@ -70,7 +66,6 @@ kube-prometheus-stack:
         - name: config-reloader
           resources:
             requests:
-              cpu: 10m
               memory: 100Mi
             limits:
               memory: 100Mi
@@ -83,7 +78,6 @@ kube-prometheus-stack:
     alertmanagerSpec:
       resources:
         requests:
-          cpu: 10m
           memory: 100Mi
         limits:
           memory: 100Mi
@@ -92,7 +86,6 @@ kube-prometheus-stack:
           image: ghcr.io/khuedoan/webhook-transformer:v0.0.3
           resources:
             requests:
-              cpu: 10m
               memory: 100Mi
             limits:
               memory: 100Mi
@@ -109,7 +102,6 @@ kube-prometheus-stack:
         - name: config-reloader
           resources:
             requests:
-              cpu: 10m
               memory: 100Mi
             limits:
               memory: 100Mi
