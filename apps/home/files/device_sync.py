@@ -35,7 +35,7 @@ def add_device(handler, label, steps):
     kind, reason = result.get("type"), result.get("reason", "")
     if kind == "create_entry":
         print(f"{label}: added as '{result['result']['title']}'")
-    elif reason == "already_configured":
+    elif reason.startswith("already_configured"):
         print(f"{label}: already configured")
     else:
         print(f"{label}: unexpected result: {kind} {reason} {result.get('errors')}")
