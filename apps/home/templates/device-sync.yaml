@@ -15,19 +15,34 @@ spec:
         key: home.gitops
         property: token
 ---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: home-assistant-esphome-keys
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: global-secrets
+  target:
+    name: home-assistant-esphome-keys
+  dataFrom:
+    - extract:
+        key: home.esphome
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: shelly-sync
+  name: device-sync
 data:
-  devices.json: {{ .Values.shelly.devices | toJson | quote }}
-  shelly_sync.py: |
-{{ .Files.Get "files/shelly_sync.py" | indent 4 }}
+  devices.json: {{ dict "shelly" .Values.shelly.devices "esphome" .Values.esphome.devices | toJson | quote }}
+  device_sync.py: |
+{{ .Files.Get "files/device_sync.py" | indent 4 }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: shelly-sync
+  name: device-sync
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
@@ -37,9 +52,9 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-        - name: shelly-sync
+        - name: device-sync
           image: python:3.12-alpine
-          command: ["python", "/app/shelly_sync.py"]
+          command: ["python", "/app/device_sync.py"]
           env:
             - name: HA_URL
               value: "http://home-home-assistant:8123"
@@ -51,7 +66,12 @@ spec:
           volumeMounts:
             - name: script
               mountPath: /app
+            - name: esphome-keys
+              mountPath: /secrets/esphome
       volumes:
         - name: script
           configMap:
-            name: shelly-sync
+            name: device-sync
+        - name: esphome-keys
+          secret:
+            secretName: home-assistant-esphome-keys

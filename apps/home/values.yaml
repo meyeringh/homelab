@@ -1,10 +1,17 @@
-# Shelly devices to register in Home Assistant (synced by shelly-sync job)
+# Devices to register in Home Assistant (synced by device-sync job)
 shelly:
   devices:
     - 192.168.1.79
     - 192.168.1.38
     - 192.168.1.44
     - 192.168.1.71
+
+# ESPHome devices; API encryption key expected in the home.esphome
+# secret (global-secrets namespace) under the device name
+esphome:
+  devices:
+    - name: ifan04
+      host: 192.168.1.82
 
 home-assistant:
   env:
