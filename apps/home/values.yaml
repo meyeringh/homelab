@@ -12,6 +12,8 @@ esphome:
   devices:
     - name: ifan04
       host: 192.168.1.82
+    - name: slzb06p10
+      host: 192.168.1.111
 
 home-assistant:
   env:
