@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: https-endpoints
+spec:
+  jobName: blackbox-https
+  module: http_2xx
+  prober:
+    url: {{ .Release.Name }}-prometheus-blackbox-exporter.{{ .Release.Namespace }}.svc:9115
+  interval: 60s
+  targets:
+    staticConfig:
+      static:
+        {{- range .Values.probeTargets }}
+        - {{ . }}
+        {{- end }}

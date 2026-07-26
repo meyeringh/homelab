@@ -1,0 +1,10 @@
+prometheus-smartctl-exporter:
+  serviceMonitor:
+    enabled: true
+  prometheusRules:
+    enabled: true
+  resources:
+    requests:
+      memory: 100Mi
+    limits:
+      memory: 100Mi

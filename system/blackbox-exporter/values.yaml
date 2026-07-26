@@ -1,0 +1,24 @@
+prometheus-blackbox-exporter:
+  resources:
+    requests:
+      memory: 100Mi
+    limits:
+      memory: 100Mi
+
+# Public endpoints probed via the Probe CRD (templates/probe.yaml).
+# sabnzbd (403) and mail (503) are excluded, they don't answer 2xx unauthenticated.
+probeTargets:
+  - https://meyeringh.org
+  - https://argocd.meyeringh.org
+  - https://auth.meyeringh.org
+  - https://budget.meyeringh.org
+  - https://cloud.meyeringh.org
+  - https://family.meyeringh.org
+  - https://grafana.meyeringh.org
+  - https://media.meyeringh.org
+  - https://paperless.meyeringh.org
+  - https://prowlarr.meyeringh.org
+  - https://radarr.meyeringh.org
+  - https://requests.meyeringh.org
+  - https://sonarr.meyeringh.org
+  - https://vault.meyeringh.org

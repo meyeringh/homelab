@@ -21,6 +21,91 @@ grafana:
       provider:
         foldersFromFilesStructure: true
 
+  # Dashboards imported from grafana.com, downloaded by an init container at
+  # pod start; pinned by revision
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: storage
+          orgId: 1
+          folder: Storage
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/storage
+        - name: network
+          orgId: 1
+          folder: Network
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/network
+        - name: infrastructure
+          orgId: 1
+          folder: Infrastructure
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/infrastructure
+  dashboards:
+    storage:
+      ceph-cluster:
+        gnetId: 2842
+        revision: 18
+      ceph-osd:
+        gnetId: 5336
+        revision: 9
+      ceph-pools:
+        gnetId: 5342
+        revision: 9
+    network:
+      cilium-agent:
+        gnetId: 16611
+        revision: 1
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
+      cilium-operator:
+        gnetId: 16612
+        revision: 1
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
+      hubble:
+        gnetId: 16613
+        revision: 1
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
+      blackbox-exporter:
+        gnetId: 7587
+        revision: 3
+        datasource:
+          - name: DS_SIGNCL-PROMETHEUS
+            value: Prometheus
+    infrastructure:
+      node-exporter-full:
+        gnetId: 1860
+        revision: 45
+      cert-manager:
+        gnetId: 11001
+        revision: 1
+      argocd:
+        gnetId: 14584
+        revision: 1
+      cloudnative-pg:
+        gnetId: 20417
+        revision: 4
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
+          - name: DS_EXPRESSION
+            value: __expr__
+
   ingress:
     enabled: false
 

@@ -48,6 +48,9 @@ loki:
     enabled: false
   resultsCache:
     enabled: false
+  monitoring:
+    serviceMonitor:
+      enabled: true
 
 alloy:
   crds:

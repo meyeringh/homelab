@@ -6,11 +6,21 @@ gateway_api_channel: experimental
 cilium_values:
   operator:
     replicas: 1
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
   kubeProxyReplacement: true
   l2announcements:
     enabled: true
   gatewayAPI:
     enabled: true
+  # ServiceMonitor CRDs come from kube-prometheus-stack, so a fresh cluster
+  # needs one more cilium role run after `make system`
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
   # TODO the host and port are k3s-specific, generic solution is in progress
   # https://github.com/cilium/cilium/issues/19038
   # https://github.com/cilium/cilium/pull/28741
@@ -21,3 +31,14 @@ cilium_values:
       enabled: true
     ui:
       enabled: true
+    metrics:
+      enableOpenMetrics: true
+      enabled:
+        - dns
+        - drop
+        - tcp
+        - flow
+        - icmp
+        - http
+      serviceMonitor:
+        enabled: true
