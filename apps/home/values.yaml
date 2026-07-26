@@ -71,11 +71,17 @@ app-template:
           image:
             repository: docker.io/rhasspy/wyoming-whisper
             tag: 3.5.0
+          # base-int8: ~1s per command on the Ryzen 2600 vs 8-10s for
+          # medium-int8 (benchmarked); beam 5 costs nothing at this size
           args:
             - --model
-            - medium-int8
+            - base-int8
             - --language
             - de
+            - --beam-size
+            - "5"
+            - --cpu-threads
+            - "10"
           probes:
             liveness:
               enabled: true
@@ -88,9 +94,9 @@ app-template:
                 periodSeconds: 5
           resources:
             requests:
-              memory: 3Gi
+              memory: 768Mi
             limits:
-              memory: 3Gi
+              memory: 768Mi
     piper:
       containers:
         app:
