@@ -1,0 +1,48 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: home-assistant
+spec:
+  groups:
+    - name: home-assistant
+      rules:
+        - alert: TrvBatteryLow
+          expr: homeassistant_binary_sensor_state{entity=~"binary_sensor.hama_thermostat._battery"} == 1
+          for: 1h
+          labels:
+            severity: warning
+          annotations:
+            summary: TRV battery low
+            description: '{{ "{{ $labels.friendly_name }}" }} reports a low battery, replace it soon.'
+        - alert: HomeEntityUnavailable
+          expr: homeassistant_entity_available{entity=~"climate\\..+|fan\\.ifan04_fan|light\\.ifan04_light|switch\\.shelly1_.+|sensor\\.power_meter_.+"} == 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Home Assistant entity unavailable
+            description: '{{ "{{ $labels.entity }}" }} has been unavailable for 15 minutes.'
+        - alert: PowerMeterStale
+          expr: increase(homeassistant_sensor_energy_kwh{entity="sensor.power_meter_total_energy"}[2h]) == 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: Power meter readings are stale
+            description: The energy counter has not increased for over two hours; the IR reading head or its ESP32 is likely down.
+        - alert: FrostWarning
+          expr: homeassistant_climate_current_temperature_celsius < 12
+          for: 30m
+          labels:
+            severity: critical
+          annotations:
+            summary: Room temperature below 12°C
+            description: '{{ "{{ $labels.friendly_name }}" }} measures {{ "{{ $value | printf \"%.1f\" }}" }}°C - open window or heating failure?'
+        - alert: SomethingLeftOn
+          expr: avg_over_time(homeassistant_sensor_power_w{entity="sensor.power_meter_active_power"}[30m]) > 2000
+          for: 1h30m
+          labels:
+            severity: warning
+          annotations:
+            summary: Sustained high power draw
+            description: 'Power draw has averaged above 2 kW for two hours ({{ "{{ $value | printf \"%.0f\" }}" }} W right now) - is something still on?'
