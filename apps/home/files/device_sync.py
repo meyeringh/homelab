@@ -61,5 +61,7 @@ for dev in DEVICES.get("esphome") or []:
     failed |= not add_device(
         "esphome", dev["name"], [{"host": dev["host"], "port": 6053}, {"noise_psk": noise_psk}]
     )
+for svc in DEVICES.get("wyoming") or []:
+    failed |= not add_device("wyoming", svc["name"], [{"host": svc["host"], "port": svc["port"]}])
 
 sys.exit(1 if failed else 0)

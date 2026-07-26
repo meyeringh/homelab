@@ -15,6 +15,16 @@ esphome:
     - name: powermeter
       host: 192.168.1.48
 
+# Wyoming voice services (synced by device-sync job)
+wyoming:
+  services:
+    - name: whisper
+      host: home-whisper
+      port: 10300
+    - name: piper
+      host: home-piper
+      port: 10200
+
 home-assistant:
   env:
     - name: TZ
@@ -51,3 +61,86 @@ home-assistant:
     enabled: true
     accessMode: ReadWriteOnce
     size: 5Gi
+
+# Wyoming speech services for the Assist pipeline: whisper (STT) + piper (TTS)
+app-template:
+  controllers:
+    whisper:
+      containers:
+        app:
+          image:
+            repository: docker.io/rhasspy/wyoming-whisper
+            tag: 3.5.0
+          args:
+            - --model
+            - medium-int8
+            - --language
+            - de
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+              spec:
+                failureThreshold: 120
+                periodSeconds: 5
+          resources:
+            requests:
+              memory: 3Gi
+            limits:
+              memory: 3Gi
+    piper:
+      containers:
+        app:
+          image:
+            repository: docker.io/rhasspy/wyoming-piper
+            tag: 2.3.1
+          args:
+            - --voice
+            - de_DE-thorsten-medium
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+              spec:
+                failureThreshold: 60
+                periodSeconds: 5
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              memory: 512Mi
+
+  service:
+    whisper:
+      controller: whisper
+      ports:
+        wyoming:
+          port: 10300
+    piper:
+      controller: piper
+      ports:
+        wyoming:
+          port: 10200
+
+  # Model caches; models are re-downloaded if lost, no backup needed
+  persistence:
+    whisper-data:
+      accessMode: ReadWriteOnce
+      size: 4Gi
+      advancedMounts:
+        whisper:
+          app:
+            - path: /data
+    piper-data:
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        piper:
+          app:
+            - path: /data

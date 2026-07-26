@@ -5,3 +5,6 @@ dependencies:
   - name: home-assistant
     version: 0.3.72
     repository: https://pajikos.github.io/home-assistant-helm-chart/
+  - name: app-template
+    version: 5.0.1
+    repository: https://bjw-s-labs.github.io/helm-charts

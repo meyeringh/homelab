@@ -35,7 +35,7 @@ kind: ConfigMap
 metadata:
   name: device-sync
 data:
-  devices.json: {{ dict "shelly" .Values.shelly.devices "esphome" .Values.esphome.devices | toJson | quote }}
+  devices.json: {{ dict "shelly" .Values.shelly.devices "esphome" .Values.esphome.devices "wyoming" .Values.wyoming.services | toJson | quote }}
   device_sync.py: |
 {{ .Files.Get "files/device_sync.py" | indent 4 }}
 ---
