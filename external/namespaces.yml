@@ -2,6 +2,7 @@
   tasks:
     - name: Ensure required namespaces exist
       kubernetes.core.k8s:
+        kubeconfig: ../metal/kubeconfig.yaml
         api_version: v1
         kind: Namespace
         name: "{{ item }}"

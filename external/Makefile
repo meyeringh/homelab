@@ -17,7 +17,7 @@ namespaces:
 	ansible-playbook namespaces.yml
 
 plan: .terraform.lock.hcl
-	tofu plan
+	KUBE_CONFIG_PATH=../metal/kubeconfig.yaml tofu plan
 
 apply: .terraform.lock.hcl namespaces
-	tofu apply -auto-approve
+	KUBE_CONFIG_PATH=../metal/kubeconfig.yaml tofu apply -auto-approve

@@ -12,3 +12,4 @@ Chart.lock
 .swp
 .planning/
 todo.md
+.playwright-mcp/

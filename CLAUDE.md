@@ -19,7 +19,7 @@ system/         # Core infra: argocd, cert-manager, ingress-nginx, rook-ceph,
                 # external-dns, cloudflared, cloudflare-ddns
 platform/       # Platform services: dex, kanidm, grafana, external-secrets, renovate
 apps/           # User apps: nextcloud, vaultwarden, jellyfin, home-assistant,
-                # webtrees, paperless, minecraft, rustdesk, tailscale,
+                # webtrees, paperless, minecraft, rustdesk, tailscale, wireguard,
                 # actual-budget, meyeringh-org
 external/       # OpenTofu: Cloudflare DNS, tunnels, secrets
 test/           # Go integration tests (terratest), smoke tests
