@@ -89,9 +89,6 @@ app-template:
           sectionName: https
       hostnames:
         - vault.meyeringh.org
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       rules:
         - backendRefs:
             - identifier: app

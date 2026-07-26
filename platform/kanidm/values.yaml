@@ -70,9 +70,6 @@ app-template:
           sectionName: https
       hostnames:
         - auth.meyeringh.org
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       rules:
         - backendRefs:
             - identifier: app

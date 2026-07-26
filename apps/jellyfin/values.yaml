@@ -249,9 +249,6 @@ app-template:
           sectionName: https
       hostnames:
         - media.meyeringh.org
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       rules:
         - backendRefs:
             - identifier: jellyfin
@@ -263,9 +260,6 @@ app-template:
           sectionName: https
       hostnames:
         - requests.meyeringh.org
-      annotations:
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.meyeringh.org"
-        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       rules:
         - backendRefs:
             - identifier: jellyfin
