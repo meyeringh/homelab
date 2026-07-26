@@ -33,6 +33,14 @@ home-assistant:
   ingress:
     enabled: false
 
+  # Enables the prometheus integration in configuration.yaml and creates a
+  # ServiceMonitor scraping /api/prometheus, reusing the gitops API token
+  serviceMonitor:
+    enabled: true
+    bearerToken:
+      secretName: home-assistant-gitops
+      secretKey: token
+
   configuration:
     enabled: true
     forceInit: true
