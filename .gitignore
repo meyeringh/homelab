@@ -13,3 +13,4 @@ Chart.lock
 .planning/
 todo.md
 .playwright-mcp/
+__pycache__/
