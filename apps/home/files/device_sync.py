@@ -27,6 +27,9 @@ def add_device(handler, label, steps):
         result = {}
         for step in steps:
             result = api(f"/api/config/config_entries/flow/{flow['flow_id']}", step)
+            if result.get("errors"):
+                print(f"{label}: step '{result.get('step_id')}' failed: {result['errors']}")
+                return False
             if result.get("type") != "form":
                 break
     except urllib.error.HTTPError as e:
@@ -61,7 +64,12 @@ for dev in DEVICES.get("esphome") or []:
     failed |= not add_device(
         "esphome", dev["name"], [{"host": dev["host"], "port": 6053}, {"noise_psk": noise_psk}]
     )
+# HA's manual wyoming flow never dedupes (no unique id) -> check entry titles
+wyoming_titles = {e["title"] for e in api("/api/config/config_entries/entry?domain=wyoming")}
 for svc in DEVICES.get("wyoming") or []:
+    if svc["title"] in wyoming_titles:
+        print(f"{svc['name']}: already configured")
+        continue
     failed |= not add_device("wyoming", svc["name"], [{"host": svc["host"], "port": svc["port"]}])
 
 sys.exit(1 if failed else 0)
