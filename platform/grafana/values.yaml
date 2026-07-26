@@ -5,6 +5,22 @@ grafana:
     limits:
       memory: 264Mi
 
+  # Load dashboards from ConfigMaps labeled grafana_dashboard across all
+  # namespaces (kube-prometheus-stack force-deploys its dashboards this way)
+  sidecar:
+    resources:
+      requests:
+        memory: 100Mi
+      limits:
+        memory: 100Mi
+    dashboards:
+      enabled: true
+      searchNamespace: ALL
+      label: grafana_dashboard
+      folderAnnotation: grafana_folder
+      provider:
+        foldersFromFilesStructure: true
+
   ingress:
     enabled: false
 
