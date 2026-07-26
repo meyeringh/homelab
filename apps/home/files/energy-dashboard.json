@@ -146,7 +146,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "kwatth",
+          "unit": "suffix:kWh",
           "decimals": 1,
           "color": { "mode": "fixed", "fixedColor": "blue" }
         },
