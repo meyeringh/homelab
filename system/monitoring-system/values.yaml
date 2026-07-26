@@ -57,6 +57,18 @@ kube-prometheus-stack:
         url: http://loki.loki:3100
   prometheus:
     prometheusSpec:
+      # ~7.5k samples/s ≈ 240GB/year; retentionSize guards the PVC from filling
+      retention: 365d
+      retentionSize: 270GB
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: standard-rwo
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 300Gi
       resources:
         requests:
           memory: 1569Mi
