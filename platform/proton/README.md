@@ -19,6 +19,8 @@ the generated SMTP credentials) lives on the retained `state` PVC mounted at `/r
    kubectl --kubeconfig metal/kubeconfig.yaml -n proton exec -it deploy/proton -- bash
    ```
 2. `pkill bridge` — the container keeps running (the entrypoint blocks on a FIFO).
+   Never `echo` commands into `/app/faketty` instead: closing the FIFO writer
+   sends EOF to the bridge CLI, which quits and restarts the container.
 3. Start an interactive bridge CLI: `/usr/bin/bridge --cli`
 4. `login` — Proton account credentials + 2FA.
 5. `info` — note the bridge-local SMTP username and password.
@@ -52,6 +54,10 @@ kubectl -n vaultwarden rollout restart deploy/vaultwarden
 ```
 
 (Consumers read the secret via env vars, so a restart is required.)
+
+**webtrees** is NOT on this chain: its SMTP settings live in its database
+(`webtrees.wt_site_setting`, keys `SMTP_HOST/SMTP_PORT/SMTP_SSL/SMTP_AUTH_USER/SMTP_AUTH_PASS`),
+configured via the admin UI. Update it there when the bridge credentials change.
 
 ## Migration note (shenxn/protonmail-bridge → VideoCurio)
 
