@@ -2,43 +2,46 @@ data "cloudflare_zones" "zone" {
   name = "meyeringh.org"
 }
 
-resource "random_id" "tunnel_secret" {
-  byte_length = 32
-}
+# meyeringh.org is a static site on GitHub Pages (meyeringh/meyeringh-org)
+resource "cloudflare_dns_record" "pages_apex_a" {
+  for_each = toset([
+    "185.199.108.153",
+    "185.199.109.153",
+    "185.199.110.153",
+    "185.199.111.153",
+  ])
 
-resource "cloudflare_zero_trust_tunnel_cloudflared" "homelab" {
-  account_id    = var.cloudflare_account_id
-  name          = "homelab"
-  tunnel_secret = random_id.tunnel_secret.b64_std
-}
-
-resource "cloudflare_dns_record" "tunnel" {
   zone_id = data.cloudflare_zones.zone.result[0].id
-  type    = "CNAME"
-  name    = "homelab-tunnel"
-  content = "${cloudflare_zero_trust_tunnel_cloudflared.homelab.id}.cfargotunnel.com"
+  type    = "A"
+  name    = "meyeringh.org"
+  content = each.value
   proxied = false
   ttl     = 1 # Auto
 }
 
-resource "kubernetes_secret_v1" "cloudflared_credentials" {
-  metadata {
-    name      = "cloudflared-credentials"
-    namespace = "cloudflared"
+resource "cloudflare_dns_record" "pages_apex_aaaa" {
+  for_each = toset([
+    "2606:50c0:8000::153",
+    "2606:50c0:8001::153",
+    "2606:50c0:8002::153",
+    "2606:50c0:8003::153",
+  ])
 
-    annotations = {
-      "app.kubernetes.io/managed-by" = "Terraform"
-    }
-  }
+  zone_id = data.cloudflare_zones.zone.result[0].id
+  type    = "AAAA"
+  name    = "meyeringh.org"
+  content = each.value
+  proxied = false
+  ttl     = 1 # Auto
+}
 
-  data = {
-    "credentials.json" = jsonencode({
-      AccountTag   = var.cloudflare_account_id
-      TunnelName   = cloudflare_zero_trust_tunnel_cloudflared.homelab.name
-      TunnelID     = cloudflare_zero_trust_tunnel_cloudflared.homelab.id
-      TunnelSecret = random_id.tunnel_secret.b64_std
-    })
-  }
+resource "cloudflare_dns_record" "pages_www" {
+  zone_id = data.cloudflare_zones.zone.result[0].id
+  type    = "CNAME"
+  name    = "www"
+  content = "meyeringh.github.io"
+  proxied = false
+  ttl     = 1 # Auto
 }
 
 resource "cloudflare_api_token" "external_dns" {

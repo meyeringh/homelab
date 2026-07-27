@@ -16,12 +16,12 @@ K3s-based single-node Kubernetes homelab on meyeringh.org, managed via ArgoCD Gi
 metal/          # Ansible playbooks: PXE boot, K3s install, Cilium
 system/         # Core infra: argocd, cert-manager, ingress-nginx, rook-ceph,
                 # cloudnative-pg, loki, kube-prometheus-stack, volsync,
-                # external-dns, cloudflared, cloudflare-ddns
+                # external-dns, cloudflare-ddns
 platform/       # Platform services: dex, kanidm, grafana, external-secrets, renovate
 apps/           # User apps: nextcloud, vaultwarden, jellyfin, home-assistant,
                 # webtrees, paperless, minecraft, rustdesk, tailscale, wireguard,
-                # actual-budget, meyeringh-org
-external/       # OpenTofu: Cloudflare DNS, tunnels, secrets
+                # actual-budget
+external/       # OpenTofu: Cloudflare DNS, secrets
 test/           # Go integration tests (terratest), smoke tests
 scripts/        # Utility scripts: backup, restore, new-service, onboard-user
 ```

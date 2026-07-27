@@ -9,7 +9,6 @@
         state: present
       loop:
         - cert-manager
-        - cloudflared
         - external-dns
         - global-secrets
         - monitoring-system
