@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: proton-bridge-alerts
+spec:
+  groups:
+    - name: proton-bridge
+      rules:
+        - alert: ProtonBridgeAuthFailing
+          expr: kube_job_failed{namespace="proton", condition="true", job_name=~"proton-auth-check-.*"} > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: Proton Mail Bridge SMTP auth is failing
+            description: >-
+              The SMTP auth canary cannot log in to the bridge. The Proton session
+              has probably expired - re-login via the bridge CLI, see
+              platform/proton/README.md.

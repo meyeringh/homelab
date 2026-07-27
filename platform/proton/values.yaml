@@ -36,6 +36,39 @@ app-template:
                   port: 25
                 periodSeconds: 10
                 failureThreshold: 60
+    # SMTP auth canary: fails when the bridge session expired and a re-login
+    # is needed (see README); alerted on via PrometheusRule
+    auth-check:
+      type: cronjob
+      cronjob:
+        schedule: "*/30 * * * *"
+        successfulJobsHistory: 1
+        failedJobsHistory: 1
+        ttlSecondsAfterFinished: 3600
+        backoffLimit: 2
+      containers:
+        app:
+          image:
+            repository: python
+            tag: 3.13-alpine
+          command:
+            - python3
+            - -c
+            - |
+              import os, smtplib
+              s = smtplib.SMTP("proton.proton.svc.cluster.local", 1025, timeout=30)
+              s.ehlo()
+              s.login(os.environ["username"], os.environ["password"])
+              s.quit()
+              print("smtp auth ok")
+          envFrom:
+            - secretRef:
+                name: smtp-config-secret
+          resources:
+            requests:
+              memory: 64Mi
+            limits:
+              memory: 64Mi
   service:
     app:
       controller: proton

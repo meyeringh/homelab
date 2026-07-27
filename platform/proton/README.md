@@ -59,6 +59,14 @@ kubectl -n vaultwarden rollout restart deploy/vaultwarden
 (`webtrees.wt_site_setting`, keys `SMTP_HOST/SMTP_PORT/SMTP_SSL/SMTP_AUTH_USER/SMTP_AUTH_PASS`),
 configured via the admin UI. Update it there when the bridge credentials change.
 
+## Monitoring
+
+A CronJob (`proton-auth-check`, every 30 min) performs an SMTP AUTH against the
+bridge with the credentials from `smtp-config-secret` (no mail is sent). When the
+Proton session expires, auth fails with 454, the job fails, and the
+`ProtonBridgeAuthFailing` alert (PrometheusRule, delivered via ntfy) tells you to
+re-login using the steps above.
+
 ## Migration note (shenxn/protonmail-bridge → VideoCurio)
 
 Both images keep their state under `/root` with the same layout (pass store +
