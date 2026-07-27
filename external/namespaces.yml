@@ -13,5 +13,4 @@
         - external-dns
         - global-secrets
         - monitoring-system
-        - cf-switch
         - cloudflare-ddns

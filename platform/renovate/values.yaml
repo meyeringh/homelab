@@ -5,7 +5,7 @@ renovate:
     config: |
       {
         "platform": "github",
-        "repositories": ["meyeringh/homelab", "meyeringh/cf-switch"],
+        "repositories": ["meyeringh/homelab"],
         "automerge": true,
         "automergeType": "branch",
         "ignoreTests": true,
