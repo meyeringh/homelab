@@ -55,7 +55,7 @@ app-template:
             - --oidc-issuer-url=https://dex.meyeringh.org
             - --client-id=readeck
             - --redirect-url=https://readeck.meyeringh.org/oauth2/callback
-            - --upstream=http://readeck:8000
+            - --upstream=http://readeck-app:8000
             - --email-domain=*
             - --skip-provider-button
             - --reverse-proxy
