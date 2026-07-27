@@ -1,0 +1,73 @@
+app-template:
+  controllers:
+    readeck:
+      containers:
+        app:
+          image:
+            repository: codeberg.org/readeck/readeck
+            tag: 0.22.3
+          env:
+            READECK_SERVER_PORT: "8000"
+            READECK_ALLOWED_HOSTS: "readeck.meyeringh.org"
+            READECK_SERVER_BASE_URL: "https://readeck.meyeringh.org"
+          resources:
+            requests:
+              memory: 256Mi
+            limits:
+              memory: 256Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                exec:
+                  command: ["/bin/readeck", "healthcheck", "-config", "config.toml"]
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                exec:
+                  command: ["/bin/readeck", "healthcheck", "-config", "config.toml"]
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                exec:
+                  command: ["/bin/readeck", "healthcheck", "-config", "config.toml"]
+                periodSeconds: 10
+                failureThreshold: 60
+
+  service:
+    app:
+      controller: readeck
+      ports:
+        http:
+          port: 8000
+
+  ingress:
+    main:
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https
+      hostnames:
+        - readeck.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: 8000
+
+  persistence:
+    data:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      retain: true
+      globalMounts:
+        - path: /readeck
