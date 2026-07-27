@@ -11,7 +11,9 @@ app-template:
             READECK_ALLOWED_HOSTS: "readeck.meyeringh.org"
             READECK_SERVER_BASE_URL: "https://readeck.meyeringh.org"
             READECK_AUTH_FORWARDED_ENABLED: "true"
-            READECK_AUTH_FORWARDED_HEADER_USER: "X-Forwarded-Preferred-Username"
+            # Kanidm's preferred_username is SPN-style (user@domain), which Readeck
+            # only accepts as username when it equals the email — so use the email.
+            READECK_AUTH_FORWARDED_HEADER_USER: "X-Forwarded-Email"
             READECK_AUTH_FORWARDED_HEADER_EMAIL: "X-Forwarded-Email"
           resources:
             requests:
