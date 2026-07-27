@@ -34,7 +34,7 @@
     - key: client_secret
       length: 32
       special: false
-- name: dex.readeck
+- name: dex.linkwarden
   data:
     - key: client_secret
       length: 32
@@ -85,9 +85,12 @@
       length: 32
       special: false
 
-# Readeck
-- name: readeck.oauth2-proxy
+# Linkwarden
+- name: linkwarden.linkwarden
   data:
-    - key: cookie_secret
+    - key: nextauth_secret
+      length: 32
+      special: false
+    - key: meili_master_key
       length: 32
       special: false

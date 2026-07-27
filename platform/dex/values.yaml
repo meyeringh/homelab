@@ -69,11 +69,11 @@ dex:
           - 'https://media.meyeringh.org/sso/OID/redirect/dex'
           - 'http://media.meyeringh.org/sso/OID/redirect/dex'
         secretEnv: JELLYFIN_CLIENT_SECRET
-      - id: readeck
-        name: Readeck
+      - id: linkwarden
+        name: Linkwarden
         redirectURIs:
-          - 'https://readeck.meyeringh.org/oauth2/callback'
-        secretEnv: READECK_CLIENT_SECRET
+          - 'https://linkwarden.meyeringh.org/api/v1/auth/callback/oidc'
+        secretEnv: LINKWARDEN_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets

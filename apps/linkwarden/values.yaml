@@ -1,0 +1,150 @@
+app-template:
+  controllers:
+    linkwarden:
+      containers:
+        app:
+          image:
+            repository: ghcr.io/linkwarden/linkwarden
+            tag: v2.15.1
+          env:
+            NEXTAUTH_URL: "https://linkwarden.meyeringh.org/api/v1/auth"
+            NEXTAUTH_SECRET:
+              valueFrom:
+                secretKeyRef:
+                  name: linkwarden-secret
+                  key: NEXTAUTH_SECRET
+            DATABASE_URL:
+              valueFrom:
+                secretKeyRef:
+                  name: linkwarden-postgres-app
+                  key: uri
+            MEILI_HOST: "http://localhost:7700"
+            MEILI_MASTER_KEY:
+              valueFrom:
+                secretKeyRef:
+                  name: linkwarden-secret
+                  key: MEILI_MASTER_KEY
+            # SSO via Dex only, no local accounts
+            NEXT_PUBLIC_CREDENTIALS_ENABLED: "false"
+            NEXT_PUBLIC_OIDC_ENABLED: "true"
+            OIDC_CUSTOM_NAME: "Dex"
+            OIDC_WELLKNOWN_URL: "https://dex.meyeringh.org/.well-known/openid-configuration"
+            OIDC_CLIENT_ID: "linkwarden"
+            OIDC_CLIENT_SECRET:
+              valueFrom:
+                secretKeyRef:
+                  name: linkwarden-secret
+                  key: OIDC_CLIENT_SECRET
+          resources:
+            requests:
+              memory: 2Gi
+            limits:
+              memory: 2Gi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 3000
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 3000
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: 3000
+                periodSeconds: 10
+                failureThreshold: 60
+        meilisearch:
+          image:
+            repository: docker.io/getmeili/meilisearch
+            tag: v1.12.8
+          env:
+            MEILI_NO_ANALYTICS: "true"
+            MEILI_MASTER_KEY:
+              valueFrom:
+                secretKeyRef:
+                  name: linkwarden-secret
+                  key: MEILI_MASTER_KEY
+          resources:
+            requests:
+              memory: 256Mi
+            limits:
+              memory: 256Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: 7700
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: 7700
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: 7700
+                periodSeconds: 10
+                failureThreshold: 60
+
+  service:
+    app:
+      controller: linkwarden
+      ports:
+        http:
+          port: 3000
+
+  ingress:
+    main:
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https
+      hostnames:
+        - linkwarden.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: 3000
+
+  persistence:
+    data:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      retain: true
+      advancedMounts:
+        linkwarden:
+          app:
+            - path: /data/data
+              subPath: data
+          meilisearch:
+            - path: /meili_data
+              subPath: meilisearch
