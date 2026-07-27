@@ -12,8 +12,9 @@ app-template:
             READECK_SERVER_BASE_URL: "https://readeck.meyeringh.org"
             READECK_AUTH_FORWARDED_ENABLED: "true"
             # Kanidm's preferred_username is SPN-style (user@domain), which Readeck
-            # only accepts as username when it equals the email — so use the email.
-            READECK_AUTH_FORWARDED_HEADER_USER: "X-Forwarded-Email"
+            # only accepts as username when it equals the email — so the proxy puts
+            # the email in X-Forwarded-User (user-id-claim) and both headers differ.
+            READECK_AUTH_FORWARDED_HEADER_USER: "X-Forwarded-User"
             READECK_AUTH_FORWARDED_HEADER_EMAIL: "X-Forwarded-Email"
           resources:
             requests:
@@ -59,6 +60,7 @@ app-template:
             - --redirect-url=https://readeck.meyeringh.org/oauth2/callback
             - --upstream=http://readeck-app:8000
             - --email-domain=*
+            - --user-id-claim=email
             - --skip-provider-button
             - --reverse-proxy
             - --cookie-secure
