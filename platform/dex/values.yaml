@@ -69,6 +69,11 @@ dex:
           - 'https://media.meyeringh.org/sso/OID/redirect/dex'
           - 'http://media.meyeringh.org/sso/OID/redirect/dex'
         secretEnv: JELLYFIN_CLIENT_SECRET
+      - id: readeck
+        name: Readeck
+        redirectURIs:
+          - 'https://readeck.meyeringh.org/oauth2/callback'
+        secretEnv: READECK_CLIENT_SECRET
   envFrom:
     - secretRef:
         name: dex-secrets

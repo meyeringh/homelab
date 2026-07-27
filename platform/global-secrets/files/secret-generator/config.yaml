@@ -34,6 +34,11 @@
     - key: client_secret
       length: 32
       special: false
+- name: dex.readeck
+  data:
+    - key: client_secret
+      length: 32
+      special: false
 
 # Registry
 - name: registry.admin
@@ -77,5 +82,12 @@
 - name: webtrees.webtrees
   data:
     - key: adminPassword
+      length: 32
+      special: false
+
+# Readeck
+- name: readeck.oauth2-proxy
+  data:
+    - key: cookie_secret
       length: 32
       special: false

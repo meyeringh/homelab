@@ -10,6 +10,9 @@ app-template:
             READECK_SERVER_PORT: "8000"
             READECK_ALLOWED_HOSTS: "readeck.meyeringh.org"
             READECK_SERVER_BASE_URL: "https://readeck.meyeringh.org"
+            READECK_AUTH_FORWARDED_ENABLED: "true"
+            READECK_AUTH_FORWARDED_HEADER_USER: "X-Forwarded-Preferred-Username"
+            READECK_AUTH_FORWARDED_HEADER_EMAIL: "X-Forwarded-Email"
           resources:
             requests:
               memory: 256Mi
@@ -40,12 +43,75 @@ app-template:
                 periodSeconds: 10
                 failureThreshold: 60
 
+    oauth2-proxy:
+      containers:
+        app:
+          image:
+            repository: quay.io/oauth2-proxy/oauth2-proxy
+            tag: v7.15.3
+          args:
+            - --http-address=0.0.0.0:4180
+            - --provider=oidc
+            - --oidc-issuer-url=https://dex.meyeringh.org
+            - --client-id=readeck
+            - --redirect-url=https://readeck.meyeringh.org/oauth2/callback
+            - --upstream=http://readeck:8000
+            - --email-domain=*
+            - --skip-provider-button
+            - --reverse-proxy
+            - --cookie-secure
+            - --pass-user-headers
+            # App traffic authenticates with Readeck API tokens, not proxy cookies.
+            # Identity headers are still stripped on skipped routes.
+            - --skip-auth-route=^/api
+            - --skip-auth-route=^/\.well-known/oauth-authorization-server
+          envFrom:
+            - secretRef:
+                name: readeck-oauth2-proxy
+          resources:
+            requests:
+              memory: 64Mi
+            limits:
+              memory: 64Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /ping
+                  port: 4180
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /ping
+                  port: 4180
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /ping
+                  port: 4180
+                periodSeconds: 10
+                failureThreshold: 60
+
   service:
     app:
       controller: readeck
       ports:
         http:
           port: 8000
+    oauth2-proxy:
+      controller: oauth2-proxy
+      ports:
+        http:
+          port: 4180
 
   ingress:
     main:
@@ -61,13 +127,14 @@ app-template:
         - readeck.meyeringh.org
       rules:
         - backendRefs:
-            - identifier: app
-              port: 8000
-
+            - identifier: oauth2-proxy
+              port: 4180
   persistence:
     data:
       accessMode: ReadWriteOnce
       size: 5Gi
       retain: true
-      globalMounts:
-        - path: /readeck
+      advancedMounts:
+        readeck:
+          app:
+            - path: /readeck
