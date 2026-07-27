@@ -132,11 +132,9 @@ nextcloud:
             name: nextcloud-mail-secret
             key: domain
       - name: SMTP_HOST
-        value: mail.meyeringh.org
-      - name: SMTP_SECURE
-        value: tls
+        value: proton.proton.svc.cluster.local
       - name: SMTP_PORT
-        value: "587"
+        value: "1025"
       - name: SMTP_AUTHTYPE
         value: LOGIN
       - name: SMTP_NAME

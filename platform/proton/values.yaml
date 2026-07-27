@@ -4,8 +4,8 @@ app-template:
       containers:
         app:
           image:
-            repository: shenxn/protonmail-bridge
-            tag: 3.19.0-1
+            repository: ghcr.io/videocurio/proton-mail-bridge
+            tag: v3.24.2
           resources:
             requests:
               memory: 283Mi
@@ -39,25 +39,9 @@ app-template:
     app:
       controller: proton
       ports:
-        http:
+        smtp:
           port: 1025
           targetPort: 25
-  ingress:
-    main:
-      enabled: false
-
-  route:
-    main:
-      parentRefs:
-        - name: main
-          namespace: gateway
-          sectionName: https
-      hostnames:
-        - mail.meyeringh.org
-      rules:
-        - backendRefs:
-            - identifier: app
-              port: 1025
   persistence:
     state:
       enabled: true

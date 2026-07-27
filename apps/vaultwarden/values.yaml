@@ -18,9 +18,9 @@ app-template:
                 secretKeyRef:
                   name: vaultwarden-admin
                   key: ADMIN_TOKEN
-            SMTP_HOST: "mail.meyeringh.org"
-            SMTP_PORT: "587"
-            SMTP_SECURITY: "starttls"
+            SMTP_HOST: "proton.proton.svc.cluster.local"
+            SMTP_PORT: "1025"
+            SMTP_SECURITY: "off"
             SMTP_FROM:
               valueFrom:
                 secretKeyRef:
