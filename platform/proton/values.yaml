@@ -1,6 +1,7 @@
 app-template:
   controllers:
     proton:
+      strategy: Recreate # bridge holds a lock file on the RWO volume, no overlapping pods
       containers:
         app:
           image:
