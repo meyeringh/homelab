@@ -73,6 +73,9 @@ app-template:
             tag: v1.51.0
           env:
             MEILI_NO_ANALYTICS: "true"
+            # Renovate auto-merges meilisearch bumps; migrate the DB in place
+            # instead of refusing to start on a version mismatch
+            MEILI_UPGRADE_DB: "true"
             MEILI_MASTER_KEY:
               valueFrom:
                 secretKeyRef:
