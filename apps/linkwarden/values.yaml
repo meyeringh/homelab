@@ -70,7 +70,7 @@ app-template:
         meilisearch:
           image:
             repository: docker.io/getmeili/meilisearch
-            tag: v1.12.8
+            tag: v1.51.0
           env:
             MEILI_NO_ANALYTICS: "true"
             MEILI_MASTER_KEY:
