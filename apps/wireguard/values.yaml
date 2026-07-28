@@ -6,7 +6,7 @@ app-template:
         sysctl:
           image:
             repository: busybox
-            tag: "1.37.0"
+            tag: "1.38.0"
           command: ["sysctl", "-w", "net.ipv4.ip_forward=1"]
           securityContext:
             privileged: true
