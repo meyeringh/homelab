@@ -15,13 +15,23 @@ spec:
             summary: TRV battery low
             description: '{{ "{{ $labels.friendly_name }}" }} reports a low battery, replace it soon.'
         - alert: HomeEntityUnavailable
-          expr: homeassistant_entity_available{entity=~"climate\\..+|fan\\.ifan04_fan|light\\.ifan04_light|switch\\.shelly1_.+|sensor\\.power_meter_.+"} == 0
+          expr: homeassistant_entity_available{entity=~"climate\\..+|fan\\.ifan04_fan|light\\.ifan04_light|switch\\.shelly1_.+"} == 0
           for: 15m
           labels:
             severity: warning
           annotations:
             summary: Home Assistant entity unavailable
             description: '{{ "{{ $labels.entity }}" }} has been unavailable for 15 minutes.'
+        # Power meter WiFi (metal cabinet) suffers episodic interference outages of up
+        # to ~2h that always self-recover; only alert when it looks genuinely dead.
+        - alert: PowerMeterUnavailable
+          expr: homeassistant_entity_available{entity=~"sensor\\.power_meter_.+"} == 0
+          for: 6h
+          labels:
+            severity: warning
+          annotations:
+            summary: Power meter unavailable for 6 hours
+            description: '{{ "{{ $labels.entity }}" }} has been unavailable for 6 hours - more than interference explains, check device and PSU.'
         - alert: PowerMeterStale
           expr: increase(homeassistant_sensor_energy_kwh{entity="sensor.power_meter_total_energy"}[2h]) == 0
           for: 15m
