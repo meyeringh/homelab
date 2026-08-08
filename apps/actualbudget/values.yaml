@@ -5,7 +5,7 @@ app-template:
         app:
           image:
             repository: docker.io/actualbudget/actual-server
-            tag: 26.8.0-alpine
+            tag: 26.8.1-alpine
           resources:
             requests:
               memory: 100Mi
