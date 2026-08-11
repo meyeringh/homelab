@@ -70,7 +70,7 @@ app-template:
         meilisearch:
           image:
             repository: docker.io/getmeili/meilisearch
-            tag: v1.52.0
+            tag: v1.53.0
           env:
             MEILI_NO_ANALYTICS: "true"
             # Renovate auto-merges meilisearch bumps; migrate the DB in place
