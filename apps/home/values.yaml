@@ -3,7 +3,7 @@ shelly:
   devices:
     - 192.168.1.38
     - 192.168.1.44
-    - 192.168.1.79
+    - 192.168.1.91
 
 # ESPHome devices; API encryption key expected in the home.esphome
 # secret (global-secrets namespace) under the device name
