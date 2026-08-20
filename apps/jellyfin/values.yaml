@@ -180,8 +180,8 @@ app-template:
                 failureThreshold: 30
         jellyseerr:
           image:
-            repository: docker.io/fallenbagel/jellyseerr
-            tag: 2.7.3
+            repository: ghcr.io/seerr-team/seerr
+            tag: v3.4.1
           env:
             TZ: Europe/Berlin
           resources:
