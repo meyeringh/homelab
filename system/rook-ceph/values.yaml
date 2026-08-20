@@ -25,8 +25,8 @@ rook-ceph-cluster:
     # Ceph Tentacle added the aes256k cephx cipher and health checks that flag
     # the legacy "aes" keys. Rotation only happens when keyRotationPolicy is
     # enabled; bumping keyGeneration above the current value is what triggers it.
-    # The chart default pins csi to "aes" for kernels below 7.0 -- metal0 runs
-    # 7.1, whose kernel ceph client speaks aes256k, so csi rotates too.
+    # Generations only ever move forward -- undoing a rotation means another
+    # bump, not restoring the previous value.
     security:
       cephx:
         daemon:
@@ -34,9 +34,13 @@ rook-ceph-cluster:
           keyRotationPolicy: KeyGeneration
           keyGeneration: 1
         csi:
-          keyType: aes256k
+          # Stays on aes. Kernel 7.1 on metal0 handles aes256k, but ceph-csi
+          # v3.17.0 links a librados that does not: rotating csi to aes256k
+          # made every provision fail with "rados: ret=-22, Invalid argument".
+          # Generation 2 rotates the aes256k keys from generation 1 back to aes.
+          keyType: aes
           keyRotationPolicy: KeyGeneration
-          keyGeneration: 1
+          keyGeneration: 2
           # Keep the superseded key valid so mounted PVs survive the rotation.
           keepPriorKeyCountMax: 1
     mon:
