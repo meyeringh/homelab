@@ -21,6 +21,12 @@ renovate:
             "matchUpdateTypes": ["major"],
             "automerge": false,
             "prPriority": 10
+          },
+          {
+            "description": "Ceph release numbering: x.0.z development, x.1.z release candidate, x.2.z stable. Rook refuses to run pre-release Ceph without allowUnsupported, so deny-list both pre-release lines. Deny-list rather than an allowed range so future stable releases keep flowing without edits.",
+            "matchDatasources": ["docker"],
+            "matchPackageNames": ["quay.io/ceph/ceph"],
+            "allowedVersions": "!/^v?\\d+\\.[01]\\./"
           }
         ]
       }
