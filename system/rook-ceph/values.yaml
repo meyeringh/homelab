@@ -32,7 +32,10 @@ rook-ceph-cluster:
         daemon:
           keyType: aes256k
           keyRotationPolicy: KeyGeneration
-          keyGeneration: 1
+          # Generation 2, not 1: the mds keys were already created at
+          # generation 1 back under Ceph 19.2.3, so generation 1 was a no-op
+          # for them and they stayed on aes while every other daemon rotated.
+          keyGeneration: 2
         csi:
           # Stays on aes. Kernel 7.1 on metal0 handles aes256k, but ceph-csi
           # v3.17.0 links a librados that does not: rotating csi to aes256k
