@@ -53,6 +53,9 @@
     - key: PAPERLESS_ADMIN_PASSWORD
       length: 32
       special: true
+    - key: PAPERLESS_SECRET_KEY
+      length: 64
+      special: false
 
 # Nextcloud
 - name: nextcloud.nextcloud
