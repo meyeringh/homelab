@@ -1,6 +1,6 @@
 renovate:
   cronjob:
-    schedule: '0 9 * * *'  # Everyday at 09:00
+    schedule: '0 * * * *'  # Hourly: each run stops after two automerges
   renovate:
     config: |
       {
@@ -9,10 +9,18 @@ renovate:
         "automerge": true,
         "automergeType": "branch",
         "ignoreTests": true,
+        "hostRules": [
+          {
+            "matchHost": "lscr.io",
+            "concurrentRequestLimit": 2,
+            "maxRequestsPerSecond": 1
+          }
+        ],
         "packageRules": [
           {
             "matchUpdateTypes": ["major"],
-            "automerge": false
+            "automerge": false,
+            "prPriority": 10
           }
         ]
       }
