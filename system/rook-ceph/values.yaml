@@ -22,6 +22,23 @@ rook-ceph-cluster:
         mon_data_avail_warn: "15"
       osd:
         bluestore_slow_ops_warn_threshold: "15"
+    # Ceph Tentacle added the aes256k cephx cipher and health checks that flag
+    # the legacy "aes" keys. Rotation only happens when keyRotationPolicy is
+    # enabled; bumping keyGeneration above the current value is what triggers it.
+    # The chart default pins csi to "aes" for kernels below 7.0 -- metal0 runs
+    # 7.1, whose kernel ceph client speaks aes256k, so csi rotates too.
+    security:
+      cephx:
+        daemon:
+          keyType: aes256k
+          keyRotationPolicy: KeyGeneration
+          keyGeneration: 1
+        csi:
+          keyType: aes256k
+          keyRotationPolicy: KeyGeneration
+          keyGeneration: 1
+          # Keep the superseded key valid so mounted PVs survive the rotation.
+          keepPriorKeyCountMax: 1
     mon:
       count: 1
     mgr:
