@@ -1,0 +1,75 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: servarr-alerts
+spec:
+  groups:
+    - name: servarr
+      rules:
+        # The check that would have caught Radarr/Sonarr losing their SABnzbd
+        # API key, which went unnoticed for 19 months
+        - alert: ServarrHealthIssue
+          expr: |
+            radarr_system_health_issues{type="error"} == 1
+            or sonarr_system_health_issues{type="error"} == 1
+            or prowlarr_system_health_issues{type="error"} == 1
+          for: 30m
+          labels:
+            severity: warning
+          annotations:
+            summary: Servarr app reports a health error
+            description: >-
+              {{ "{{" }} $labels.endpoint {{ "}}" }}: {{ "{{" }} $labels.message {{ "}}" }}
+              ({{ "{{" }} $labels.source {{ "}}" }})
+              See {{ "{{" }} $labels.wikiurl {{ "}}" }}
+        - alert: ServarrUnreachable
+          expr: |
+            radarr_system_status != 1
+            or sonarr_system_status != 1
+            or prowlarr_system_status != 1
+          for: 15m
+          labels:
+            severity: critical
+          annotations:
+            summary: Servarr app is not answering its API
+            description: >-
+              {{ "{{" }} $labels.endpoint {{ "}}" }} has not reported a healthy
+              system status for 15 minutes.
+        - alert: ProwlarrNoEnabledIndexers
+          expr: prowlarr_indexer_enabled_total == 0
+          for: 1h
+          labels:
+            severity: warning
+          annotations:
+            summary: Prowlarr has no enabled indexers
+            description: >-
+              Nothing can be grabbed while Prowlarr has zero enabled indexers.
+        # 0 = Unknown, i.e. the queue state could not be read
+        - alert: SabnzbdQueueStateUnknown
+          expr: sabnzbd_status == 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: SABnzbd queue state is unknown
+            description: >-
+              SABnzbd reported an unknown queue state for 15 minutes.
+        - alert: SabnzbdPausedTooLong
+          expr: sabnzbd_paused_all == 1
+          for: 6h
+          labels:
+            severity: warning
+          annotations:
+            summary: SABnzbd has been paused for 6 hours
+            description: >-
+              All SABnzbd queues are paused, so no downloads will complete.
+        - alert: ExportarrTargetDown
+          expr: up{job="jellyfin", endpoint=~"metrics-.*"} == 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: exportarr target is down
+            description: >-
+              Prometheus cannot scrape {{ "{{" }} $labels.endpoint {{ "}}" }},
+              so the servarr alerts above are blind.
