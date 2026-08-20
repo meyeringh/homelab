@@ -5,7 +5,7 @@ app-template:
         paperless:
           image:
             repository: ghcr.io/paperless-ngx/paperless-ngx
-            tag: 2.20.15
+            tag: 3.0.5
           resources:
             requests:
               memory: 2500Mi
