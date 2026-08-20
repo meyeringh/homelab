@@ -213,6 +213,177 @@ app-template:
                   port: 5055
                 periodSeconds: 10
                 failureThreshold: 30
+        exportarr-radarr:
+          image:
+            repository: ghcr.io/onedr0p/exportarr
+            tag: v2.3.0
+          args:
+            - radarr
+          env:
+            PORT: "9707"
+            URL: http://localhost:7878
+            # Reads ApiKey/Port/UrlBase out of Radarr's own config.xml, so the key
+            # is never duplicated into git or the secret store
+            CONFIG: /config/config.xml
+            LOG_FORMAT: json
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9707
+                periodSeconds: 30
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9707
+                periodSeconds: 30
+            startup:
+              enabled: false
+        exportarr-sonarr:
+          image:
+            repository: ghcr.io/onedr0p/exportarr
+            tag: v2.3.0
+          args:
+            - sonarr
+          env:
+            PORT: "9708"
+            URL: http://localhost:8989
+            CONFIG: /config/config.xml
+            LOG_FORMAT: json
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9708
+                periodSeconds: 30
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9708
+                periodSeconds: 30
+            startup:
+              enabled: false
+        exportarr-prowlarr:
+          image:
+            repository: ghcr.io/onedr0p/exportarr
+            tag: v2.3.0
+          args:
+            - prowlarr
+          env:
+            PORT: "9709"
+            URL: http://localhost:9696
+            CONFIG: /config/config.xml
+            LOG_FORMAT: json
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9709
+                periodSeconds: 30
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9709
+                periodSeconds: 30
+            startup:
+              enabled: false
+        exportarr-sabnzbd:
+          image:
+            repository: ghcr.io/onedr0p/exportarr
+            tag: v2.3.0
+          args:
+            - sabnzbd
+          env:
+            PORT: "9710"
+            URL: http://localhost:8080
+            # sabnzbd.ini is not the XML format CONFIG understands, so the key is
+            # extracted into an emptyDir by the sabnzbd-apikey init container
+            API_KEY_FILE: /apikeys/sabnzbd
+            LOG_FORMAT: json
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 64Mi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9710
+                periodSeconds: 30
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: 9710
+                periodSeconds: 30
+            startup:
+              enabled: false
+      initContainers:
+        # sabnzbd.ini is mode 0660 abc:abc, so this runs as root to read it
+        sabnzbd-apikey:
+          image:
+            repository: docker.io/library/busybox
+            tag: 1.37.0
+          command:
+            - /bin/sh
+            - -c
+            - >-
+              sed -n 's/^api_key *= *//p' /sabnzbd-config/sabnzbd.ini
+              | tr -d '\n' > /apikeys/sabnzbd
+              && chmod 0444 /apikeys/sabnzbd
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 32Mi
   service:
     jellyfin:
       controller: jellyfin
@@ -235,6 +406,40 @@ app-template:
         jellyseerr:
           port: 5055
           protocol: HTTP
+        metrics-radarr:
+          port: 9707
+          protocol: HTTP
+        metrics-sonarr:
+          port: 9708
+          protocol: HTTP
+        metrics-prowlarr:
+          port: 9709
+          protocol: HTTP
+        metrics-sabnzbd:
+          port: 9710
+          protocol: HTTP
+  serviceMonitor:
+    exportarr:
+      enabled: true
+      service:
+        identifier: jellyfin
+      endpoints:
+        - port: metrics-radarr
+          path: /metrics
+          interval: 1m
+          scrapeTimeout: 30s
+        - port: metrics-sonarr
+          path: /metrics
+          interval: 1m
+          scrapeTimeout: 30s
+        - port: metrics-prowlarr
+          path: /metrics
+          interval: 1m
+          scrapeTimeout: 30s
+        - port: metrics-sabnzbd
+          path: /metrics
+          interval: 1m
+          scrapeTimeout: 30s
   ingress:
     jellyfin:
       enabled: false
@@ -348,3 +553,28 @@ app-template:
           jellyseerr:
             - path: /app/config
               subPath: jellyseerr/config
+          exportarr-radarr:
+            - path: /config
+              subPath: radarr/config
+              readOnly: true
+          exportarr-sonarr:
+            - path: /config
+              subPath: sonarr/config
+              readOnly: true
+          exportarr-prowlarr:
+            - path: /config
+              subPath: prowlarr/config
+              readOnly: true
+          sabnzbd-apikey:
+            - path: /sabnzbd-config
+              subPath: sabnzbd/config
+              readOnly: true
+    apikeys:
+      type: emptyDir
+      advancedMounts:
+        jellyfin:
+          sabnzbd-apikey:
+            - path: /apikeys
+          exportarr-sabnzbd:
+            - path: /apikeys
+              readOnly: true
