@@ -517,7 +517,7 @@ app-template:
     data:
       enabled: true
       accessMode: ReadWriteOnce
-      size: 100Gi
+      size: 250Gi
       retain: true
       advancedMounts:
         jellyfin:
