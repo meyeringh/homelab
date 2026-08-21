@@ -491,6 +491,52 @@ app-template:
               memory: 16Mi
             limits:
               memory: 32Mi
+    # radarr/sonarr have no built-in periodic search: RssSync only ever sees
+    # newly posted releases, so anything already on the indexer is never found
+    # and cutoff upgrades never happen. This is the missing nudge.
+    arr-search:
+      type: cronjob
+      cronjob:
+        schedule: "0 5 * * 0"
+        timeZone: Europe/Berlin
+        concurrencyPolicy: Forbid
+        successfulJobsHistory: 1
+        failedJobsHistory: 3
+        backoffLimit: 2
+        ttlSecondsAfterFinished: 604800
+      pod:
+        restartPolicy: OnFailure
+      containers:
+        search:
+          image:
+            repository: docker.io/curlimages/curl
+            tag: 8.21.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              H=jellyfin.jellyfin.svc.cluster.local
+              R=$(sed -n 's:.*<ApiKey>\(.*\)</ApiKey>.*:\1:p' /radarr-config/config.xml)
+              S=$(sed -n 's:.*<ApiKey>\(.*\)</ApiKey>.*:\1:p' /sonarr-config/config.xml)
+              for c in MissingMoviesSearch CutoffUnmetMoviesSearch; do
+                curl -fsS -o /dev/null -X POST "http://$H:7878/api/v3/command" \
+                  -H "X-Api-Key: $R" -H 'Content-Type: application/json' \
+                  -d "{\"name\":\"$c\"}"
+                echo "radarr $c queued"
+              done
+              for c in MissingEpisodeSearch CutoffUnmetEpisodeSearch; do
+                curl -fsS -o /dev/null -X POST "http://$H:8989/api/v3/command" \
+                  -H "X-Api-Key: $S" -H 'Content-Type: application/json' \
+                  -d "{\"name\":\"$c\"}"
+                echo "sonarr $c queued"
+              done
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 64Mi
   service:
     jellyfin:
       controller: jellyfin
@@ -704,6 +750,14 @@ app-template:
             # be identical in all three containers
             - path: /data/completed-downloads
               subPath: infinidysk/completed-downloads
+        arr-search:
+          search:
+            - path: /radarr-config
+              subPath: radarr/config
+              readOnly: true
+            - path: /sonarr-config
+              subPath: sonarr/config
+              readOnly: true
     apikeys:
       type: emptyDir
       advancedMounts:
