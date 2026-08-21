@@ -90,7 +90,9 @@ app-template:
             # the backend defaults to :8080, which sabnzbd already owns in this
             # pod's shared network namespace -- without this the frontend proxies
             # /api straight into sabnzbd
-            ASPNETCORE_URLS: http://127.0.0.1:3001
+            # bound on all interfaces so prometheus can scrape /metrics, which is
+            # anonymous on the backend but redirects to /login through :3000
+            ASPNETCORE_URLS: http://0.0.0.0:3001
             BACKEND_URL: http://127.0.0.1:3001
             # STRM import instead of the default rclone symlinks: no FUSE, no
             # privileged container, and nothing has to be mount-propagated into
@@ -493,6 +495,9 @@ app-template:
         infinidysk:
           port: 3000
           protocol: HTTP
+        metrics-infinidysk:
+          port: 3001
+          protocol: HTTP
   serviceMonitor:
     exportarr:
       enabled: true
@@ -515,8 +520,8 @@ app-template:
           path: /metrics
           interval: 1m
           scrapeTimeout: 30s
-        # ui, webdav, sab api and /metrics all share port 3000
-        - port: infinidysk
+        # port 3000 serves ui/webdav/sab-api; /metrics lives on the backend port
+        - port: metrics-infinidysk
           path: /metrics
           interval: 1m
           scrapeTimeout: 30s
