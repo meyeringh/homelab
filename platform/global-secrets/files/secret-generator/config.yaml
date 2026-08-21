@@ -97,3 +97,10 @@
     - key: meili_master_key
       length: 32
       special: false
+
+# InfiniDysk
+- name: infinidysk.api
+  data:
+    - key: apiKey
+      length: 32
+      special: false
