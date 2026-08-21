@@ -107,6 +107,11 @@ app-template:
             # could start it. A failed check fails the grab and radarr moves on.
             NZBDAV_CONFIG__API__ENSURE_ARTICLE_EXISTENCE_CATEGORIES: movies,tv
             NZBDAV_CONFIG__API__ARTICLE_EXISTENCE_CHECK_MODE: full
+            # lazy rar mounting parses only the FIRST volume and extrapolates
+            # the inner file size across the set, overshooting when the last
+            # volume is short: reads past the real end 404 and players that
+            # need the matroska index at EOF hang. Parse every volume instead.
+            NZBDAV_CONFIG__API__LAZY_RAR_PARSING: "false"
             # must be reachable by the CLIENT, not just by jellyfin: for remote
             # http sources jellyfin hands the .strm url straight to the player
             # for direct play, so a localhost url makes the phone dial itself
