@@ -87,11 +87,6 @@ app-template:
             # TLS is terminated at the gateway
             TRUST_PROXY: "1"
             SECURE_COOKIES: "true"
-            # TEMPORARY: deletes the admin account on startup so the UI returns
-            # to onboarding. Settings, providers, queue and history are kept.
-            # MUST be removed once a new password is set, or every restart wipes
-            # the account again.
-            RESET_ADMIN_PASSWORD: "true"
             # the backend defaults to :8080, which sabnzbd already owns in this
             # pod's shared network namespace -- without this the frontend proxies
             # /api straight into sabnzbd
