@@ -87,6 +87,11 @@ app-template:
             # TLS is terminated at the gateway
             TRUST_PROXY: "1"
             SECURE_COOKIES: "true"
+            # the backend defaults to :8080, which sabnzbd already owns in this
+            # pod's shared network namespace -- without this the frontend proxies
+            # /api straight into sabnzbd
+            ASPNETCORE_URLS: http://127.0.0.1:3001
+            BACKEND_URL: http://127.0.0.1:3001
             # STRM import instead of the default rclone symlinks: no FUSE, no
             # privileged container, and nothing has to be mount-propagated into
             # radarr/sonarr (which is impossible through subPath mounts anyway)
@@ -128,12 +133,15 @@ app-template:
                   path: /healthz
                   port: 3000
                 periodSeconds: 30
+            # /healthz is served by the frontend alone and stays green even when
+            # the backend is dead, so prove the proxy reaches the backend here.
+            # mode=version is the one unauthenticated sab endpoint.
             startup:
               enabled: true
               custom: true
               spec:
                 httpGet:
-                  path: /healthz
+                  path: "/api?mode=version&output=json"
                   port: 3000
                 periodSeconds: 10
                 failureThreshold: 60
