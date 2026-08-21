@@ -456,6 +456,25 @@ app-template:
               memory: 16Mi
             limits:
               memory: 32Mi
+        # radarr/sonarr health-check the per-category output folder before
+        # infinidysk has created it on its first job
+        infinidysk-dirs:
+          image:
+            repository: docker.io/library/busybox
+            tag: 1.38.0
+          command:
+            - /bin/sh
+            - -c
+            - >-
+              mkdir -p /data/completed-downloads/movies
+              /data/completed-downloads/tv
+              && chown -R 1000:1000 /data/completed-downloads
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 32Mi
   service:
     jellyfin:
       controller: jellyfin
@@ -659,6 +678,9 @@ app-template:
             - path: /sabnzbd-config
               subPath: sabnzbd/config
               readOnly: true
+          infinidysk-dirs:
+            - path: /data/completed-downloads
+              subPath: infinidysk/completed-downloads
           infinidysk:
             - path: /config
               subPath: infinidysk/config
