@@ -101,8 +101,10 @@ app-template:
             NZBDAV_CONFIG__API__IMPORT_STRATEGY: strm
             NZBDAV_CONFIG__API__COMPLETED_DOWNLOADS_DIR: /data/completed-downloads
             NZBDAV_CONFIG__API__CATEGORIES: movies,tv
-            # jellyfin resolves the .strm URLs from inside this same pod
-            NZBDAV_CONFIG__GENERAL__BASE_URL: http://localhost:3000
+            # must be reachable by the CLIENT, not just by jellyfin: for remote
+            # http sources jellyfin hands the .strm url straight to the player
+            # for direct play, so a localhost url makes the phone dial itself
+            NZBDAV_CONFIG__GENERAL__BASE_URL: https://infinidysk.meyeringh.org
             # keep the write-heavy decoded-segment cache off Ceph RBD
             NZBDAV_CONFIG__USENET__SEGMENT_CACHE__PATH: /cache/segments
             NZBDAV_CONFIG__USENET__SEGMENT_CACHE__MAX_GB: "8"
