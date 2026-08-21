@@ -82,7 +82,10 @@ app-template:
             tag: v1.1.2
           env:
             TZ: Europe/Berlin
-            PUID: "1000"
+            # 911 is the uid the linuxserver arr containers run as. Radarr
+            # imports by copy-then-delete, and deleting needs write on the
+            # SOURCE dir, which infinidysk creates 0755 -- so it has to own it.
+            PUID: "911"
             PGID: "1000"
             # TLS is terminated at the gateway
             TRUST_PROXY: "1"
@@ -468,7 +471,7 @@ app-template:
             - >-
               mkdir -p /data/completed-downloads/movies
               /data/completed-downloads/tv
-              && chown -R 1000:1000 /data/completed-downloads
+              && chown -R 911:1000 /data/completed-downloads
           resources:
             requests:
               cpu: 10m
