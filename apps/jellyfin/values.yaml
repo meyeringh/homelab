@@ -101,6 +101,12 @@ app-template:
             NZBDAV_CONFIG__API__IMPORT_STRATEGY: strm
             NZBDAV_CONFIG__API__COMPLETED_DOWNLOADS_DIR: /data/completed-downloads
             NZBDAV_CONFIG__API__CATEGORIES: movies,tv
+            # STAT every article before reporting the job complete. Off by
+            # default, which let a release missing its last 14 MB import as
+            # "completed" -- matroska keeps its seek index there, so no player
+            # could start it. A failed check fails the grab and radarr moves on.
+            NZBDAV_CONFIG__API__ENSURE_ARTICLE_EXISTENCE_CATEGORIES: movies,tv
+            NZBDAV_CONFIG__API__ARTICLE_EXISTENCE_CHECK_MODE: full
             # must be reachable by the CLIENT, not just by jellyfin: for remote
             # http sources jellyfin hands the .strm url straight to the player
             # for direct play, so a localhost url makes the phone dial itself
