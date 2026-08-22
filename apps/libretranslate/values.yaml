@@ -1,0 +1,91 @@
+app-template:
+  defaultPodOptions:
+    securityContext:
+      # image runs as the libretranslate user, models live on the PVC
+      fsGroup: 1032
+  controllers:
+    libretranslate:
+      containers:
+        app:
+          image:
+            repository: docker.io/libretranslate/libretranslate
+            tag: v1.9.6
+          env:
+            # each gunicorn worker loads its own copy of every model it serves
+            LT_THREADS: "2"
+            LT_LOAD_ONLY: "en,de,ru"
+            LT_UPDATE_MODELS: "true"
+            LT_CHAR_LIMIT: "10000"
+            LT_METRICS: "true"
+          resources:
+            requests:
+              memory: 2Gi
+            limits:
+              memory: 2Gi
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: 5000
+                periodSeconds: 10
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: 5000
+                periodSeconds: 10
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: 5000
+                periodSeconds: 10
+                # first boot downloads the argos models before gunicorn binds
+                failureThreshold: 90
+  service:
+    app:
+      controller: libretranslate
+      ports:
+        http:
+          port: 5000
+  serviceMonitor:
+    app:
+      enabled: true
+      service:
+        identifier: app
+      endpoints:
+        - port: http
+          path: /metrics
+          interval: 1m
+          scrapeTimeout: 30s
+  ingress:
+    main:
+      enabled: false
+
+  route:
+    main:
+      parentRefs:
+        - name: main
+          namespace: gateway
+          sectionName: https
+      hostnames:
+        - translate.meyeringh.org
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: 5000
+  persistence:
+    data:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      retain: true
+      globalMounts:
+        - path: /home/libretranslate/.local
