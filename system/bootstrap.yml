@@ -25,8 +25,12 @@
         release_name: argocd
         release_namespace: argocd
         dependency_update: true
-        values_files:
-          - "argocd/{{ (first_install.resources | length == 0) | ternary('values-seed.yaml', 'values.yaml') }}"
+        # The seed file is an overlay on top of values.yaml, not a replacement:
+        # it only disables the ServiceMonitors that cannot exist before
+        # kube-prometheus-stack has been deployed.
+        values_files: "{{ ['argocd/values.yaml'] + seed_values }}"
+      vars:
+        seed_values: "{{ (first_install.resources | length == 0) | ternary(['argocd/values-seed.yaml'], []) }}"
       register: argocd_manifests
 
     - name: Apply ArgoCD manifests

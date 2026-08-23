@@ -1,3 +1,6 @@
+# Overlay applied on top of values.yaml on the very first install only, when
+# kube-prometheus-stack (and therefore the ServiceMonitor CRD) does not exist
+# yet. Keep this file limited to those toggles — everything else is inherited.
 argo-cd:
   server:
     metrics: &metrics
@@ -10,19 +13,3 @@ argo-cd:
     metrics: *metrics
   redis:
     metrics: *metrics
-argocd-apps:
-  applicationsets:
-    root:
-      generators:
-        - git:
-            repoURL: &repoURL https://github.com/meyeringh/homelab
-            revision: &revision master
-            directories:
-              - path: system/*
-              - path: platform/*
-              - path: apps/*
-      template:
-        spec:
-          source:
-            repoURL: *repoURL
-            targetRevision: *revision
