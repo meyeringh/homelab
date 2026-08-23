@@ -1,11 +1,13 @@
 #!/bin/sh
 
+set -eu
+
 username="${1}"
 fullname="${2}"
 mail="${3}"
 
 export KUBECONFIG=./metal/kubeconfig.yaml
-host="$(kubectl get ingress --namespace kanidm kanidm --output jsonpath='{.spec.rules[0].host}')"
+host="$(kubectl get httproutes --namespace kanidm --output jsonpath='{.items[0].spec.hostnames[0]}')"
 
 kanidm person create "${username}" "${fullname}" --url "https://${host}" --name idm_admin
 kanidm person update "${username}" --url "https://${host}" --name idm_admin --mail "${mail}"

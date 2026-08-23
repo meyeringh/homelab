@@ -16,7 +16,20 @@ from kubernetes.stream import stream
 
 config.load_config()
 
-kanidm_host = client.NetworkingV1Api().read_namespaced_ingress('kanidm', 'kanidm').spec.rules[0].host
+def httproute_host(namespace: str) -> str:
+    """First hostname of the first HTTPRoute in a namespace."""
+    routes = client.CustomObjectsApi().list_namespaced_custom_object(
+        'gateway.networking.k8s.io', 'v1', namespace, 'httproutes',
+    )['items']
+
+    for route in routes:
+        hostnames = route.get('spec', {}).get('hostnames', [])
+        if hostnames:
+            return hostnames[0]
+
+    raise RuntimeError(f"no HTTPRoute with a hostname in namespace {namespace}")
+
+kanidm_host = httproute_host('kanidm')
 
 def apply_secret(name: str, namespace: str, data: dict) -> None:
     try:
@@ -112,7 +125,7 @@ def main() -> None:
         ]
 
         kanidm_oauth_apps = [
-            {'name': 'dex', 'redirect_uri': f"https://{client.NetworkingV1Api().read_namespaced_ingress('dex', 'dex').spec.rules[0].host}/callback"},
+            {'name': 'dex', 'redirect_uri': f"https://{httproute_host('dex')}/callback"},
         ]
 
         kanidm_login(["admin", "idm_admin"])

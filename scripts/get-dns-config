@@ -1,4 +1,8 @@
 #!/bin/sh
 
+set -eu
+
 export KUBECONFIG=./metal/kubeconfig.yaml
-kubectl get ingress --all-namespaces --no-headers --output custom-columns="ADDRESS:.status.loadBalancer.ingress[0].ip,HOST:.spec.rules[0].host"
+
+kubectl get gateways --all-namespaces --no-headers --output custom-columns="GATEWAY:.metadata.name,ADDRESS:.status.addresses[0].value"
+kubectl get httproutes --all-namespaces --no-headers --output custom-columns="NAMESPACE:.metadata.namespace,HOST:.spec.hostnames[0]"
