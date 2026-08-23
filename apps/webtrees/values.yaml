@@ -7,8 +7,8 @@ app-template:
       initContainers:
         install-oauth2-module:
           image:
-            repository: alpine
-            tag: 3.240
+            repository: docker.io/library/alpine
+            tag: "3.24"
           command:
             - sh
             - -c
