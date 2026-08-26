@@ -79,7 +79,7 @@ app-template:
         infinidysk:
           image:
             repository: ghcr.io/infinidysk/infinidysk
-            tag: v1.2.5
+            tag: v1.2.6
           env:
             TZ: Europe/Berlin
             # 911 is the uid the linuxserver arr containers run as. Radarr
