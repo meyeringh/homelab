@@ -60,8 +60,29 @@ home-assistant:
   configuration:
     enabled: true
     forceInit: true
-    trusted_proxies:
-      - 10.0.0.0/8
+    # Overrides the chart default for two reasons:
+    #  - No document-leading comment. forceInit deep-merges this into
+    #    /config/configuration.yaml on every start, and yq appends a leading
+    #    comment on each merge (it had accumulated 74 copies). Comments attached
+    #    to a key are deduplicated by the merge and are safe.
+    #  - No http: block. HA 2027.2.0 drops http: from YAML; the settings were
+    #    imported into .storage/http (Settings > System > Network) and are now
+    #    UI-managed. The chart only emits http: when its own ingress/httpRoute is
+    #    enabled, which it is not here (see templates/httproute.yaml), so the
+    #    block in the PVC was a stale leftover -- the merge can add keys but
+    #    never remove them.
+    # prometheus: is hardcoded rather than keyed off serviceMonitor.enabled
+    # (upstream does that) because the merge could not remove it again anyway.
+    templateConfig: |-
+      default_config:
+      prometheus:
+      # Load frontend themes from the themes folder
+      frontend:
+        themes: !include_dir_merge_named themes
+
+      automation: !include automations.yaml
+      script: !include scripts.yaml
+      scene: !include scenes.yaml
 
   persistence:
     enabled: true
