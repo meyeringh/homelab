@@ -97,7 +97,7 @@ app-template:
         app:
           image:
             repository: docker.io/rhasspy/wyoming-whisper
-            tag: 3.6.0
+            tag: 3.7.0
           # base-int8: ~1s per command on the Ryzen 2600 vs 8-10s for
           # medium-int8 (benchmarked); beam 5 costs nothing at this size
           args:
