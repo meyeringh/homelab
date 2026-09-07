@@ -7,11 +7,64 @@ app-template:
           image:
             repository: docker.io/kanidm/server
             tag: 1.11.1
+          # Kanidm serves TLS directly; kubelet does not verify the self-signed cert.
+          # Without these the process can wedge on blocked storage I/O while the pod
+          # still reports Running, which hides the outage indefinitely.
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /status
+                  port: 443
+                  scheme: HTTPS
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 6
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /status
+                  port: 443
+                  scheme: HTTPS
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /status
+                  port: 443
+                  scheme: HTTPS
+                periodSeconds: 10
+                failureThreshold: 30
         # TODO remove when Cilium supports BackendTLSPolicy (upstream TLS)
         tls-proxy:
           image:
             repository: docker.io/nginx
             tag: alpine
+          # Readiness only: proves the gateway-facing chain works end to end. Restarting
+          # nginx would not fix a wedged upstream, so no liveness probe here.
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /status
+                  port: 8080
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            startup:
+              enabled: false
       statefulset:
         volumeClaimTemplates:
           - name: data
