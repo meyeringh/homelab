@@ -27,6 +27,13 @@ renovate:
             "matchDatasources": ["docker"],
             "matchPackageNames": ["quay.io/ceph/ceph"],
             "allowedVersions": "!/^v?\\d+\\.[01]\\./"
+          },
+          {
+            "description": "Postgres bumps restart a single-instance CNPG cluster, so they land on a human's schedule rather than an automerge. The tag filter keeps the beta and the -standard/-system/-bookworm variants of the CNPG image catalogue out of the lookup.",
+            "matchDatasources": ["docker"],
+            "matchPackageNames": ["ghcr.io/cloudnative-pg/postgresql"],
+            "allowedVersions": "/^\\d+\\.\\d+$/",
+            "automerge": false
           }
         ]
       }
