@@ -6,7 +6,7 @@ app-template:
         app:
           image:
             repository: docker.io/kanidm/server
-            tag: 1.11.1
+            tag: 1.11.2
           # Kanidm serves TLS directly; kubelet does not verify the self-signed cert.
           # Without these the process can wedge on blocked storage I/O while the pod
           # still reports Running, which hides the outage indefinitely.
