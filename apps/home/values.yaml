@@ -129,7 +129,7 @@ app-template:
         app:
           image:
             repository: docker.io/rhasspy/wyoming-piper
-            tag: 2.5.0
+            tag: 2.5.2
           args:
             - --voice
             - de_DE-thorsten-medium
