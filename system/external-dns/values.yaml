@@ -1,6 +1,7 @@
 external-dns:
   provider: cloudflare
   txtOwnerId: homelab
+  policy: upsert-only
 
   resources:
     requests:
