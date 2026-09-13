@@ -29,11 +29,10 @@ renovate:
             "allowedVersions": "!/^v?\\d+\\.[01]\\./"
           },
           {
-            "description": "Postgres bumps restart a single-instance CNPG cluster, so they land on a human's schedule rather than an automerge. The tag filter keeps the beta and the -standard/-system/-bookworm variants of the CNPG image catalogue out of the lookup.",
+            "description": "The CNPG image repository also carries beta tags and the -standard/-system/-<distro> catalogue variants. Restrict the lookup to plain major.minor so only PostgreSQL point releases are offered; majors still stop at a PR through the rule above, because they trigger a declarative offline pg_upgrade.",
             "matchDatasources": ["docker"],
             "matchPackageNames": ["ghcr.io/cloudnative-pg/postgresql"],
-            "allowedVersions": "/^\\d+\\.\\d+$/",
-            "automerge": false
+            "allowedVersions": "/^\\d+\\.\\d+$/"
           }
         ]
       }
