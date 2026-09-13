@@ -1,4 +1,4 @@
-postgresImage: ghcr.io/cloudnative-pg/postgresql:17.11
+postgresImage: ghcr.io/cloudnative-pg/postgresql:18.6
 
 nextcloud:
   service:
