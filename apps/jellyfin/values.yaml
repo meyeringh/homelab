@@ -234,7 +234,7 @@ app-template:
         sonarr:
           image:
             repository: lscr.io/linuxserver/sonarr
-            tag: 4.0.19
+            tag: 4.0.20
           env:
             TZ: Europe/Berlin
           resources:
