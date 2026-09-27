@@ -16,6 +16,8 @@ esphome:
       host: 192.168.1.111
     - name: powermeter
       host: 192.168.1.48
+    - name: blinds-controller
+      host: 192.168.1.21
 
 # Wyoming voice services (synced by device-sync job). title is the config
 # entry title HA assigns (= wyoming program name); the sync job uses it to
