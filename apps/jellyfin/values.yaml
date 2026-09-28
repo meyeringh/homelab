@@ -269,7 +269,7 @@ app-template:
         jellyseerr:
           image:
             repository: ghcr.io/seerr-team/seerr
-            tag: v3.4.1
+            tag: v3.5.0
           env:
             TZ: Europe/Berlin
           resources:
