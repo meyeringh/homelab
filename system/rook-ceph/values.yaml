@@ -21,7 +21,8 @@ rook-ceph-cluster:
       global:
         mon_data_avail_warn: "15"
       osd:
-        bluestore_slow_ops_warn_threshold: "15"
+        # 0 disables BLUESTORE_SLOW_OP_ALERT entirely; the HDD OSDs are simply slow.
+        bluestore_slow_ops_warn_threshold: "0"
     # Ceph Tentacle added the aes256k cephx cipher and health checks that flag
     # the legacy "aes" keys. Rotation only happens when keyRotationPolicy is
     # enabled; bumping keyGeneration above the current value is what triggers it.
