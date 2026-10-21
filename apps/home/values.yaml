@@ -44,11 +44,13 @@ home-assistant:
     - name: TZ
       value: Europe/Berlin
 
+  # Sat at 470-490Mi with a 500Mi limit; loading the matter integration tipped
+  # it into OOMKill
   resources:
     requests:
-      memory: 500Mi
+      memory: 768Mi
     limits:
-      memory: 500Mi
+      memory: 768Mi
 
   service:
     type: ClusterIP
