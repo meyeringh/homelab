@@ -34,6 +34,11 @@ wyoming:
       port: 10200
       title: piper
 
+# Matter server the matter integration connects to (synced by device-sync job).
+# Resolves to the node IP since the matter controller runs on the host network
+matter:
+  url: ws://home-matter:5580/ws
+
 home-assistant:
   env:
     - name: TZ
@@ -92,9 +97,42 @@ home-assistant:
     accessMode: ReadWriteOnce
     size: 5Gi
 
-# Wyoming speech services for the Assist pipeline: whisper (STT) + piper (TTS)
+# Wyoming speech services for the Assist pipeline (whisper STT, piper TTS) and
+# the Matter controller HA's matter integration talks to
 app-template:
   controllers:
+    # Matter is IPv6 link-local multicast + mDNS, so the controller must sit on
+    # the LAN itself, not in the pod network
+    matter:
+      pod:
+        hostNetwork: true
+        dnsPolicy: ClusterFirstWithHostNet
+        securityContext:
+          fsGroup: 1000
+      containers:
+        app:
+          image:
+            repository: ghcr.io/matter-js/matterjs-server
+            tag: "1.5.2"
+          env:
+            TZ: Europe/Berlin
+            PRIMARY_INTERFACE: eno1
+            NODE_OPTIONS: --max-old-space-size=384
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+              spec:
+                failureThreshold: 30
+                periodSeconds: 5
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              memory: 512Mi
     whisper:
       containers:
         app:
@@ -153,6 +191,11 @@ app-template:
               memory: 512Mi
 
   service:
+    matter:
+      controller: matter
+      ports:
+        ws:
+          port: 5580
     whisper:
       controller: whisper
       ports:
@@ -164,8 +207,17 @@ app-template:
         wyoming:
           port: 10200
 
-  # Model caches; models are re-downloaded if lost, no backup needed
   persistence:
+    # Fabric credentials; losing this means factory-resetting and
+    # re-commissioning every Matter device. In the Makefile backup list.
+    matter-data:
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        matter:
+          app:
+            - path: /data
+    # Model caches; models are re-downloaded if lost, no backup needed
     whisper-data:
       accessMode: ReadWriteOnce
       size: 4Gi

@@ -56,6 +56,9 @@ else:
     sys.exit("home assistant not reachable")
 
 failed = False
+# matter's manual flow reconfigures the existing entry instead of aborting
+if (url := DEVICES.get("matter")) and not api("/api/config/config_entries/entry?domain=matter"):
+    failed |= not add_device("matter", "matter", [{"url": url}])
 for host in DEVICES.get("shelly") or []:
     failed |= not add_device("shelly", host, [{"host": host, "port": 80}])
 for dev in DEVICES.get("esphome") or []:
