@@ -7,7 +7,7 @@ app-template:
         app:
           image:
             repository: docker.io/vaultwarden/server
-            tag: 1.37.4
+            tag: 1.37.5
           env:
             DOMAIN: "https://vault.meyeringh.org"
             DATABASE_URL:
