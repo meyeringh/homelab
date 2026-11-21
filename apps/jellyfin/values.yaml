@@ -199,7 +199,7 @@ app-template:
         radarr:
           image:
             repository: lscr.io/linuxserver/radarr
-            tag: 6.4.4
+            tag: 7.0.3
           env:
             TZ: Europe/Berlin
           resources:
