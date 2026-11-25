@@ -9,7 +9,7 @@ app-template:
         app:
           image:
             repository: docker.io/libretranslate/libretranslate
-            tag: v1.9.6
+            tag: v1.10.0
           env:
             # each gunicorn worker loads its own copy of every model it serves
             LT_THREADS: "2"
