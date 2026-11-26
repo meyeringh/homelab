@@ -45,6 +45,7 @@ app-template:
             - secret: "{{ .Release.Name }}-secret"
             - secret: "paperless-sso-secrets"
           probes:
+            # 3.5.0 restricts ALLOWED_HOSTS to PAPERLESS_URL + localhost; kubelet probes with the pod IP
             liveness:
               enabled: true
               custom: true
@@ -52,6 +53,9 @@ app-template:
                 httpGet:
                   path: /api/health
                   port: 8000
+                  httpHeaders:
+                    - name: Host
+                      value: localhost
                 periodSeconds: 10
                 failureThreshold: 3
             readiness:
@@ -61,6 +65,9 @@ app-template:
                 httpGet:
                   path: /api/health
                   port: 8000
+                  httpHeaders:
+                    - name: Host
+                      value: localhost
                 periodSeconds: 10
             startup:
               enabled: true
@@ -69,6 +76,9 @@ app-template:
                 httpGet:
                   path: /api/health
                   port: 8000
+                  httpHeaders:
+                    - name: Host
+                      value: localhost
                 periodSeconds: 10
                 failureThreshold: 120
         redis:
