@@ -47,8 +47,10 @@ rook-ceph-cluster:
           keyType: aes256k
           keyRotationPolicy: KeyGeneration
           keyGeneration: 3
-          # Keep the superseded key valid so mounted PVs survive the rotation.
-          keepPriorKeyCountMax: 1
+          # 0: every PV has been remounted with the generation-3 key, so the
+          # aes keys from generation 2 can go. Bump to 1 before any future
+          # rotation so mounted PVs survive it.
+          keepPriorKeyCountMax: 0
         rbdMirrorPeer:
           # No mirroring is configured; the key only exists for the peer token.
           keyType: aes256k
