@@ -29,11 +29,6 @@
     - key: client_secret
       length: 32
       special: false
-- name: dex.linkwarden
-  data:
-    - key: client_secret
-      length: 32
-      special: false
 
 # Registry
 - name: registry.admin
@@ -80,16 +75,6 @@
 - name: webtrees.webtrees
   data:
     - key: adminPassword
-      length: 32
-      special: false
-
-# Linkwarden
-- name: linkwarden.linkwarden
-  data:
-    - key: nextauth_secret
-      length: 32
-      special: false
-    - key: meili_master_key
       length: 32
       special: false
 

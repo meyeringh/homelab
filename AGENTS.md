@@ -24,9 +24,8 @@ system/         argocd, blackbox-exporter, cert-manager, cloudflare-ddns,
                 rook-ceph, smartctl-exporter, volsync-system
 platform/       dex, external-secrets, global-secrets, grafana, kanidm, proton,
                 renovate
-apps/           actualbudget, home, jellyfin, libretranslate, linkwarden,
-                minecraft, nextcloud, paperless, rustdesk, tailscale,
-                vaultwarden, webtrees, wireguard
+apps/           actualbudget, home, jellyfin, minecraft, nextcloud, paperless,
+                rustdesk, tailscale, vaultwarden, webtrees, wireguard
 external/       OpenTofu: Cloudflare DNS + API tokens, ntfy, extra secrets
 test/           Go smoke tests (terratest)
 scripts/        Operational helpers, see below

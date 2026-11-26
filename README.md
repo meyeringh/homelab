@@ -25,8 +25,8 @@ longer describes this setup. Thanks to Khue for the foundation.
 Services live in three directories that ArgoCD scans automatically:
 `system/` (cluster infrastructure), `platform/` (identity, secrets, observability,
 Renovate) and `apps/` (Nextcloud, Vaultwarden, Jellyfin, Home Assistant,
-Paperless, Linkwarden, Webtrees, Actual Budget, LibreTranslate, Minecraft,
-RustDesk, Tailscale, WireGuard).
+Paperless, Webtrees, Actual Budget, Minecraft, RustDesk, Tailscale,
+WireGuard).
 
 ## Network
 

@@ -29,8 +29,6 @@ post-install:
 backup:
 	./scripts/backup --action setup --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action setup --namespace=jellyfin --pvc=jellyfin
-	./scripts/backup --action setup --namespace=linkwarden --pvc=linkwarden
-	./scripts/backup --action setup --namespace=linkwarden --pvc=linkwarden-postgres-1
 	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden
 	./scripts/backup --action setup --namespace=vaultwarden --pvc=vaultwarden-postgres-1
 	./scripts/backup --action setup --namespace=paperless --pvc=paperless
@@ -50,8 +48,6 @@ backup:
 restore:
 	./scripts/backup --action restore --namespace=actualbudget --pvc=actualbudget
 	./scripts/backup --action restore --namespace=jellyfin --pvc=jellyfin
-	./scripts/backup --action restore --namespace=linkwarden --pvc=linkwarden
-	./scripts/backup --action restore --namespace=linkwarden --pvc=linkwarden-postgres-1
 	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden
 	./scripts/backup --action restore --namespace=vaultwarden --pvc=vaultwarden-postgres-1
 	./scripts/backup --action restore --namespace=paperless --pvc=paperless
