@@ -30,23 +30,30 @@ rook-ceph-cluster:
     # bump, not restoring the previous value.
     security:
       cephx:
+        # No daemon.keyType: Rook defaults to aes256k, and an explicit value makes
+        # it start the mons with --mon-auth-emergency-allowed-ciphers, which
+        # itself raises AUTH_EMERGENCY_CIPHERS_SET.
         daemon:
-          keyType: aes256k
           keyRotationPolicy: KeyGeneration
           # Generation 2, not 1: the mds keys were already created at
           # generation 1 back under Ceph 19.2.3, so generation 1 was a no-op
           # for them and they stayed on aes while every other daemon rotated.
           keyGeneration: 2
         csi:
-          # Stays on aes. Kernel 7.1 on metal0 handles aes256k, but ceph-csi
-          # v3.17.0 links a librados that does not: rotating csi to aes256k
-          # made every provision fail with "rados: ret=-22, Invalid argument".
-          # Generation 2 rotates the aes256k keys from generation 1 back to aes.
-          keyType: aes
+          # Generation 3 moves csi to aes256k. Generation 2 had rolled it back
+          # to aes because ceph-csi v3.17.0 linked a librados without aes256k
+          # support (every provision failed with "rados: ret=-22"); v3.17.1+
+          # and kernel 7.0+ are the documented prerequisites, both met now.
+          keyType: aes256k
           keyRotationPolicy: KeyGeneration
-          keyGeneration: 2
+          keyGeneration: 3
           # Keep the superseded key valid so mounted PVs survive the rotation.
           keepPriorKeyCountMax: 1
+        rbdMirrorPeer:
+          # No mirroring is configured; the key only exists for the peer token.
+          keyType: aes256k
+          keyRotationPolicy: KeyGeneration
+          keyGeneration: 1
     mon:
       count: 1
     mgr:
