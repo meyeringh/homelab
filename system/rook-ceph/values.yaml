@@ -30,6 +30,11 @@ rook-ceph-cluster:
     # bump, not restoring the previous value.
     security:
       cephx:
+        # Every key is aes256k (ceph auth dump-keys), so the legacy cipher can be
+        # refused outright. Any aes key would be locked out -- re-add "aes" here
+        # before creating one, e.g. for a client on a kernel older than 7.0.
+        allowedCiphers:
+          - aes256k
         # No daemon.keyType: Rook defaults to aes256k, and an explicit value makes
         # it start the mons with --mon-auth-emergency-allowed-ciphers, which
         # itself raises AUTH_EMERGENCY_CIPHERS_SET.
