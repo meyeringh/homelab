@@ -109,6 +109,10 @@ group. Note that `editor` currently maps to broad ArgoCD RBAC including
 
 - Rook-Ceph block storage (`standard-rwo`), `replicated.size: 2`,
   `failureDomain: osd` on the single NVMe.
+- CephX is `aes256k`-only (`allowedCiphers` in `system/rook-ceph/values.yaml`);
+  an `aes` key cannot authenticate. Before any CSI key rotation set
+  `keepPriorKeyCountMax: 1`, and note that on this single node a Deployment
+  rollout never remaps RBD images — scale to 0 and back to pick up a new key.
 - PostgreSQL is per-app CloudNative-PG, one `Cluster` per app in that app's
   `templates/postgres-cluster.yaml`, single instance, no barman/WAL archiving.
 - Backups are VolSync + restic to an off-cluster S3 (Minio on the LAN), set up
